@@ -15,6 +15,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ListGenerator.Server.Areas.Identity;
 using ListGenerator.Server.Data;
+using ListGenerator.Server.Services;
+using ListGenerator.Common.Interfaces;
+using ListGenerator.Common.Models;
 
 namespace ListGenerator.Server
 {
@@ -40,6 +43,18 @@ namespace ListGenerator.Server
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
+
+            services.AddTransient<IJsonHelper, JsonHelper>();
+            services.AddTransient<IItemService, ItemService>();
+
+
+            services.AddHttpClient<IApiClient, ApiClient>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44379/");
+            });
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

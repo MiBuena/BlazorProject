@@ -14,10 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Services\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <ProjectReference Include="..\ListGenerator.Common\ListGenerator.Common.csproj" />
     <ProjectReference Include="..\ListGenerator.Models\ListGenerator.Models.csproj" />
   </ItemGroup>
 
