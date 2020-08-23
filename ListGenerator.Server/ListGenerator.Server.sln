@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Models", "Lis
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Common", "ListGenerator.Common\ListGenerator.Common.csproj", "{4C842155-7DC7-4ABB-A154-5F2891C639B2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Api", "ListGenerator.Api\ListGenerator.Api.csproj", "{AA514BF4-E903-4029-986E-30F0DBED226F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.ServerProject", "ListGenerator.ServerProject\ListGenerator.ServerProject.csproj", "{D136B63F-A7AA-46FE-8DFE-3036074ED788}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{4C842155-7DC7-4ABB-A154-5F2891C639B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C842155-7DC7-4ABB-A154-5F2891C639B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C842155-7DC7-4ABB-A154-5F2891C639B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA514BF4-E903-4029-986E-30F0DBED226F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA514BF4-E903-4029-986E-30F0DBED226F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA514BF4-E903-4029-986E-30F0DBED226F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA514BF4-E903-4029-986E-30F0DBED226F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D136B63F-A7AA-46FE-8DFE-3036074ED788}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D136B63F-A7AA-46FE-8DFE-3036074ED788}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D136B63F-A7AA-46FE-8DFE-3036074ED788}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D136B63F-A7AA-46FE-8DFE-3036074ED788}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

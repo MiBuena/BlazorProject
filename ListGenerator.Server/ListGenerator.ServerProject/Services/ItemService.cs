@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ListGenerator.Server.Services
+namespace ListGenerator.ServerProject.Services
 {
     public class ItemService : IItemService
     {
@@ -25,9 +25,9 @@ namespace ListGenerator.Server.Services
 
         public async Task<ApiResponse> AddItem(Item item)
         {
-            var employeeJson = _jsonHelper.Serialize(item);
+            var itemJson = _jsonHelper.Serialize(item);
 
-            var response = await _apiClient.PostAsync("api/items", employeeJson);
+            var response = await _apiClient.PostAsync("api/items", itemJson);
 
             return response;
         }
