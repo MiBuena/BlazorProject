@@ -16,16 +16,26 @@ namespace ListGenerator.ServerProject.Pages
         [Inject]
         public IItemService ItemService { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
 
         protected async Task HandleValidSubmit()
         {
-            this.ApiResponse = await ItemService.AddItem(ItemToAdd);
+            var apiResponse = await ItemService.AddItem(ItemToAdd);
+
+            if (!apiResponse.IsSuccess)
+            {
+                this.ApiResponse = apiResponse;
+            }
+            else
+            {
+                //ToDo navigate to overview page
+            }
         }
 
-        protected void HandleInvalidSubmit()
+        protected void NavigateToOverview(ApiResponse apiResponse = null)
         {
-
+            NavigationManager.NavigateTo("/employeeoverview");
         }
-
     }
 }
