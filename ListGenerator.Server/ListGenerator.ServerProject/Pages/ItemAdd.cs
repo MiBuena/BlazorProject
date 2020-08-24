@@ -29,13 +29,13 @@ namespace ListGenerator.ServerProject.Pages
             }
             else
             {
-                //ToDo navigate to overview page
+                NavigateToOverview();
             }
         }
 
-        protected void NavigateToOverview(ApiResponse apiResponse = null)
+        protected void NavigateToOverview()
         {
-            NavigationManager.NavigateTo("/employeeoverview");
+            NavigationManager.NavigateTo($"/allitems");
         }
     }
 }

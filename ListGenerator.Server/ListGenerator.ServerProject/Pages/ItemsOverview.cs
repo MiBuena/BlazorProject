@@ -15,6 +15,9 @@ namespace ListGenerator.ServerProject.Pages
 
         public ItemsOverviewResponse Response { get; set; }
 
+        [Parameter]
+        public string Message { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             this.Response = await ItemService.GetAllItems();

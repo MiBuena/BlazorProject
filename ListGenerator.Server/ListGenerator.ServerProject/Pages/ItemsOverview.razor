@@ -9,11 +9,17 @@
 }
 else
 {
-    <table>
+    if (this.Message != null)
+    {
+        <div class="responseMessage successMessage">@this.Message</div>
+    }
+
+    <table class="itemsOverviewTable">
         <thead>
             <tr>
                 <th>Name</th>
                 <th>Replenishment Period</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -27,6 +33,9 @@ else
                     </td>
                     <td>
                         @item.ReplenishmentPeriod
+                    </td>
+                    <td>
+                        @*<a class="btn btn-outline-primary" @onclick="@NavigateToOverview">Edit</a>*@
                     </td>
                 </tr>
             }

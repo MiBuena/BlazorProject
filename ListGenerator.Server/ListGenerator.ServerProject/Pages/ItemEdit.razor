@@ -1,8 +1,15 @@
-﻿@page "/additem"
+﻿
+@page "/itemedit/{ItemId}"
 
-<h3>ItemAdd</h3>
 
-@if (!this.ApiResponse.IsSuccess)
+<h3>ItemEdit</h3>
+
+
+@if (this.ApiResponse.IsSuccess)
+{
+    <div class="responseMessage successMessage">@this.ApiResponse.SuccessMessage</div>
+}
+else
 {
     <div class="responseMessage errorMessage">@this.ApiResponse.ErrorMessage</div>
 }
