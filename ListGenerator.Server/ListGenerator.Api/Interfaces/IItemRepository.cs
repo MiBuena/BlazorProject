@@ -8,6 +8,6 @@ namespace ListGenerator.Api.Interfaces
 {
     public interface IItemRepository
     {
-        void AddItem(Item item);
+        Item AddItem(Item item);
     }
 }

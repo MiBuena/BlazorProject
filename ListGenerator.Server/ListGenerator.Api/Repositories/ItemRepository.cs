@@ -17,10 +17,11 @@ namespace ListGenerator.Api.Repositories
             _context = context;
         }
         
-        public void AddItem(Item item)
+        public Item AddItem(Item item)
         {
-            _context.Items.Add(item);
+            var addedEntity = _context.Items.Add(item);
             _context.SaveChanges();
+            return addedEntity.Entity;
         }
     }
 }

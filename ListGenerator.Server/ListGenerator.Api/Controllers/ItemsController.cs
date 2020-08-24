@@ -23,9 +23,24 @@ namespace ListGenerator.Api.Controllers
         [HttpPost]
         public IActionResult AddItem([FromBody] Item item)
         {
-            _itemRepository.AddItem(item);
+            if (item == null)
+            {
+                return BadRequest();
+            }
 
-            return Ok();
+            if (item.Name == string.Empty)
+            {
+                ModelState.AddModelError("Name", "The name shouldn't be empty");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var createdItem = _itemRepository.AddItem(item);
+
+            return Created("items", createdItem);
         }
     }
 }
