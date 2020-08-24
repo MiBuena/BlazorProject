@@ -8,6 +8,8 @@ namespace ListGenerator.Common.Models
     {
         public bool IsSuccess { get; set; }
 
-        public string Message { get; set; }
+        public string SuccessMessage { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

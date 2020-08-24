@@ -17,14 +17,14 @@ namespace ListGenerator.Common.Models
             _httpClient = httpClient;
         }
 
-        public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent)
+        public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
         {
             var stringContent =
               new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(requestUri, stringContent);
 
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, "An error occurred while creating item.");
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, successMessage, errorMessage);
             
             return apiReponse;
         }

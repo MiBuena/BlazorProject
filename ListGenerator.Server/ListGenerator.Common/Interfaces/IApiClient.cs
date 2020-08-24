@@ -8,6 +8,6 @@ namespace ListGenerator.Common.Interfaces
 {
     public interface IApiClient
     {
-        Task<ApiResponse> PostAsync(string requestUri, string jsonContent);
+        Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
     }
 }

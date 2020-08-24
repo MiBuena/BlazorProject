@@ -14,6 +14,9 @@ namespace ListGenerator.ServerProject.Services
 {
     public class ItemService : IItemService
     {
+        private const string SaveItemSuccessMessage = "The item was saved successfully";
+        private const string SaveItemErrorMessage = "An error occurred while saving the item";
+
         private readonly IApiClient _apiClient;
         private readonly IJsonHelper _jsonHelper;
 
@@ -28,7 +31,7 @@ namespace ListGenerator.ServerProject.Services
         {
             var itemJson = _jsonHelper.Serialize(item);
 
-            var response = await _apiClient.PostAsync("api/items", itemJson);
+            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 
             return response;
         }

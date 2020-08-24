@@ -7,12 +7,13 @@ namespace ListGenerator.Common.Builders
 {
     public static class ResponseBuilder
     {
-        public static ApiResponse BuildApiResponse(bool isSuccess, string message = null)
+        public static ApiResponse BuildApiResponse(bool isSuccess, string successMessage = null, string errorMessage = null)
         {
             var response = new ApiResponse()
-            { 
+            {
                 IsSuccess = isSuccess,
-                Message = message
+                SuccessMessage = successMessage,
+                ErrorMessage = errorMessage
             };
 
             return response;

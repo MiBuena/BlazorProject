@@ -184,4 +184,19 @@ app {
     .periodMeasure {
         margin-left: 10px;
     }
+
+    .responseMessage {
+        margin-left: 40%;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        display: inline-block;
+    }
+
+    .errorMessage {
+        color: red;
+    }
+
+    .successMessage {
+        color: green;
+    }
 }

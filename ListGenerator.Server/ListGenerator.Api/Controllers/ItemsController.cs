@@ -29,7 +29,6 @@ namespace ListGenerator.Api.Controllers
         [HttpPost]
         public IActionResult AddItem([FromBody] ItemViewModel item)
         {
-            item = null;
             if (item == null)
             {
                 return BadRequest();
