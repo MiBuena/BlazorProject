@@ -14,7 +14,7 @@ namespace ListGenerator.Models.Entities
         [MaxLength(40)]
         public string Name { get; set; }
 
-        [Required]
+        [Range(1, 52)]
         public int ReplenishmentPeriod { get; set; }
     }
 }
