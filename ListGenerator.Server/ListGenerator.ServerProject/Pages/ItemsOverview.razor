@@ -1,0 +1,36 @@
+﻿@page "/allitems"
+
+
+<h3>ItemsOverview</h3>
+
+@if (this.Response == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Replenishment Period</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach (var item in this.Response.Items)
+            {
+                <tr>
+                    <td>
+                        @item.Name
+                    </td>
+                    <td>
+                        @item.ReplenishmentPeriod
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}

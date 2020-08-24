@@ -9,5 +9,7 @@ namespace ListGenerator.Common.Interfaces
     public interface IApiClient
     {
         Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
+
+        Task<ItemsOverviewResponse> GetAllItems(string requestUri);
     }
 }

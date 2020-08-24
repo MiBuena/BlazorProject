@@ -45,5 +45,12 @@ namespace ListGenerator.Api.Controllers
 
             return Created("items", createdItem);
         }
+
+
+        [HttpGet]
+        public IActionResult GetAllItems()
+        {
+            return Ok(_itemRepository.GetAllItems());
+        }
     }
 }

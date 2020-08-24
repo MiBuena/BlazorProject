@@ -11,5 +11,7 @@ namespace ListGenerator.ServerProject.Services
     public interface IItemService
     {
         Task<ApiResponse> AddItem(ItemViewModel item);
+
+        Task<ItemsOverviewResponse> GetAllItems();
     }
 }

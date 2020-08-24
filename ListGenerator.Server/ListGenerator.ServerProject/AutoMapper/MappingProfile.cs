@@ -7,7 +7,7 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
-namespace ListGenerator.Api.AutoMapper
+namespace ListGenerator.ServerProject.AutoMapper
 {
     public class MappingProfile : Profile
     {

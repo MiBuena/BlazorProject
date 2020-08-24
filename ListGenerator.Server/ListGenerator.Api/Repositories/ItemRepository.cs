@@ -23,5 +23,11 @@ namespace ListGenerator.Api.Repositories
             _context.SaveChanges();
             return addedEntity.Entity;
         }
+
+        public IEnumerable<Item> GetAllItems()
+        {
+            var items = _context.Items.ToList();
+            return items;
+        }
     }
 }

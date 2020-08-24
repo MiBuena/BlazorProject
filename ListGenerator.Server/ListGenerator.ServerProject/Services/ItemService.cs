@@ -35,5 +35,12 @@ namespace ListGenerator.ServerProject.Services
 
             return response;
         }
+
+        public async Task<ItemsOverviewResponse> GetAllItems()
+        {
+            var response = await _apiClient.GetAllItems("api/items");
+
+            return response;
+        }
     }
 }
