@@ -28,15 +28,15 @@ namespace ListGenerator.Common.Models
 
         public async Task<ItemsOverviewResponse> GetAllItems(string requestUri)
         {
-            var a = await _httpClient.GetStreamAsync(requestUri);
+            var httpResponse = await _httpClient.GetStreamAsync(requestUri);
 
-            var b = await _jsonHelper.Deserialize<IEnumerable<Item>>(a);
+            var deserializedItems = await _jsonHelper.Deserialize<IEnumerable<Item>>(httpResponse);
 
-            var viewModels = b.Select(x=> _mapper.Map<Item, ItemViewModel>(x)).ToList();
+            var itemsViewModels = deserializedItems.Select(x => _mapper.Map<Item, ItemViewModel>(x)).ToList();
 
-            var response = ResponseBuilder.BuildItemsOverviewResponse(viewModels);
+            var itemsOverviewResponse = ResponseBuilder.BuildItemsOverviewResponse(itemsViewModels);
 
-            return response;
+            return itemsOverviewResponse;
         }
         
         public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
