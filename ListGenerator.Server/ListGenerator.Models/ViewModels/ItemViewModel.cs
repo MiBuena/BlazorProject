@@ -17,6 +17,6 @@ namespace ListGenerator.Models.ViewModels
         [Required]
         [MinLength(1)]
         [MaxLength(2)]
-        public string ReplenishmentPeriod { get; set; }
+        public string ReplenishmentPeriod { get; set; } = "1";
     }
 }
