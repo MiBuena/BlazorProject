@@ -29,14 +29,10 @@ namespace ListGenerator.Api.Controllers
         [HttpPost]
         public IActionResult AddItem([FromBody] ItemViewModel item)
         {
+            item = null;
             if (item == null)
             {
                 return BadRequest();
-            }
-
-            if (item.Name == string.Empty)
-            {
-                ModelState.AddModelError("Name", "The name shouldn't be empty");
             }
 
             if (!ModelState.IsValid)

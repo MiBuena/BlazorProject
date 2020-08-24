@@ -1,4 +1,5 @@
-﻿using ListGenerator.Common.Interfaces;
+﻿using ListGenerator.Common.Builders;
+using ListGenerator.Common.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -23,18 +24,9 @@ namespace ListGenerator.Common.Models
 
             var response = await _httpClient.PostAsync(requestUri, stringContent);
 
-            if(response.IsSuccessStatusCode)
-            {
-                return new ApiResponse()
-                {
-                    IsSuccess = true
-                };
-            }
-
-            return new ApiResponse()
-            {
-                IsSuccess = false
-            };
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, "An error occurred while creating item.");
+            
+            return apiReponse;
         }
     }
 }
