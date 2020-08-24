@@ -15,7 +15,27 @@
         <InputText id="name" class="form-control col-sm-8" placeholder="Enter item name" @bind-Value="@ItemToAdd.Name"></InputText>
         <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToAdd.Name)" />
     </div>
-    
+
+    <div class="form-group row">
+        <label for="country" class="col-sm-3">Country: </label>
+        <InputSelect id="country" class="form-control col-sm-8" @bind-Value="@ItemToAdd.ReplenishmentPeriod">
+            
+            @for (int i = 1; i < 52; i++)
+            {
+                @if (i == 1)
+                {
+                    <option value="@i">@i week</option>
+                }
+                else
+                {
+                    <option value="@i">@i weeks</option>
+                }
+            }
+
+            </InputSelect>
+    </div>
+
+
     <button type="submit" class="btn btn-primary edit-btn">Save employee</button>
 
 </EditForm>

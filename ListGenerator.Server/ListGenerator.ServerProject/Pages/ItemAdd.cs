@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Models.Entities;
+using ListGenerator.Models.ViewModels;
 using ListGenerator.ServerProject.Services;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ namespace ListGenerator.ServerProject.Pages
 {
     public partial class ItemAdd
     {
-        public Item ItemToAdd { get; set; } = new Item();
+        public ItemViewModel ItemToAdd { get; set; } = new ItemViewModel();
 
         [Inject]
         public IItemService ItemService { get; set; }

@@ -15,6 +15,7 @@ using ListGenerator.Common.Models;
 using ListGenerator.ServerProject.Services;
 using ListGenerator.Api.Interfaces;
 using ListGenerator.Api.Repositories;
+using AutoMapper;
 
 namespace ListGenerator.ServerProject
 {
@@ -44,7 +45,6 @@ namespace ListGenerator.ServerProject
             {
                 client.BaseAddress = new Uri("https://localhost:44392/");
             });
-
 
         }
 

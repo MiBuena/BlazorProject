@@ -1,6 +1,7 @@
 ﻿using ListGenerator.Common.Interfaces;
 using ListGenerator.Common.Models;
 using ListGenerator.Models.Entities;
+using ListGenerator.Models.ViewModels;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace ListGenerator.ServerProject.Services
         }
 
 
-        public async Task<ApiResponse> AddItem(Item item)
+        public async Task<ApiResponse> AddItem(ItemViewModel item)
         {
             var itemJson = _jsonHelper.Serialize(item);
 

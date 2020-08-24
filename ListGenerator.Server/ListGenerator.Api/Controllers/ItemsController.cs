@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ListGenerator.Api.Interfaces;
 using ListGenerator.Models.Entities;
+using ListGenerator.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,13 +17,17 @@ namespace ListGenerator.Api.Controllers
     {
         private readonly IItemRepository _itemRepository;
 
-        public ItemsController(IItemRepository itemRepository)
+        private readonly IMapper _mapper;
+
+
+        public ItemsController(IItemRepository itemRepository, IMapper mapper)
         {
             _itemRepository = itemRepository;
+            _mapper = mapper;
         }
 
         [HttpPost]
-        public IActionResult AddItem([FromBody] Item item)
+        public IActionResult AddItem([FromBody] ItemViewModel item)
         {
             if (item == null)
             {
@@ -38,7 +44,9 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdItem = _itemRepository.AddItem(item);
+            var itemEntity = _mapper.Map<ItemViewModel, Item>(item);
+
+            var createdItem = _itemRepository.AddItem(itemEntity);
 
             return Created("items", createdItem);
         }
