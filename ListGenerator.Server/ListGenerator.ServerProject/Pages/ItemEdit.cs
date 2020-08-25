@@ -17,6 +17,12 @@ namespace ListGenerator.ServerProject.Pages
 
         public ApiResponse ApiResponse { get; set; } = new ApiResponse();
 
+
+
+        protected override Task OnInitializedAsync()
+        {
+            return base.OnInitializedAsync();
+        }
         protected async Task HandleValidSubmit()
         {
             //var apiResponse = await ItemService.AddItem(ItemToAdd);

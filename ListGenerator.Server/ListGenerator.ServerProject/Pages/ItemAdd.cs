@@ -35,7 +35,7 @@ namespace ListGenerator.ServerProject.Pages
 
         protected void NavigateToOverview()
         {
-            NavigationManager.NavigateTo($"/allitems");
+            NavigationManager.NavigateTo("/allitems");
         }
     }
 }
