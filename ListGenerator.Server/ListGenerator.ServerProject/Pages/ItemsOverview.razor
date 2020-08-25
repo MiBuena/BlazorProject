@@ -35,13 +35,7 @@ else
                         @item.ReplenishmentPeriod
                     </td>
                     <td>
-                        <a href="@($"itemedit/{item.Id}")">
-                            Edit
-                        </a>
-
-                        <button @onclick="QuickEditItem" class="btn btn-dark table-btn quick-add-btn">Quick edit</button>
-
-                        <EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
+                        <button @onclick="(x=> QuickEditItem(item.Id))" class="btn btn-dark table-btn quick-add-btn">Quick edit</button>
                     </td>
                 </tr>
             }
@@ -53,5 +47,8 @@ else
 <button @onclick="QuickAddItem" class="btn btn-dark table-btn quick-add-btn">Quick add</button>
 
 <AddItemDialog @ref="AddItemDialog" CloseEventCallback="@AddItemDialog_OnDialogClose"></AddItemDialog>
+
+<EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
+
 
 

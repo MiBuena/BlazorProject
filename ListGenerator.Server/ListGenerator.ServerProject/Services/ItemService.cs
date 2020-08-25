@@ -43,9 +43,10 @@ namespace ListGenerator.ServerProject.Services
             return response;
         }
 
-        public Task<GetItemResponse> GetItem(int id)
+        public async Task<GetItemResponse> GetItem(int id)
         {
-            throw new NotImplementedException();
+            var response = await _apiClient.GetItem($"api/items/{id}");
+            return response;
         }
 
         public async Task<ApiResponse> UpdateItem(ItemViewModel item)

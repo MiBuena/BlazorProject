@@ -77,5 +77,11 @@ namespace ListGenerator.Api.Controllers
         {
             return Ok(_itemRepository.GetAllItems());
         }
+
+        [HttpGet("{id}")]
+        public IActionResult GetItemById(int id)
+        {
+            return Ok(_itemRepository.GetItemById(id));
+        }
     }
 }

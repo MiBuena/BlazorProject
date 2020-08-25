@@ -20,6 +20,27 @@ namespace ListGenerator.Common.Builders
             return response;
         }
 
+        public static GetItemResponse BuildGetItemResponse(ItemViewModel item)
+        {
+            var isSuccess = true;
+            string errorMessage = null;
+
+            if (item == null)
+            {
+                isSuccess = false;
+                errorMessage = "Item doesn't exist";
+            }
+
+            var response = new GetItemResponse()
+            {
+                Item = item,
+                IsSuccess = isSuccess,
+                ErrorMessage = errorMessage
+            };
+
+            return response;
+        }
+
         public static ItemsOverviewResponse BuildItemsOverviewResponse(IEnumerable<ItemViewModel> items)
         {
             var isSuccess = true;

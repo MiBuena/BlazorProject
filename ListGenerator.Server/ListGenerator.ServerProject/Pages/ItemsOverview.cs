@@ -40,9 +40,9 @@ namespace ListGenerator.ServerProject.Pages
             StateHasChanged();
         }
 
-        protected void QuickEditItem()
+        protected void QuickEditItem(int id)
         {
-            EditItemDialog.Show();
+            EditItemDialog.Show(id);
         }
 
         public async void EditItemDialog_OnDialogClose()

@@ -21,19 +21,12 @@ namespace ListGenerator.ServerProject.Components
         [Parameter]
         public EventCallback<bool> CloseEventCallback { get; set; }
 
-        [Parameter]
-        public string ItemToEditId { get; set; }
-
-        protected override Task OnInitializedAsync()
-        {
-            return base.OnInitializedAsync();
-        }
-
-
         public bool ShowDialog { get; set; }
 
-        public void Show()
+        public async void Show(int id)
         {
+            var response = await this.ItemService.GetItem(id);
+            this.ItemToUpdate = response.Item;
             ShowDialog = true;
             StateHasChanged();
         }

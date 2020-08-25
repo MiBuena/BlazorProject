@@ -39,9 +39,17 @@ namespace ListGenerator.Common.Models
             return itemsOverviewResponse;
         }
 
-        public Task<GetItemResponse> GetItem(string requestUri)
+        public async Task<GetItemResponse> GetItem(string requestUri)
         {
-            throw new NotImplementedException();
+            var httpResponse = await _httpClient.GetStreamAsync(requestUri);
+
+            var deserializedItem = await _jsonHelper.Deserialize<Item>(httpResponse);
+
+            var itemViewModel = _mapper.Map<Item, ItemViewModel>(deserializedItem);
+
+            var itemResponse = ResponseBuilder.BuildGetItemResponse(itemViewModel);
+
+            return itemResponse;
         }
 
         public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
