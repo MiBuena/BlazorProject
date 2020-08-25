@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using ListGenerator.Api.Interfaces;
+using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
@@ -29,6 +30,22 @@ namespace ListGenerator.Api.Controllers
             _itemRepository = itemRepository;
             _mapper = mapper;
             _itemsDataService = itemsDataService;
+        }
+
+        [HttpPost("replenish")]
+        public IActionResult ReplenishItems([FromBody] ReplenishmentModel model)
+        {
+            if (model == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Created("items", null);
         }
 
         [HttpGet("shoppinglist")]

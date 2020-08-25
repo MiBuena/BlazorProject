@@ -1,5 +1,6 @@
 ﻿using ListGenerator.Common.Interfaces;
 using ListGenerator.Common.Models;
+using ListGenerator.Models;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using Newtonsoft.Json;
@@ -25,6 +26,22 @@ namespace ListGenerator.ServerProject.Services
             _apiClient = apiClient;
             _jsonHelper = jsonHelper;
         }
+
+
+        public async Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items)
+        {
+            var a = new ReplenishmentModel()
+            {
+                ReplenishmentData = items
+            };
+
+            var itemsJson = _jsonHelper.Serialize(a);
+
+            var response = await _apiClient.PostAsync("api/items/replenish", itemsJson, SaveItemSuccessMessage, SaveItemErrorMessage);
+
+            return response;
+        }
+
 
 
         public async Task<ApiResponse> AddItem(ItemViewModel item)

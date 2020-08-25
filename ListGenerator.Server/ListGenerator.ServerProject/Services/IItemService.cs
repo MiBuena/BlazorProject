@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Common.Models;
+using ListGenerator.Models;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using System;
@@ -21,5 +22,7 @@ namespace ListGenerator.ServerProject.Services
         Task<ApiResponse> DeleteItem(int item);
         
         Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchases();
+
+        Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items);
     }
 }

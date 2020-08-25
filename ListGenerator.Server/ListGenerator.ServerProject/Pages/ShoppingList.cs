@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Common.Models;
+using ListGenerator.Models;
 using ListGenerator.Models.ViewModels;
 using ListGenerator.ServerProject.Services;
 using Microsoft.AspNetCore.Components;
@@ -9,13 +10,6 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.ServerProject.Pages
 {
-    public class ReplenishmentData
-    {
-        public int ItemId { get; set; }
-        public string Name { get; set; }
-        public string Quantity { get; set; } = "1";
-    }
-
     public partial class ShoppingList
     {
         [Inject]
@@ -43,7 +37,7 @@ namespace ListGenerator.ServerProject.Pages
 
         protected async Task HandleValidSubmit()
         {
-            StateHasChanged();
+            await this.ItemService.ReplenishItems(this.ReplenishmentItems);
         }
     }
 }
