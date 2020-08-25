@@ -1,14 +1,50 @@
 ﻿@page "/shoppinglist"
 
 
-@if (this.Response == null)
+@if (this.ReplenishmentItems == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    @foreach (var item in Response.Items)
+<EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@HandleValidSubmit">
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+
+
+    <button type="submit" class="btn btn-primary edit-btn">Save item</button>
+
+    @foreach (var item in this.ReplenishmentItems)
     {
+
         <div> @item.Name</div>
+
+        <div class="form-group row">
+            <label for="country" class="col-sm-3">Replenishment quantity: </label>
+            <InputSelect id="country" class="form-control col-sm-2" @bind-Value="@item.Quantity">
+
+                @for (int i = 1; i <= 20; i++)
+                        {
+                    @if (i == 1)
+                            {
+                        <option value="@i" selected="selected">@i</option>
+                            }
+                            else
+                            {
+                        <option value="@i">@i</option>
+                            }
+                        }
+
+            </InputSelect>
+            <span class="periodMeasure">piece(s)</span>
+        </div>
     }
+
+    <button type="submit" class="btn btn-primary edit-btn">Save item</button>
+
+
+</EditForm>
+
 }
