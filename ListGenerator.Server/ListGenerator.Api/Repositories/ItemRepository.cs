@@ -31,7 +31,7 @@ namespace ListGenerator.Api.Repositories
             if (foundItem != null)
             {
                 foundItem.Name = item.Name;
-                foundItem.ReplenishmentPeriod = foundItem.ReplenishmentPeriod;
+                foundItem.ReplenishmentPeriod = item.ReplenishmentPeriod;
 
                 _context.SaveChanges();
 

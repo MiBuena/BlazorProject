@@ -53,7 +53,7 @@ namespace ListGenerator.ServerProject.Services
         {
             var itemJson = _jsonHelper.Serialize(item);
 
-            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
+            var response = await _apiClient.PutAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 
             return response;
         }

@@ -66,7 +66,9 @@ namespace ListGenerator.Api.Controllers
                 return NotFound();
             }
 
-           _itemRepository.UpdateItem(itemToUpdate);
+            var itemEntity = _mapper.Map<ItemViewModel, Item>(item);
+
+            _itemRepository.UpdateItem(itemEntity);
 
             return NoContent(); //success
         }
