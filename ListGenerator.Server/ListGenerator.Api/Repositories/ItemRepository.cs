@@ -41,6 +41,17 @@ namespace ListGenerator.Api.Repositories
             return null;
         }
 
+        public void DeleteItem(int itemId)
+        {
+            var foundItem = _context.Items.FirstOrDefault(e => e.Id == itemId);
+            if (foundItem == null)
+            {
+                return;
+            }
+
+            _context.Items.Remove(foundItem);
+            _context.SaveChanges();
+        }
 
         public Item GetItemById(int itemId)
         {

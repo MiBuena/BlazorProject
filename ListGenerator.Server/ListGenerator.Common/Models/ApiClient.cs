@@ -26,6 +26,15 @@ namespace ListGenerator.Common.Models
             _mapper = mapper;
         }
 
+        public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)
+        {
+            var response = await _httpClient.DeleteAsync(requestUri);
+
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, null, errorMessage);
+
+            return apiReponse;
+        }
+
         public async Task<ItemsOverviewResponse> GetAllItems(string requestUri)
         {
             var httpResponse = await _httpClient.GetStreamAsync(requestUri);

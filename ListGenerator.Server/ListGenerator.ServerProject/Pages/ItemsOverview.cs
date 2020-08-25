@@ -20,6 +20,7 @@ namespace ListGenerator.ServerProject.Pages
 
         protected EditItemDialog EditItemDialog { get; set; }
 
+        protected DeleteItemDialog DeleteItemDialog { get; set; }
 
         [Parameter]
         public string Message { get; set; }
@@ -46,6 +47,16 @@ namespace ListGenerator.ServerProject.Pages
         }
 
         public async void EditItemDialog_OnDialogClose()
+        {
+            this.Response = await ItemService.GetAllItems();
+            StateHasChanged();
+        }
+        protected void DeleteItemQuestion(int id)
+        {
+            DeleteItemDialog.Show(id);
+        }
+
+        public async void DeleteItemDialog_OnDialogClose()
         {
             this.Response = await ItemService.GetAllItems();
             StateHasChanged();

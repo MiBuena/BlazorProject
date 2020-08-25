@@ -85,5 +85,25 @@ namespace ListGenerator.Api.Controllers
         {
             return Ok(_itemRepository.GetItemById(id));
         }
+
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteItem(int id)
+        {
+            if (id == 0)
+            {
+                return BadRequest();
+            }
+
+            var itemToDelete = _itemRepository.GetItemById(id);
+            if (itemToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _itemRepository.DeleteItem(id);
+
+            return NoContent();//success
+        }
     }
 }

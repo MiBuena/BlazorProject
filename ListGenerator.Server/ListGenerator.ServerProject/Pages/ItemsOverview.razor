@@ -35,7 +35,10 @@ else
                         @item.ReplenishmentPeriod
                     </td>
                     <td>
-                        <button @onclick="(x=> QuickEditItem(item.Id))" class="btn btn-dark table-btn quick-add-btn">Quick edit</button>
+                        <button @onclick="(x=> QuickEditItem(item.Id))" class="btn btn-dark table-btn quick-add-btn">Edit</button>
+                    </td>
+                    <td>
+                        <button @onclick="(x=> DeleteItemQuestion(item.Id))" class="btn btn-dark table-btn quick-add-btn">Delete</button>
                     </td>
                 </tr>
             }
@@ -50,5 +53,6 @@ else
 
 <EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
 
+<DeleteItemDialog @ref="DeleteItemDialog" CloseEventCallback="@DeleteItemDialog_OnDialogClose"></DeleteItemDialog>
 
 

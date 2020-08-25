@@ -11,11 +11,12 @@ namespace ListGenerator.ServerProject.Services
     public interface IItemService
     {
         Task<GetItemResponse> GetItem(int id);
+        Task<ItemsOverviewResponse> GetAllItems();
 
         Task<ApiResponse> AddItem(ItemViewModel item);
 
         Task<ApiResponse> UpdateItem(ItemViewModel item);
 
-        Task<ItemsOverviewResponse> GetAllItems();
+        Task<ApiResponse> DeleteItem(int item);
     }
 }

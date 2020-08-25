@@ -9,11 +9,12 @@ namespace ListGenerator.Api.Interfaces
     public interface IItemRepository
     {
         Item GetItemById(int itemId);
+        IEnumerable<Item> GetAllItems();
 
         Item AddItem(Item item);
         
         Item UpdateItem(Item item);
 
-        IEnumerable<Item> GetAllItems();
+        void DeleteItem(int itemId);
     }
 }

@@ -36,6 +36,12 @@ namespace ListGenerator.ServerProject.Services
             return response;
         }
 
+        public async Task<ApiResponse> DeleteItem(int itemId)
+        {
+            var response = await _apiClient.DeleteAsync($"api/items/{itemId}");
+            return response;
+        }
+
         public async Task<ItemsOverviewResponse> GetAllItems()
         {
             var response = await _apiClient.GetAllItems("api/items");

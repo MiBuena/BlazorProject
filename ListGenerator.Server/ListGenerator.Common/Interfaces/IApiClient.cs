@@ -8,12 +8,14 @@ namespace ListGenerator.Common.Interfaces
 {
     public interface IApiClient
     {
+        Task<ItemsOverviewResponse> GetAllItems(string requestUri);
+        Task<GetItemResponse> GetItem(string requestUri);
+
         Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
 
         Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
 
-        Task<ItemsOverviewResponse> GetAllItems(string requestUri);
-        Task<GetItemResponse> GetItem(string requestUri);
+        Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
 
     }
 }
