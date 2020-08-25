@@ -15,5 +15,9 @@ namespace ListGenerator.Models.Entities
         public Item Item { get; set; }
 
         public int Quantity { get; set; }
+
+        public int ReplenishmentId { get; set; }
+
+        public Replenishment Replenishment { get; set; }
     }
 }

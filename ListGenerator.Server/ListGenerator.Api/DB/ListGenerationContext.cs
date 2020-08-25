@@ -25,6 +25,12 @@ namespace ListGenerator.Api.DB
                 .HasOne(x => x.Item)
                 .WithMany(x => x.PurchasedItems)
                 .HasForeignKey(x => x.ItemId);
+
+            modelBuilder
+                .Entity<PurchasedItem>()
+                .HasOne(x => x.Replenishment)
+                .WithMany(x => x.PurchasedItems)
+                .HasForeignKey(x => x.ReplenishmentId);
         }
     }
 }
