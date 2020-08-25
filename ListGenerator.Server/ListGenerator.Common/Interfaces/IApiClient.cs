@@ -8,7 +8,7 @@ namespace ListGenerator.Common.Interfaces
 {
     public interface IApiClient
     {
-        Task<ItemsOverviewResponse> GetAllItems(string requestUri);
+        Task<ItemsOverviewResponse> GetItems(string requestUri);
         Task<GetItemResponse> GetItem(string requestUri);
 
         Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
@@ -16,6 +16,9 @@ namespace ListGenerator.Common.Interfaces
         Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
 
         Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
+
+        Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchase(string requestUri);
+
 
     }
 }

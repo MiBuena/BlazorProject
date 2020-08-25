@@ -67,7 +67,7 @@ namespace ListGenerator.ServerProject.Pages
 
         protected void NavigateToListGeneration()
         {
-            NavigationManager.NavigateTo("/employeeoverview");
+            NavigationManager.NavigateTo("/shoppinglist");
         }
     }
 }

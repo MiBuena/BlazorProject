@@ -14,7 +14,7 @@ namespace ListGenerator.ServerProject.AutoMapper
         public MappingProfile()
         {
             CreateMap<ItemViewModel, Item>()
-                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => int.Parse(a.ReplenishmentPeriod)))
+                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => double.Parse(a.ReplenishmentPeriod)))
                 .ReverseMap()
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => src.ReplenishmentPeriod.ToString()));
         }

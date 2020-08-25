@@ -44,7 +44,14 @@ namespace ListGenerator.ServerProject.Services
 
         public async Task<ItemsOverviewResponse> GetAllItems()
         {
-            var response = await _apiClient.GetAllItems("api/items");
+            var response = await _apiClient.GetItems("api/items");
+
+            return response;
+        }
+
+        public async Task<ItemsOverviewResponse> GetShoppingListItems()
+        {
+            var response = await _apiClient.GetItems("api/items/shoppinglist");
 
             return response;
         }
@@ -63,5 +70,20 @@ namespace ListGenerator.ServerProject.Services
 
             return response;
         }
+
+        public async Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchases()
+        {
+            var response = await _apiClient.GetItemsWithLastPurchase($"api/items/itemswithlastpurchase");
+
+            var datetime = DateTime.Now;
+
+            
+            return response;
+        }
+    }
+
+    public class Aa
+    {
+
     }
 }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ListGenerator.Common.Builders;
 using ListGenerator.Common.Interfaces;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using System;
@@ -13,6 +14,11 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Common.Models
 {
+    public class ItemsWithLastPurchaseReponse : ApiResponse
+    {
+        public IEnumerable<ItemPurchaseDto> Items { get; set; }
+    }
+
     public class ApiClient : IApiClient
     {
         private readonly HttpClient _httpClient;
@@ -26,6 +32,21 @@ namespace ListGenerator.Common.Models
             _mapper = mapper;
         }
 
+        public async Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchase(string requestUri)
+        {
+            var httpResponse = await _httpClient.GetStreamAsync(requestUri);
+
+            var deserializedItems = await _jsonHelper.Deserialize<IEnumerable<ItemPurchaseDto>>(httpResponse);
+
+            var a = new ItemsWithLastPurchaseReponse()
+            {
+                IsSuccess = true,
+                Items = deserializedItems
+            };
+
+            return a;
+        }
+
         public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)
         {
             var response = await _httpClient.DeleteAsync(requestUri);
@@ -35,7 +56,7 @@ namespace ListGenerator.Common.Models
             return apiReponse;
         }
 
-        public async Task<ItemsOverviewResponse> GetAllItems(string requestUri)
+        public async Task<ItemsOverviewResponse> GetItems(string requestUri)
         {
             var httpResponse = await _httpClient.GetStreamAsync(requestUri);
 
@@ -59,7 +80,7 @@ namespace ListGenerator.Common.Models
             var itemResponse = ResponseBuilder.BuildGetItemResponse(itemViewModel);
 
             return itemResponse;
-        }
+        } 
 
         public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
         {

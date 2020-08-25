@@ -6,6 +6,7 @@ using AutoMapper;
 using ListGenerator.Api.DB;
 using ListGenerator.Api.Interfaces;
 using ListGenerator.Api.Repositories;
+using ListGenerator.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +37,12 @@ namespace ListGenerator.Api
             options.UseSqlServer(Configuration.GetConnectionString("ListGenerationContext")));
 
             services.AddTransient<IItemRepository, ItemRepository>();
+
+            services.AddTransient<IItemsDataService, ItemsDataService>();
+
+            services.AddTransient<IPurchasesRepository, PurchasesRepository>();
+
+            services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddAutoMapper(typeof(Startup));
         }

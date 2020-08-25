@@ -1,0 +1,14 @@
+﻿@page "/shoppinglist"
+
+
+@if (this.Response == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @foreach (var item in Response.Items)
+    {
+        <div> @item.Name</div>
+    }
+}

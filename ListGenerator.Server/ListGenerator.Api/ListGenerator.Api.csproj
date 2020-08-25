@@ -13,6 +13,8 @@
     <Compile Remove="Migrations\20200825123801_AddRelationBetweenPurchasedItemAndReplenishment.Designer.cs" />
     <Compile Remove="Migrations\20200825144533_RenamePurchaseitemsTable.cs" />
     <Compile Remove="Migrations\20200825144533_RenamePurchaseitemsTable.Designer.cs" />
+    <Compile Remove="Migrations\20200825184805_AddNextReplenishmentDate.cs" />
+    <Compile Remove="Migrations\20200825184805_AddNextReplenishmentDate.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,10 +35,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ListGenerator.Models\ListGenerator.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 

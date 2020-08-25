@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using AutoMapper;
 using ListGenerator.Api.Interfaces;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
@@ -17,13 +19,23 @@ namespace ListGenerator.Api.Controllers
     {
         private readonly IItemRepository _itemRepository;
 
+        private readonly IItemsDataService _itemsDataService;
+
         private readonly IMapper _mapper;
 
 
-        public ItemsController(IItemRepository itemRepository, IMapper mapper)
+        public ItemsController(IItemRepository itemRepository, IMapper mapper, IItemsDataService itemsDataService)
         {
             _itemRepository = itemRepository;
             _mapper = mapper;
+            _itemsDataService = itemsDataService;
+        }
+
+        [HttpGet("shoppinglist")]
+        public IActionResult GetShoppingList()
+        {
+            var shoppingItems = _itemsDataService.CalculateGenerationList();
+            return Ok(shoppingItems);
         }
 
         [HttpPost]
@@ -40,6 +52,8 @@ namespace ListGenerator.Api.Controllers
             }
 
             var itemEntity = _mapper.Map<ItemViewModel, Item>(item);
+
+            itemEntity.NextReplenishmentDate = DateTime.Now;
 
             var createdItem = _itemRepository.AddItem(itemEntity);
 
@@ -59,7 +73,7 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var itemToUpdate =  _itemRepository.GetItemById(item.Id);
+            var itemToUpdate = _itemRepository.GetItemById(item.Id);
 
             if (itemToUpdate == null)
             {

@@ -15,7 +15,10 @@ namespace ListGenerator.Models.Entities
         public string Name { get; set; }
 
         [Range(1, 52)]
-        public int ReplenishmentPeriod { get; set; }
+        public double ReplenishmentPeriod { get; set; }
+
+        [Required]
+        public DateTime NextReplenishmentDate { get; set; }
 
         public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
     }

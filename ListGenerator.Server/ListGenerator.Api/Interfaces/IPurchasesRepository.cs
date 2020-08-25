@@ -8,8 +8,6 @@ namespace ListGenerator.Api.Interfaces
 {
     public interface IPurchasesRepository
     {
-        IEnumerable<Purchase> GetAllPurchases();
-
-        IEnumerable<Purchase> GetAllPurchasesByItemId(int itemId);
+        IEnumerable<Purchase> GetItemsLastPurchases();
     }
 }

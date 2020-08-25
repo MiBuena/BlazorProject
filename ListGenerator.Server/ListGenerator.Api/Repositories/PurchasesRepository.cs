@@ -17,16 +17,13 @@ namespace ListGenerator.Api.Repositories
             _context = context;
         }
 
-        public IEnumerable<Purchase> GetAllPurchases()
+        public IEnumerable<Purchase> GetItemsLastPurchases()
         {
-            var items = _context.Purchases.ToList();
-            return items;
-        }
+            var a = _context.Items
+                .Select(x => x.Purchases.OrderByDescending(y => y.Replenishment.Date).FirstOrDefault()).ToList();
 
-        public IEnumerable<Purchase> GetAllPurchasesByItemId(int itemId)
-        {
-            var items = _context.Purchases.Where(x=>x.ItemId == itemId);
-            return items;
+
+            return a;
         }
     }
 }

@@ -12,11 +12,14 @@ namespace ListGenerator.ServerProject.Services
     {
         Task<GetItemResponse> GetItem(int id);
         Task<ItemsOverviewResponse> GetAllItems();
+        Task<ItemsOverviewResponse> GetShoppingListItems();
 
         Task<ApiResponse> AddItem(ItemViewModel item);
 
         Task<ApiResponse> UpdateItem(ItemViewModel item);
 
         Task<ApiResponse> DeleteItem(int item);
+        
+        Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchases();
     }
 }
