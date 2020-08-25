@@ -18,6 +18,9 @@ namespace ListGenerator.ServerProject.Pages
 
         protected AddItemDialog AddItemDialog { get; set; }
 
+        protected EditItemDialog EditItemDialog { get; set; }
+
+
         [Parameter]
         public string Message { get; set; }
 
@@ -26,12 +29,23 @@ namespace ListGenerator.ServerProject.Pages
             this.Response = await ItemService.GetAllItems();
         }
 
-        protected void QuickAddEmployee()
+        protected void QuickAddItem()
         {
             AddItemDialog.Show();
         }
 
         public async void AddItemDialog_OnDialogClose()
+        {
+            this.Response = await ItemService.GetAllItems();
+            StateHasChanged();
+        }
+
+        protected void QuickEditItem()
+        {
+            EditItemDialog.Show();
+        }
+
+        public async void EditItemDialog_OnDialogClose()
         {
             this.Response = await ItemService.GetAllItems();
             StateHasChanged();

@@ -42,5 +42,19 @@ namespace ListGenerator.ServerProject.Services
 
             return response;
         }
+
+        public Task<GetItemResponse> GetItem(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ApiResponse> UpdateItem(ItemViewModel item)
+        {
+            var itemJson = _jsonHelper.Serialize(item);
+
+            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
+
+            return response;
+        }
     }
 }

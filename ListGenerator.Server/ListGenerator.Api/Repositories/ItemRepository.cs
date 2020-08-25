@@ -24,6 +24,29 @@ namespace ListGenerator.Api.Repositories
             return addedEntity.Entity;
         }
 
+        public Item UpdateItem(Item item)
+        {
+            var foundItem = _context.Items.FirstOrDefault(e => e.Id == item.Id);
+
+            if (foundItem != null)
+            {
+                foundItem.Name = item.Name;
+                foundItem.ReplenishmentPeriod = foundItem.ReplenishmentPeriod;
+
+                _context.SaveChanges();
+
+                return foundItem;
+            }
+
+            return null;
+        }
+
+
+        public Item GetItemById(int itemId)
+        {
+            return _context.Items.FirstOrDefault(c => c.Id == itemId);
+        }
+
         public IEnumerable<Item> GetAllItems()
         {
             var items = _context.Items.ToList();

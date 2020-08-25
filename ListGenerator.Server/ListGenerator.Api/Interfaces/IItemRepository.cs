@@ -8,8 +8,12 @@ namespace ListGenerator.Api.Interfaces
 {
     public interface IItemRepository
     {
+        Item GetItemById(int itemId);
+
         Item AddItem(Item item);
         
+        Item UpdateItem(Item item);
+
         IEnumerable<Item> GetAllItems();
     }
 }

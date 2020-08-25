@@ -38,7 +38,12 @@ namespace ListGenerator.Common.Models
 
             return itemsOverviewResponse;
         }
-        
+
+        public Task<GetItemResponse> GetItem(string requestUri)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
         {
             var stringContent =
@@ -48,6 +53,18 @@ namespace ListGenerator.Common.Models
 
             var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, successMessage, errorMessage);
             
+            return apiReponse;
+        }
+
+        public async Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
+        {
+            var stringContent =
+              new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(requestUri, stringContent);
+
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, successMessage, errorMessage);
+
             return apiReponse;
         }
     }

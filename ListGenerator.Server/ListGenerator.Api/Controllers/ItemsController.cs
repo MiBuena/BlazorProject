@@ -46,6 +46,31 @@ namespace ListGenerator.Api.Controllers
             return Created("items", createdItem);
         }
 
+        [HttpPut]
+        public IActionResult UpdateItem([FromBody] ItemViewModel item)
+        {
+            if (item == null)
+            {
+                return BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var itemToUpdate =  _itemRepository.GetItemById(item.Id);
+
+            if (itemToUpdate == null)
+            {
+                return NotFound();
+            }
+
+           _itemRepository.UpdateItem(itemToUpdate);
+
+            return NoContent(); //success
+        }
+
 
         [HttpGet]
         public IActionResult GetAllItems()

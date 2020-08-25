@@ -10,7 +10,11 @@ namespace ListGenerator.ServerProject.Services
 {
     public interface IItemService
     {
+        Task<GetItemResponse> GetItem(int id);
+
         Task<ApiResponse> AddItem(ItemViewModel item);
+
+        Task<ApiResponse> UpdateItem(ItemViewModel item);
 
         Task<ItemsOverviewResponse> GetAllItems();
     }
