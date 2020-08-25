@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Api.Interfaces;
+using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
@@ -32,6 +33,26 @@ namespace ListGenerator.Api.Services
                 .ToList();
 
             return a;
+        }
+
+        public void ReplenishItems(IEnumerable<ReplenishmentData> replenishmentDatas)
+        {
+            var allItems = _itemsRepository.All().ToList();
+
+            foreach (var replenishmentData in replenishmentDatas)
+            {
+                var item = allItems.FirstOrDefault(x => x.Id == replenishmentData.ItemId);
+
+                var coveredWeeks = double.Parse(replenishmentData.Quantity) * item.ReplenishmentPeriod;
+
+                var days = coveredWeeks * 7;
+
+                var newReplenishmentDate = DateTime.Now.AddDays(days);
+
+                item.NextReplenishmentDate = newReplenishmentDate;
+            }
+
+            _itemsRepository.SaveChangesAsync();
         }
     }
 

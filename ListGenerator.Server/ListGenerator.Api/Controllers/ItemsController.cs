@@ -45,7 +45,9 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            return Created("items", null);
+            _itemsDataService.ReplenishItems(model.ReplenishmentData);
+
+            return Ok();
         }
 
         [HttpGet("shoppinglist")]

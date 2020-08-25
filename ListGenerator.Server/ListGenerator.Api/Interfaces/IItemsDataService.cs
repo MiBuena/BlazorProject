@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Api.Services;
+using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,7 @@ namespace ListGenerator.Api.Interfaces
     public interface IItemsDataService
     {
         IEnumerable<ShoppingListItem> CalculateGenerationList();
+
+        void ReplenishItems(IEnumerable<ReplenishmentData> replenishmentData);
     }
 }
