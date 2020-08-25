@@ -17,6 +17,6 @@ namespace ListGenerator.Models.Entities
         [Range(1, 52)]
         public int ReplenishmentPeriod { get; set; }
 
-        public ICollection<PurchasedItem> PurchasedItems { get; set; } = new List<PurchasedItem>();
+        public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
     }
 }

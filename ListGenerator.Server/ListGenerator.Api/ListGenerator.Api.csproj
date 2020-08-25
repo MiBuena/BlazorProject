@@ -11,6 +11,8 @@
     <Compile Remove="Migrations\20200825123627_AddRelationBetweenPurchasedItemAndReplenishment.Designer.cs" />
     <Compile Remove="Migrations\20200825123801_AddRelationBetweenPurchasedItemAndReplenishment.cs" />
     <Compile Remove="Migrations\20200825123801_AddRelationBetweenPurchasedItemAndReplenishment.Designer.cs" />
+    <Compile Remove="Migrations\20200825144533_RenamePurchaseitemsTable.cs" />
+    <Compile Remove="Migrations\20200825144533_RenamePurchaseitemsTable.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

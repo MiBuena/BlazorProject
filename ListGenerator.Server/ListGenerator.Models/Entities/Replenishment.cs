@@ -13,6 +13,6 @@ namespace ListGenerator.Models.Entities
         [Required]
         public DateTime Date { get; set; }
 
-        public ICollection<PurchasedItem> PurchasedItems { get; set; } = new List<PurchasedItem>();
+        public ICollection<Purchase> Purchase { get; set; } = new List<Purchase>();
     }
 }

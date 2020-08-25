@@ -18,21 +18,21 @@ namespace ListGenerator.Api.DB
 
         public DbSet<Replenishment> Replenishments { get; set; }
 
-        public DbSet<PurchasedItem> PurchasedItems { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<PurchasedItem>()
+                .Entity<Purchase>()
                 .HasOne(x => x.Item)
-                .WithMany(x => x.PurchasedItems)
+                .WithMany(x => x.Purchases)
                 .HasForeignKey(x => x.ItemId);
 
             modelBuilder
-                .Entity<PurchasedItem>()
+                .Entity<Purchase>()
                 .HasOne(x => x.Replenishment)
-                .WithMany(x => x.PurchasedItems)
+                .WithMany(x => x.Purchase)
                 .HasForeignKey(x => x.ReplenishmentId);
         }
     }

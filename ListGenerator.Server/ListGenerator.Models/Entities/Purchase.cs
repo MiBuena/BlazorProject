@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ListGenerator.Models.Entities
 {
-    public class PurchasedItem
+    public class Purchase
     {
         [Key]
         public int Id { get; set; }
