@@ -7,8 +7,8 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="titleLabel">Employee Quick Add</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <h5 class="modal-title" id="titleLabel">Item Quick Add</h5>
+                    <button  @onclick="Close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -28,7 +28,7 @@
 
                         <div class="form-group row">
                             <label for="country" class="col-sm-3">Replenishment period: </label>
-                            <InputSelect id="country" class="form-control col-sm-1" @bind-Value="@ItemToAdd.ReplenishmentPeriod">
+                            <InputSelect id="country" class="form-control col-sm-2" @bind-Value="@ItemToAdd.ReplenishmentPeriod">
 
                                 @for (int i = 1; i <= 52; i++)
                                     {
