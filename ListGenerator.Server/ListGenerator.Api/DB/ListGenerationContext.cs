@@ -15,5 +15,14 @@ namespace ListGenerator.Api.DB
         } 
         
         public DbSet<Item> Items { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<PurchasedItem>()
+                .HasOne(x => x.Item)
+                .WithMany(x => x.PurchasedItems)
+                .HasForeignKey(x => x.ItemId);
+        }
     }
 }

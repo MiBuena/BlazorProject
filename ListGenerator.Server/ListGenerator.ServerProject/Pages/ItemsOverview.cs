@@ -25,6 +25,9 @@ namespace ListGenerator.ServerProject.Pages
         [Parameter]
         public string Message { get; set; }
 
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             this.Response = await ItemService.GetAllItems();
@@ -60,6 +63,11 @@ namespace ListGenerator.ServerProject.Pages
         {
             this.Response = await ItemService.GetAllItems();
             StateHasChanged();
+        }
+
+        protected void NavigateToListGeneration()
+        {
+            NavigationManager.NavigateTo("/employeeoverview");
         }
     }
 }
