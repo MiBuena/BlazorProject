@@ -16,6 +16,8 @@ namespace ListGenerator.Api.DB
         
         public DbSet<Item> Items { get; set; }
 
+        public DbSet<Replenishment> Replenishments { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
