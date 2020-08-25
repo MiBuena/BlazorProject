@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Api.Interfaces
 {
-    public interface IPurchasedItemRepository
+    public interface IPurchasesRepository
     {
         IEnumerable<Purchase> GetAllPurchases();
 

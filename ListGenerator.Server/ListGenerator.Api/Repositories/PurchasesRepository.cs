@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Api.Repositories
 {
-    public class PurchasedItemRepository : IPurchasedItemRepository
+    public class PurchasesRepository : IPurchasesRepository
     {
         private readonly ListGenerationContext _context;
 
-        public PurchasedItemRepository(ListGenerationContext context)
+        public PurchasesRepository(ListGenerationContext context)
         {
             _context = context;
         }
