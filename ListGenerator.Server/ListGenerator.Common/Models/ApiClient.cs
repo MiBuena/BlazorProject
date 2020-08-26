@@ -55,6 +55,18 @@ namespace ListGenerator.Common.Models
             return apiReponse;
         }
 
+        public async Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null)
+        {
+            var stringContent =
+              new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PutAsync(requestUri, stringContent);
+
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
+
+            return apiReponse;
+        }
+
         public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)
         {
             var response = await _httpClient.DeleteAsync(requestUri);
@@ -75,19 +87,6 @@ namespace ListGenerator.Common.Models
             var itemsOverviewResponse = ResponseBuilder.BuildItemsOverviewResponse(itemsViewModels);
 
             return itemsOverviewResponse;
-        }
-
-
-        public async Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
-        {
-            var stringContent =
-              new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PutAsync(requestUri, stringContent);
-
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, successMessage, errorMessage);
-
-            return apiReponse;
         }
     }
 }

@@ -90,9 +90,9 @@ namespace ListGenerator.Api.Controllers
         }
 
         [HttpPut]
-        public IActionResult UpdateItem([FromBody] ItemViewModel item)
+        public IActionResult UpdateItem([FromBody] ItemDto itemDto)
         {
-            if (item == null)
+            if (itemDto == null)
             {
                 return BadRequest();
             }
@@ -102,18 +102,16 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var itemToUpdate = _itemRepository.GetItemById(item.Id);
+            var itemToUpdate = _itemsDataService.GetItem(itemDto.Id);
 
             if (itemToUpdate == null)
             {
                 return NotFound();
             }
 
-            var itemEntity = _mapper.Map<ItemViewModel, Item>(item);
+            _itemsDataService.UpdateItem(itemDto);
 
-            _itemRepository.UpdateItem(itemEntity);
-
-            return NoContent(); //success
+            return Ok();
         }
 
         [HttpDelete("{id}")]

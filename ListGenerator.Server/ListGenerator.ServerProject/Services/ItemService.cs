@@ -55,6 +55,17 @@ namespace ListGenerator.ServerProject.Services
             return response;
         }
 
+        public async Task<ApiResponse> UpdateItem(ItemViewModel item)
+        {
+            var itemDto = _mapper.Map<ItemViewModel, ItemDto>(item);
+
+            var itemJson = _jsonHelper.Serialize(itemDto);
+
+            var response = await _apiClient.PutAsync("api/items", itemJson, SaveItemErrorMessage);
+
+            return response;
+        }
+
         public async Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items)
         {
             var a = new ReplenishmentModel()
@@ -80,15 +91,6 @@ namespace ListGenerator.ServerProject.Services
             var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>("api/items/shoppinglist");
 
             return dtos;
-        }
-
-        public async Task<ApiResponse> UpdateItem(ItemViewModel item)
-        {
-            var itemJson = _jsonHelper.Serialize2(item);
-
-            var response = await _apiClient.PutAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
-
-            return response;
         }
     }
 }

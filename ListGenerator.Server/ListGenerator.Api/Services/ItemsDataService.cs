@@ -67,6 +67,15 @@ namespace ListGenerator.Api.Services
             return itemEntity.Id;
         }
 
+        public void UpdateItem(ItemDto itemDto)
+        {
+            var itemEntity = _mapper.Map<ItemDto, Item>(itemDto); 
+            
+            _itemsRepository.Update(itemEntity);
+
+            _itemsRepository.SaveChanges();
+        }
+
         public IEnumerable<ShoppingListItem> CalculateGenerationList()
         {
             var a = _itemsRepository.All()

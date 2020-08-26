@@ -14,10 +14,9 @@ namespace ListGenerator.Common.Interfaces
 
         Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string errorMessage = null);
 
+        Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null);
 
 
-
-        Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
 
         Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
     }
