@@ -16,6 +16,8 @@ namespace ListGenerator.Api.AutoMapper
         {
             CreateMap<ItemDto, ItemViewModel>()
                 .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
+                .ForMember(item => item.ReplenishmentSignalClass, 
+                 opt => opt.MapFrom(x => x.NextReplenishmentDate < DateTime.Now ? "itemNeedsReplenishment" : ""))         
                 .ReverseMap()
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
 
