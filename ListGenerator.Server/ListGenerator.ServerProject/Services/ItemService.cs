@@ -1,4 +1,5 @@
-﻿using ListGenerator.Common.Interfaces;
+﻿using AutoMapper;
+using ListGenerator.Common.Interfaces;
 using ListGenerator.Common.Models;
 using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
@@ -21,11 +22,13 @@ namespace ListGenerator.ServerProject.Services
 
         private readonly IApiClient _apiClient;
         private readonly IJsonHelper _jsonHelper;
+        private readonly IMapper _mapper;
 
-        public ItemService(IApiClient apiClient, IJsonHelper jsonHelper)
+        public ItemService(IApiClient apiClient, IJsonHelper jsonHelper, IMapper mapper)
         {
             _apiClient = apiClient;
             _jsonHelper = jsonHelper;
+            _mapper = mapper;
         }
 
         public async Task<IEnumerable<ItemDto>> GetItemsOverviewModels()
@@ -41,6 +44,17 @@ namespace ListGenerator.ServerProject.Services
             return dto;
         }
 
+        public async Task<ApiResponse> AddItem(ItemViewModel item)
+        {
+            var itemDto = _mapper.Map<ItemViewModel, ItemDto>(item);
+
+            var itemJson = _jsonHelper.Serialize(itemDto);
+
+            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemErrorMessage);
+
+            return response;
+        }
+
         public async Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items)
         {
             var a = new ReplenishmentModel()
@@ -53,17 +67,6 @@ namespace ListGenerator.ServerProject.Services
             //var response = await _apiClient.PostAsync("api/items/replenish", itemsJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 
             return null ;
-        }
-
-
-
-        public async Task<ApiResponse> AddItem(ItemViewModel item)
-        {
-            var itemJson = _jsonHelper.Serialize(item);
-
-            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemErrorMessage);
-
-            return response;
         }
 
         public async Task<ApiResponse> DeleteItem(int itemId)

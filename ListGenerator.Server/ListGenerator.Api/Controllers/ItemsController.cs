@@ -72,9 +72,9 @@ namespace ListGenerator.Api.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem([FromBody] ItemViewModel item)
+        public IActionResult AddItem([FromBody] ItemDto itemDto)
         {
-            if (item == null)
+            if (itemDto == null)
             {
                 return BadRequest();
             }
@@ -83,8 +83,6 @@ namespace ListGenerator.Api.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-            var itemDto = _mapper.Map<ItemViewModel, ItemDto>(item);
 
             var createdItemId = _itemsDataService.AddItem(itemDto);
 
