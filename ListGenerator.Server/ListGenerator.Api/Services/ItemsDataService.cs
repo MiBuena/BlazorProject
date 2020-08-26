@@ -76,6 +76,13 @@ namespace ListGenerator.Api.Services
             _itemsRepository.SaveChanges();
         }
 
+        public void DeleteItem(int id)
+        {
+            var itemToDelete = _itemsRepository.All().FirstOrDefault(x => x.Id == id);
+            _itemsRepository.Delete(itemToDelete);
+            _itemsRepository.SaveChanges();
+        }
+
         public IEnumerable<ShoppingListItem> CalculateGenerationList()
         {
             var a = _itemsRepository.All()

@@ -122,15 +122,15 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest();
             }
 
-            var itemToDelete = _itemRepository.GetItemById(id);
+            var itemToDelete = _itemsDataService.GetItem(id);
             if (itemToDelete == null)
             {
                 return NotFound();
             }
 
-            _itemRepository.DeleteItem(id);
+            _itemsDataService.DeleteItem(id);
 
-            return NoContent();//success
+            return Ok();
         }
     }
 }

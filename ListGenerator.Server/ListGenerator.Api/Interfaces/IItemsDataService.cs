@@ -1,6 +1,7 @@
 ﻿using ListGenerator.Api.Services;
 using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
+using ListGenerator.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace ListGenerator.Api.Interfaces
 
         void UpdateItem(ItemDto itemDto);
 
+        void DeleteItem(int id);     
 
         IEnumerable<ShoppingListItem> CalculateGenerationList();
 

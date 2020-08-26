@@ -71,7 +71,7 @@ namespace ListGenerator.Common.Models
         {
             var response = await _httpClient.DeleteAsync(requestUri);
 
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, null, errorMessage);
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
 
             return apiReponse;
         }
