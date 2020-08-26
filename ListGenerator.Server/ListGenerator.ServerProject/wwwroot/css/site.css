@@ -207,11 +207,5 @@ app {
 }
 
 .shoppingListButton {
-    margin-left: 10%;
-    float: right;
-}
-
-.quick-add-btn {
-    margin-left: 65%;
-    margin-bottom: 1%;
+    margin-left: 70%;
 }

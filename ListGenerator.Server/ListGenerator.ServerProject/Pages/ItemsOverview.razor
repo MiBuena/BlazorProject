@@ -16,10 +16,7 @@ else
         <div class="responseMessage successMessage">@this.Message</div>
     }
 
-    <div class="overviewButtons">
-        <button @onclick="QuickAddItem" class="btn btn-dark table-btn quick-add-btn">Quick add</button>
-        <button @onclick="@NavigateToListGeneration" class="btn btn-outline-primary shoppingListButton">Generate shopping list</button>
-    </div>
+    <button @onclick="@NavigateToListGeneration" class="btn btn-outline-primary shoppingListButton">Generate shopping list</button>
 
     <table class="itemsOverviewTable">
         <thead>
@@ -52,12 +49,16 @@ else
 
         </tbody>
     </table>
+
+    <button @onclick="QuickAddItem" class="btn btn-dark table-btn quick-add-btn">Quick add</button>
+
+
+    <AddItemDialog @ref="AddItemDialog" CloseEventCallback="@AddItemDialog_OnDialogClose"></AddItemDialog>
+
+    <EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
+
+    <DeleteItemDialog @ref="DeleteItemDialog" CloseEventCallback="@DeleteItemDialog_OnDialogClose"></DeleteItemDialog>
 }
 
-<AddItemDialog @ref="AddItemDialog" CloseEventCallback="@AddItemDialog_OnDialogClose"></AddItemDialog>
-
-<EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
-
-<DeleteItemDialog @ref="DeleteItemDialog" CloseEventCallback="@DeleteItemDialog_OnDialogClose"></DeleteItemDialog>
 
 
