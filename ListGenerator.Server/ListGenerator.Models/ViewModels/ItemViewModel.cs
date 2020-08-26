@@ -21,6 +21,8 @@ namespace ListGenerator.Models.ViewModels
 
         public DateTime NextReplenishmentDate { get; set; }
 
+        public DateTime? LastReplenishmentDate { get; set; }
+
         public string ReplenishmentSignalClass { get; set; }
     }
 }

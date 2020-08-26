@@ -17,6 +17,7 @@ else
             <tr>
                 <th>Name</th>
                 <th>Replenishment Period (in weeks)</th>
+                <th>Last replenishment date</th>
                 <th>Next replenishment date</th>
                 <th></th>
             </tr>
@@ -26,23 +27,29 @@ else
 
             @foreach (var item in this.Items)
             {
-                <tr>
-                    <td class="@item.ReplenishmentSignalClass">
-                        @item.Name
-                    </td>
-                    <td class="@item.ReplenishmentSignalClass">
-                        @item.ReplenishmentPeriod
-                    </td>
-                    <td class="@item.ReplenishmentSignalClass">
-                        @item.NextReplenishmentDate.ToString("d.MM.yyyy")
-                    </td>
-                    <td>
-                        <button @onclick="(x=> QuickEditItem(item.Id))" class="btn btn-dark table-btn quick-add-btn">Edit</button>
-                    </td>
-                    <td>
-                        <button @onclick="(x=> DeleteItemQuestion(item.Id))" class="btn btn-dark table-btn quick-add-btn">Delete</button>
-                    </td>
-                </tr>
+            <tr>
+                <td class="@item.ReplenishmentSignalClass">
+                    @item.Name
+                </td>
+                <td class="@item.ReplenishmentSignalClass">
+                    @item.ReplenishmentPeriod
+                </td>
+                <td class="@item.ReplenishmentSignalClass">
+                    @if (item.LastReplenishmentDate.HasValue)
+                    {
+                        @item.LastReplenishmentDate.Value.ToString("d.MM.yyyy")
+                    }
+                </td>
+                <td class="@item.ReplenishmentSignalClass">
+                    @item.NextReplenishmentDate.ToString("d.MM.yyyy")
+                </td>
+                <td>
+                    <button @onclick="(x=> QuickEditItem(item.Id))" class="btn btn-dark table-btn quick-add-btn">Edit</button>
+                </td>
+                <td>
+                    <button @onclick="(x=> DeleteItemQuestion(item.Id))" class="btn btn-dark table-btn quick-add-btn">Delete</button>
+                </td>
+            </tr>
             }
 
         </tbody>
