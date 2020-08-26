@@ -102,33 +102,5 @@ namespace ListGenerator.Api.Services
 
             return itemsNeedingReplenishment;
         }
-
-        public void ReplenishItems(ReplenishmentDto replenishmentData)
-        {
-            var allItems = _itemsRepository.All().ToList();
-
-            foreach (var purchaseItem in replenishmentData.Purchaseitems)
-            {
-                var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
-
-                var coveredWeeks = double.Parse(purchaseItem.Quantity.ToString()) * item.ReplenishmentPeriod;
-
-                var days = coveredWeeks * 7;
-
-                var newReplenishmentDate = _dateTimeProvider.GetDateTimeNow().AddDays(days);
-
-                item.NextReplenishmentDate = newReplenishmentDate;
-            }
-
-            _itemsRepository.SaveChanges();
-        }
-    }
-
-
-    public class ShoppingListItem
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
     }
 }

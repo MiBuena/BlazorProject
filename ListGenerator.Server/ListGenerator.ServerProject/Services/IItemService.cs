@@ -16,15 +16,10 @@ namespace ListGenerator.ServerProject.Services
         Task<ItemDto> GetItem(int id);
         Task<IEnumerable<ItemDto>> GetShoppingListItems();
 
-
-
-
         Task<ApiResponse> AddItem(ItemViewModel item);
 
         Task<ApiResponse> UpdateItem(ItemViewModel item);
 
-        Task<ApiResponse> DeleteItem(int item);
-        
-        Task<ApiResponse> ReplenishItems(IEnumerable<PurchaseItemViewModel> items);
+        Task<ApiResponse> DeleteItem(int item);     
     }
 }

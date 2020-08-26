@@ -66,20 +66,6 @@ namespace ListGenerator.ServerProject.Services
             return response;
         }
 
-        public async Task<ApiResponse> ReplenishItems(IEnumerable<PurchaseItemViewModel> items)
-        {
-            var replenishmentModel = new ReplenishmentDto()
-            {
-                Purchaseitems = items.Select(x => _mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x))
-            };
-
-            var replenishmentJson = _jsonHelper.Serialize(replenishmentModel);
-
-            var response = await _apiClient.PostAsync("api/items/replenish", replenishmentJson, SaveItemErrorMessage);
-
-            return response;
-        }
-
         public async Task<ApiResponse> DeleteItem(int itemId)
         {
             var response = await _apiClient.DeleteAsync($"api/items/{itemId}");

@@ -40,24 +40,6 @@ namespace ListGenerator.Api.Controllers
             return Ok(dto);
         }
 
-        [HttpPost("replenish")]
-        public IActionResult ReplenishItems([FromBody] ReplenishmentDto model)
-        {
-            if (model == null)
-            {
-                return BadRequest();
-            }
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            _itemsDataService.ReplenishItems(model);
-
-            return Ok();
-        }
-
         [HttpGet("shoppinglist")]
         public IActionResult GetShoppingList()
         {

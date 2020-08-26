@@ -22,7 +22,5 @@ namespace ListGenerator.Api.Interfaces
         void DeleteItem(int id);     
 
         IEnumerable<ItemDto> GetShoppingList();
-
-        void ReplenishItems(ReplenishmentDto dto);
     }
 }

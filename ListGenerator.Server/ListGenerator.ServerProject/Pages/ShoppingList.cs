@@ -18,6 +18,12 @@ namespace ListGenerator.ServerProject.Pages
         public IItemService ItemService { get; set; }
 
         [Inject]
+        public IReplenishmentService ReplenishmentService { get; set; }
+
+        [Inject]
+        public NavigationManager NavigationManager { get; set; }
+
+        [Inject]
         public IMapper Mapper { get; set; }
 
         public IEnumerable<PurchaseItemViewModel> ReplenishmentItems { get; set; }
@@ -30,7 +36,13 @@ namespace ListGenerator.ServerProject.Pages
 
         protected async Task HandleValidSubmit()
         {
-            await this.ItemService.ReplenishItems(this.ReplenishmentItems);
+            await this.ReplenishmentService.ReplenishItems(this.ReplenishmentItems);
+            NavigateToAllItems();
+        }
+
+        protected void NavigateToAllItems()
+        {
+            NavigationManager.NavigateTo("/allitems");
         }
     }
 }

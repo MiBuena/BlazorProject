@@ -40,6 +40,8 @@ namespace ListGenerator.Api
 
             services.AddTransient<IItemsDataService, ItemsDataService>();
 
+            services.AddTransient<IReplenishmentDataService, ReplenishmentDataService>();
+
             services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
