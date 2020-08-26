@@ -3,7 +3,6 @@
 
 <h3>ItemsOverview</h3>
 
-<a class="btn btn-outline-primary" @onclick="@NavigateToListGeneration">Generate shopping list</a>
 
 @if (this.Response == null)
 {
@@ -17,11 +16,16 @@ else
         <div class="responseMessage successMessage">@this.Message</div>
     }
 
+    <div class="overviewButtons">
+        <button @onclick="QuickAddItem" class="btn btn-dark table-btn quick-add-btn">Quick add</button>
+        <button @onclick="@NavigateToListGeneration" class="btn btn-outline-primary shoppingListButton">Generate shopping list</button>
+    </div>
+
     <table class="itemsOverviewTable">
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Replenishment Period</th>
+                <th>Replenishment Period (in weeks)</th>
                 <th></th>
             </tr>
         </thead>
@@ -49,8 +53,6 @@ else
         </tbody>
     </table>
 }
-
-<button @onclick="QuickAddItem" class="btn btn-dark table-btn quick-add-btn">Quick add</button>
 
 <AddItemDialog @ref="AddItemDialog" CloseEventCallback="@AddItemDialog_OnDialogClose"></AddItemDialog>
 

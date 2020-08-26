@@ -180,29 +180,38 @@ app {
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
+}
+.periodMeasure {
+    margin-left: 10px;
+}
 
-    .periodMeasure {
-        margin-left: 10px;
-    }
+.responseMessage {
+    margin-left: 40%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
 
-    .responseMessage {
-        margin-left: 40%;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        display: inline-block;
-    }
+.errorMessage {
+    color: red;
+}
 
-    .errorMessage {
-        color: red;
-    }
+.successMessage {
+    color: green;
+}
 
-    .successMessage {
-        color: green;
-    }
+.itemsOverviewTable {
+    width: 60%;
+    text-align: center;
+    vertical-align: middle;
+}
 
-    .itemsOverviewTable {
-        width: 60%;
-        text-align: center;
-        vertical-align: middle;
-    }
+.shoppingListButton {
+    margin-left: 10%;
+    float: right;
+}
+
+.quick-add-btn {
+    margin-left: 65%;
+    margin-bottom: 1%;
 }
