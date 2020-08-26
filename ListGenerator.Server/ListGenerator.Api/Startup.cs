@@ -7,6 +7,8 @@ using ListGenerator.Api.DB;
 using ListGenerator.Api.Interfaces;
 using ListGenerator.Api.Repositories;
 using ListGenerator.Api.Services;
+using ListGenerator.Common.Interfaces;
+using ListGenerator.Common.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,6 +45,8 @@ namespace ListGenerator.Api
             services.AddTransient<IPurchasesRepository, PurchasesRepository>();
 
             services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services.AddAutoMapper(typeof(Startup));
         }

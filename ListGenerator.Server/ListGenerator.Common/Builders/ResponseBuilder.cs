@@ -20,6 +20,16 @@ namespace ListGenerator.Common.Builders
             return response;
         }
 
+        public static ApiResponse BuildApiResponse(bool isSuccess, string errorMessage = null)
+        {
+            var response = new ApiResponse()
+            {
+                IsSuccess = isSuccess,
+                ErrorMessage = errorMessage
+            };
+
+            return response;
+        }
         public static GetItemResponse BuildGetItemResponse(ItemViewModel item)
         {
             var isSuccess = true;

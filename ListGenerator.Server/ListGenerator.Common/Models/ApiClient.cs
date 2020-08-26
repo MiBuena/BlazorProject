@@ -43,6 +43,18 @@ namespace ListGenerator.Common.Models
             return deserializedItems;
         }
 
+        public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string errorMessage = null)
+        {
+            var stringContent =
+              new StringContent(jsonContent, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(requestUri, stringContent);
+
+            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
+
+            return apiReponse;
+        }
+
         public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)
         {
             var response = await _httpClient.DeleteAsync(requestUri);
@@ -65,30 +77,6 @@ namespace ListGenerator.Common.Models
             return itemsOverviewResponse;
         }
 
-        public async Task<GetItemResponse> GetItem(string requestUri)
-        {
-            var httpResponse = await _httpClient.GetStreamAsync(requestUri);
-
-            var deserializedItem = await _jsonHelper.Deserialize2<Item>(httpResponse);
-
-            var itemViewModel = _mapper.Map<Item, ItemViewModel>(deserializedItem);
-
-            var itemResponse = ResponseBuilder.BuildGetItemResponse(itemViewModel);
-
-            return itemResponse;
-        } 
-
-        public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
-        {
-            var stringContent =
-              new StringContent(jsonContent, Encoding.UTF8, "application/json");
-
-            var response = await _httpClient.PostAsync(requestUri, stringContent);
-
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, successMessage, errorMessage);
-            
-            return apiReponse;
-        }
 
         public async Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null)
         {

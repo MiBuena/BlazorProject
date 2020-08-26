@@ -84,13 +84,11 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            var itemEntity = _mapper.Map<ItemViewModel, Item>(item);
+            var itemDto = _mapper.Map<ItemViewModel, ItemDto>(item);
 
-            itemEntity.NextReplenishmentDate = DateTime.Now;
+            var createdItemId = _itemsDataService.AddItem(itemDto);
 
-            var createdItem = _itemRepository.AddItem(itemEntity);
-
-            return Created("items", createdItem);
+            return Created("items", createdItemId);
         }
 
         [HttpPut]

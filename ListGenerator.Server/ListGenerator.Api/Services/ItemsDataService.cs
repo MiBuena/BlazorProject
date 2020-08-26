@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ListGenerator.Api.Interfaces;
+using ListGenerator.Common.Interfaces;
 using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
@@ -16,13 +17,14 @@ namespace ListGenerator.Api.Services
     public class ItemsDataService : IItemsDataService
     {
         private readonly IRepository<Item> _itemsRepository;
-
         private readonly IMapper _mapper;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper)
+        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper, IDateTimeProvider dateTimeProvider)
         {
             _itemsRepository = itemsRepository;
             _mapper = mapper;
+            _dateTimeProvider = dateTimeProvider;
         }
 
         public IEnumerable<ItemDto> GetOverviewItemsModels()
@@ -50,6 +52,19 @@ namespace ListGenerator.Api.Services
                 .FirstOrDefault(x => x.Id == itemId);
 
             return dto;
+        }
+
+        public int AddItem(ItemDto itemDto)
+        {
+            var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
+
+            itemEntity.NextReplenishmentDate = _dateTimeProvider.GetDateTimeNow();
+
+            _itemsRepository.Add(itemEntity);
+
+            _itemsRepository.SaveChanges();
+
+            return itemEntity.Id;
         }
 
         public IEnumerable<ShoppingListItem> CalculateGenerationList()

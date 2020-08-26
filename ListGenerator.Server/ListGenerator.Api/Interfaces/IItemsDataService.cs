@@ -14,6 +14,9 @@ namespace ListGenerator.Api.Interfaces
 
         ItemDto GetItem(int itemId);
 
+        int AddItem(ItemDto itemDto);
+
+
         IEnumerable<ShoppingListItem> CalculateGenerationList();
 
         void ReplenishItems(IEnumerable<ReplenishmentData> replenishmentData);

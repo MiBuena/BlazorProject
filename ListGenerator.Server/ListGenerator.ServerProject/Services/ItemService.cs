@@ -50,18 +50,18 @@ namespace ListGenerator.ServerProject.Services
 
             var itemsJson = _jsonHelper.Serialize2(a);
 
-            var response = await _apiClient.PostAsync("api/items/replenish", itemsJson, SaveItemSuccessMessage, SaveItemErrorMessage);
+            //var response = await _apiClient.PostAsync("api/items/replenish", itemsJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 
-            return response;
+            return null ;
         }
 
 
 
         public async Task<ApiResponse> AddItem(ItemViewModel item)
         {
-            var itemJson = _jsonHelper.Serialize2(item);
+            var itemJson = _jsonHelper.Serialize(item);
 
-            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
+            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemErrorMessage);
 
             return response;
         }

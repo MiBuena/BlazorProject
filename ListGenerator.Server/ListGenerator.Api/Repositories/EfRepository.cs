@@ -25,7 +25,7 @@ namespace ListGenerator.Api.Repositories
 
         public virtual IQueryable<TEntity> AllAsNoTracking() => this.DbSet.AsNoTracking();
 
-        public virtual Task AddAsync(TEntity entity) => this.DbSet.AddAsync(entity).AsTask();
+        public virtual void Add(TEntity entity) => this.DbSet.Add(entity);       
 
         public virtual void Update(TEntity entity)
         {
