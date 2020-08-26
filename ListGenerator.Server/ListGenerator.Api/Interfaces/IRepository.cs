@@ -19,5 +19,8 @@ namespace ListGenerator.Api.Interfaces
         void Delete(TEntity entity);
 
         Task<int> SaveChangesAsync();
+
+        void SaveChanges();
+
     }
 }

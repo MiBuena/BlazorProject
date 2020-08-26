@@ -52,7 +52,7 @@ namespace ListGenerator.Api.Services
                 item.NextReplenishmentDate = newReplenishmentDate;
             }
 
-            _itemsRepository.SaveChangesAsync();
+           _itemsRepository.SaveChanges();
         }
     }
 

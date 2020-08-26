@@ -25,6 +25,7 @@ namespace ListGenerator.ServerProject.Components
 
         public void Show()
         {
+            ItemToAdd = new ItemViewModel();
             ShowDialog = true;
             StateHasChanged();
         }
