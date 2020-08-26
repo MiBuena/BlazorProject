@@ -35,7 +35,6 @@ namespace ListGenerator.ServerProject.Services
             return dtos;
         }
 
-
         public async Task<ItemDto> GetItem(int id)
         {
             var dto = await _apiClient.GetAsync<ItemDto>($"api/items/{id}");
@@ -73,18 +72,11 @@ namespace ListGenerator.ServerProject.Services
             return response;
         }
 
-        public async Task<ItemsOverviewResponse> GetAllItems()
+        public async Task<IEnumerable<ItemDto>> GetShoppingListItems()
         {
-            var response = await _apiClient.GetItems("api/items");
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>("api/items/shoppinglist");
 
-            return response;
-        }
-
-        public async Task<ItemsOverviewResponse> GetShoppingListItems()
-        {
-            var response = await _apiClient.GetItems("api/items/shoppinglist");
-
-            return response;
+            return dtos;
         }
 
         public async Task<ApiResponse> UpdateItem(ItemViewModel item)
@@ -95,20 +87,5 @@ namespace ListGenerator.ServerProject.Services
 
             return response;
         }
-
-        public async Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchases()
-        {
-            var response = await _apiClient.GetItemsWithLastPurchase($"api/items/itemswithlastpurchase");
-
-            var datetime = DateTime.Now;
-
-            
-            return response;
-        }
-    }
-
-    public class Aa
-    {
-
     }
 }

@@ -13,8 +13,6 @@ namespace ListGenerator.ServerProject.Components
 {
     public partial class DeleteItemDialog
     {
-        public ApiResponse ApiResponse { get; set; } = new ApiResponse();
-
         [Inject]
         public IItemService ItemService { get; set; }
 

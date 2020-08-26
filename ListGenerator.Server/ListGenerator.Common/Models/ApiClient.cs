@@ -43,21 +43,6 @@ namespace ListGenerator.Common.Models
             return deserializedItems;
         }
 
-        public async Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchase(string requestUri)
-        {
-            var httpResponse = await _httpClient.GetStreamAsync(requestUri);
-
-            var deserializedItems = await _jsonHelper.Deserialize2<IEnumerable<ItemPurchaseDto>>(httpResponse);
-
-            var a = new ItemsWithLastPurchaseReponse()
-            {
-                IsSuccess = true,
-                Items = deserializedItems
-            };
-
-            return a;
-        }
-
         public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)
         {
             var response = await _httpClient.DeleteAsync(requestUri);

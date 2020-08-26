@@ -19,11 +19,11 @@ namespace ListGenerator.ServerProject.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            var response = await ItemService.GetShoppingListItems();
+            var dtos = await ItemService.GetShoppingListItems();
 
             this.ReplenishmentItems = new List<ReplenishmentData>();
 
-            foreach (var item in response.Items)
+            foreach (var item in dtos)
             {
                 var a = new ReplenishmentData()
                 {

@@ -15,8 +15,6 @@ namespace ListGenerator.ServerProject.Components
     {
         public ItemViewModel ItemToUpdate { get; set; } = new ItemViewModel();
 
-        public ApiResponse ApiResponse { get; set; } = new ApiResponse();
-
         [Inject]
         public IItemService ItemService { get; set; }
 

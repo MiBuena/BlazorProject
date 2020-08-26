@@ -11,16 +11,11 @@ namespace ListGenerator.Common.Interfaces
         Task<T> GetAsync<T>(string requestUri);
 
         Task<ItemsOverviewResponse> GetItems(string requestUri);
-        Task<GetItemResponse> GetItem(string requestUri);
 
         Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
 
         Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string successMessage = null, string errorMessage = null);
 
         Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
-
-        Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchase(string requestUri);
-
-
     }
 }

@@ -14,10 +14,10 @@ namespace ListGenerator.ServerProject.Services
     {
         Task<IEnumerable<ItemDto>> GetItemsOverviewModels();
         Task<ItemDto> GetItem(int id);
+        Task<IEnumerable<ItemDto>> GetShoppingListItems();
 
 
-        Task<ItemsOverviewResponse> GetAllItems();
-        Task<ItemsOverviewResponse> GetShoppingListItems();
+
 
         Task<ApiResponse> AddItem(ItemViewModel item);
 
@@ -25,8 +25,6 @@ namespace ListGenerator.ServerProject.Services
 
         Task<ApiResponse> DeleteItem(int item);
         
-        Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchases();
-
         Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items);
     }
 }
