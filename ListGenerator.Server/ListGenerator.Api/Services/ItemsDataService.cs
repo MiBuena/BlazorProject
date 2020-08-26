@@ -1,4 +1,5 @@
-﻿using ListGenerator.Api.Interfaces;
+﻿using AutoMapper;
+using ListGenerator.Api.Interfaces;
 using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
@@ -16,15 +17,18 @@ namespace ListGenerator.Api.Services
     {
         private readonly IRepository<Item> _itemsRepository;
 
-        public ItemsDataService(IRepository<Item> itemsRepository)
+        private readonly IMapper _mapper;
+
+        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper)
         {
             _itemsRepository = itemsRepository;
+            _mapper = mapper;
         }
 
-        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels()
+        public IEnumerable<ItemDto> GetOverviewItemsModels()
         {
             var dtos = _itemsRepository.All()
-                .Select(x => new ItemOverviewDto()
+                .Select(x => new ItemDto()
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -33,6 +37,19 @@ namespace ListGenerator.Api.Services
                 .ToList();
 
             return dtos;
+        }
+        public ItemDto GetItem(int itemId)
+        {
+            var dto = _itemsRepository.All()
+                .Select(x => new ItemDto()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ReplenishmentPeriod = x.ReplenishmentPeriod
+                })
+                .FirstOrDefault(x => x.Id == itemId);
+
+            return dto;
         }
 
         public IEnumerable<ShoppingListItem> CalculateGenerationList()
@@ -66,7 +83,7 @@ namespace ListGenerator.Api.Services
                 item.NextReplenishmentDate = newReplenishmentDate;
             }
 
-           _itemsRepository.SaveChanges();
+            _itemsRepository.SaveChanges();
         }
     }
 

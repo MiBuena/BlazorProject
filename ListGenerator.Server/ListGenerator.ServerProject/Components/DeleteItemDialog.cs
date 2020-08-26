@@ -1,4 +1,7 @@
-﻿using ListGenerator.Common.Models;
+﻿using AutoMapper;
+using ListGenerator.Common.Models;
+using ListGenerator.Models.Dtos;
+using ListGenerator.Models.ViewModels;
 using ListGenerator.ServerProject.Services;
 using Microsoft.AspNetCore.Components;
 using System;
@@ -15,18 +18,19 @@ namespace ListGenerator.ServerProject.Components
         [Inject]
         public IItemService ItemService { get; set; }
 
+        [Inject]
+        public IMapper Mapper { get; set; }
+
         [Parameter]
         public EventCallback<bool> CloseEventCallback { get; set; }
 
-        public int ItemId { get; set; }
-
-        public string ItemName { get; set; }
+        public ItemViewModel Item { get; set; }
 
         public bool ShowDialog { get; set; }
 
         protected async Task DeleteItem()
         {
-            await ItemService.DeleteItem(ItemId);
+            await ItemService.DeleteItem(Item.Id);
             ShowDialog = false;
 
             await CloseEventCallback.InvokeAsync(true);
@@ -35,9 +39,8 @@ namespace ListGenerator.ServerProject.Components
 
         public async void Show(int id)
         {
-            var response = await this.ItemService.GetItem(id);
-            this.ItemId = response.Item.Id;
-            this.ItemName = response.Item.Name;
+            var dto = await this.ItemService.GetItem(id);
+            this.Item = Mapper.Map<ItemDto, ItemViewModel>(dto);
             ShowDialog = true;
             StateHasChanged();
         }

@@ -6,7 +6,7 @@ namespace ListGenerator.Models.Dtos
 {
     public class ItemPurchaseDto
     {
-        public ItemOverviewDto Item { get; set; }
+        public ItemDto Item { get; set; }
 
         public PurchaseDto Purchase { get; set; }
     }

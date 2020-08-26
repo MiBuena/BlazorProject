@@ -28,11 +28,18 @@ namespace ListGenerator.ServerProject.Services
             _jsonHelper = jsonHelper;
         }
 
-        public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
+        public async Task<IEnumerable<ItemDto>> GetItemsOverviewModels()
         {
-            var response = await _apiClient.GetAsync<IEnumerable<ItemOverviewDto>>("api/items/overview");
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>("api/items/overview");
 
-            return response;
+            return dtos;
+        }
+
+
+        public async Task<ItemDto> GetItem(int id)
+        {
+            var dto = await _apiClient.GetAsync<ItemDto>($"api/items/{id}");
+            return dto;
         }
 
         public async Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items)
@@ -77,12 +84,6 @@ namespace ListGenerator.ServerProject.Services
         {
             var response = await _apiClient.GetItems("api/items/shoppinglist");
 
-            return response;
-        }
-
-        public async Task<GetItemResponse> GetItem(int id)
-        {
-            var response = await _apiClient.GetItem($"api/items/{id}");
             return response;
         }
 

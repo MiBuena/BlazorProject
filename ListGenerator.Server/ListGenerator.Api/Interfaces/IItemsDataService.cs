@@ -10,7 +10,9 @@ namespace ListGenerator.Api.Interfaces
 {
     public interface IItemsDataService
     {
-        IEnumerable<ItemOverviewDto> GetOverviewItemsModels();
+        IEnumerable<ItemDto> GetOverviewItemsModels();
+
+        ItemDto GetItem(int itemId);
 
         IEnumerable<ShoppingListItem> CalculateGenerationList();
 

@@ -14,7 +14,7 @@ namespace ListGenerator.Common.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<ItemOverviewDto, ItemOverviewViewModel>()
+            CreateMap<ItemDto, ItemViewModel>()
                 .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
                 .ReverseMap()
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));

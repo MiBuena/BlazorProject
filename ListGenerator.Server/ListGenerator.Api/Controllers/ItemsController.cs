@@ -39,6 +39,13 @@ namespace ListGenerator.Api.Controllers
             return Ok(dtos);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetItemById(int id)
+        {
+            var dto = _itemsDataService.GetItem(id);
+            return Ok(dto);
+        }
+
         [HttpPost("replenish")]
         public IActionResult ReplenishItems([FromBody] ReplenishmentModel model)
         {
@@ -112,13 +119,6 @@ namespace ListGenerator.Api.Controllers
 
             return NoContent(); //success
         }
-
-        [HttpGet("{id}")]
-        public IActionResult GetItemById(int id)
-        {
-            return Ok(_itemRepository.GetItemById(id));
-        }
-
 
         [HttpDelete("{id}")]
         public IActionResult DeleteItem(int id)
