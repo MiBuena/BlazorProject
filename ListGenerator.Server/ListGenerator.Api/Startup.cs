@@ -38,8 +38,6 @@ namespace ListGenerator.Api
             services.AddDbContext<ListGenerationContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("ListGenerationContext")));
 
-            services.AddTransient<IItemRepository, ItemRepository>();
-
             services.AddTransient<IItemsDataService, ItemsDataService>();
 
             services.AddTransient<IPurchasesRepository, PurchasesRepository>();

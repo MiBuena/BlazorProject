@@ -18,16 +18,13 @@ namespace ListGenerator.Api.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly IItemRepository _itemRepository;
-
         private readonly IItemsDataService _itemsDataService;
 
         private readonly IMapper _mapper;
 
 
-        public ItemsController(IItemRepository itemRepository, IMapper mapper, IItemsDataService itemsDataService)
+        public ItemsController(IMapper mapper, IItemsDataService itemsDataService)
         {
-            _itemRepository = itemRepository;
             _mapper = mapper;
             _itemsDataService = itemsDataService;
         }
