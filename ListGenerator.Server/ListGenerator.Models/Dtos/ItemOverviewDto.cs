@@ -4,7 +4,7 @@ using System.Text;
 
 namespace ListGenerator.Models.Dtos
 {
-    public class ItemDto
+    public class ItemOverviewDto
     {
         public int Id { get; set; }
 

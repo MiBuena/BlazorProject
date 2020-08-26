@@ -1,6 +1,7 @@
 ﻿using ListGenerator.Common.Interfaces;
 using ListGenerator.Common.Models;
 using ListGenerator.Models;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using Newtonsoft.Json;
@@ -27,6 +28,12 @@ namespace ListGenerator.ServerProject.Services
             _jsonHelper = jsonHelper;
         }
 
+        public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
+        {
+            var response = await _apiClient.GetAsync<IEnumerable<ItemOverviewDto>>("api/items/overview");
+
+            return response;
+        }
 
         public async Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items)
         {
@@ -35,7 +42,7 @@ namespace ListGenerator.ServerProject.Services
                 ReplenishmentData = items
             };
 
-            var itemsJson = _jsonHelper.Serialize(a);
+            var itemsJson = _jsonHelper.Serialize2(a);
 
             var response = await _apiClient.PostAsync("api/items/replenish", itemsJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 
@@ -46,7 +53,7 @@ namespace ListGenerator.ServerProject.Services
 
         public async Task<ApiResponse> AddItem(ItemViewModel item)
         {
-            var itemJson = _jsonHelper.Serialize(item);
+            var itemJson = _jsonHelper.Serialize2(item);
 
             var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 
@@ -81,7 +88,7 @@ namespace ListGenerator.ServerProject.Services
 
         public async Task<ApiResponse> UpdateItem(ItemViewModel item)
         {
-            var itemJson = _jsonHelper.Serialize(item);
+            var itemJson = _jsonHelper.Serialize2(item);
 
             var response = await _apiClient.PutAsync("api/items", itemJson, SaveItemSuccessMessage, SaveItemErrorMessage);
 

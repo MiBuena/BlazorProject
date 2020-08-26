@@ -32,11 +32,22 @@ namespace ListGenerator.Common.Models
             _mapper = mapper;
         }
 
+        public async Task<T> GetAsync<T>(string requestUri)
+        {
+            var httpResponse = await _httpClient.GetAsync(requestUri);
+
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            var deserializedItems = _jsonHelper.Deserialize<T>(content);
+
+            return deserializedItems;
+        }
+
         public async Task<ItemsWithLastPurchaseReponse> GetItemsWithLastPurchase(string requestUri)
         {
             var httpResponse = await _httpClient.GetStreamAsync(requestUri);
 
-            var deserializedItems = await _jsonHelper.Deserialize<IEnumerable<ItemPurchaseDto>>(httpResponse);
+            var deserializedItems = await _jsonHelper.Deserialize2<IEnumerable<ItemPurchaseDto>>(httpResponse);
 
             var a = new ItemsWithLastPurchaseReponse()
             {
@@ -60,7 +71,7 @@ namespace ListGenerator.Common.Models
         {
             var httpResponse = await _httpClient.GetStreamAsync(requestUri);
 
-            var deserializedItems = await _jsonHelper.Deserialize<IEnumerable<Item>>(httpResponse);
+            var deserializedItems = await _jsonHelper.Deserialize2<IEnumerable<Item>>(httpResponse);
 
             var itemsViewModels = deserializedItems.Select(x => _mapper.Map<Item, ItemViewModel>(x)).ToList();
 
@@ -73,7 +84,7 @@ namespace ListGenerator.Common.Models
         {
             var httpResponse = await _httpClient.GetStreamAsync(requestUri);
 
-            var deserializedItem = await _jsonHelper.Deserialize<Item>(httpResponse);
+            var deserializedItem = await _jsonHelper.Deserialize2<Item>(httpResponse);
 
             var itemViewModel = _mapper.Map<Item, ItemViewModel>(deserializedItem);
 

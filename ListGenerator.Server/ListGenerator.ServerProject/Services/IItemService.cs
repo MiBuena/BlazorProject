@@ -1,5 +1,6 @@
 ﻿using ListGenerator.Common.Models;
 using ListGenerator.Models;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using System;
@@ -11,6 +12,8 @@ namespace ListGenerator.ServerProject.Services
 {
     public interface IItemService
     {
+        Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels();
+
         Task<GetItemResponse> GetItem(int id);
         Task<ItemsOverviewResponse> GetAllItems();
         Task<ItemsOverviewResponse> GetShoppingListItems();

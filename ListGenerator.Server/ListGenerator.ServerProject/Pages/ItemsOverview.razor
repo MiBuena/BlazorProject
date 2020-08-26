@@ -4,7 +4,7 @@
 <h3>ItemsOverview</h3>
 
 
-@if (this.Response == null)
+@if (this.Items == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -29,7 +29,7 @@ else
 
         <tbody>
 
-            @foreach (var item in this.Response.Items)
+            @foreach (var item in this.Items)
             {
                 <tr>
                     <td>

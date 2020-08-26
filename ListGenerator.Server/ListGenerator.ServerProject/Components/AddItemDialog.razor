@@ -8,7 +8,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="titleLabel">Item Quick Add</h5>
-                    <button  @onclick="Close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <button @onclick="Close" type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -31,16 +31,16 @@
                             <InputSelect id="country" class="form-control col-sm-2" @bind-Value="@ItemToAdd.ReplenishmentPeriod">
 
                                 @for (int i = 1; i <= 52; i++)
-                                    {
+                                {
                                     @if (i == 1)
-                                        {
+                                    {
                                         <option value="@i" selected="selected">@i</option>
-                                        }
-                                        else
-                                        {
-                                        <option value="@i">@i</option>
-                                        }
                                     }
+                                    else
+                                    {
+                                        <option value="@i">@i</option>
+                                    }
+                                }
 
                             </InputSelect>
                             <span class="periodMeasure">week(s)</span>

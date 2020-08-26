@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using System;
@@ -13,10 +14,10 @@ namespace ListGenerator.ServerProject.AutoMapper
     {
         public MappingProfile()
         {
-            CreateMap<ItemViewModel, Item>()
-                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => double.Parse(a.ReplenishmentPeriod)))
+            CreateMap<ItemOverviewDto, ItemOverviewViewModel>()
+                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
                 .ReverseMap()
-                .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => src.ReplenishmentPeriod.ToString()));
+                .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
         }
     }
 }

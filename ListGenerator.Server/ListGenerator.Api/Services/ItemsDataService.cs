@@ -21,6 +21,20 @@ namespace ListGenerator.Api.Services
             _itemsRepository = itemsRepository;
         }
 
+        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels()
+        {
+            var dtos = _itemsRepository.All()
+                .Select(x => new ItemOverviewDto()
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ReplenishmentPeriod = x.ReplenishmentPeriod
+                })
+                .ToList();
+
+            return dtos;
+        }
+
         public IEnumerable<ShoppingListItem> CalculateGenerationList()
         {
             var a = _itemsRepository.All()

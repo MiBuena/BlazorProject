@@ -8,6 +8,8 @@ namespace ListGenerator.Common.Interfaces
 {
     public interface IApiClient
     {
+        Task<T> GetAsync<T>(string requestUri);
+
         Task<ItemsOverviewResponse> GetItems(string requestUri);
         Task<GetItemResponse> GetItem(string requestUri);
 
