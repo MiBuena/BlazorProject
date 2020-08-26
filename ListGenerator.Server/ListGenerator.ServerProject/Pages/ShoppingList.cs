@@ -1,5 +1,7 @@
-﻿using ListGenerator.Common.Models;
+﻿using AutoMapper;
+using ListGenerator.Common.Models;
 using ListGenerator.Models;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.ViewModels;
 using ListGenerator.ServerProject.Services;
 using Microsoft.AspNetCore.Components;
@@ -15,29 +17,20 @@ namespace ListGenerator.ServerProject.Pages
         [Inject]
         public IItemService ItemService { get; set; }
 
-        public List<ReplenishmentData> ReplenishmentItems { get; set; }
+        [Inject]
+        public IMapper Mapper { get; set; }
+
+        public IEnumerable<PurchaseItemViewModel> ReplenishmentItems { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             var dtos = await ItemService.GetShoppingListItems();
-
-            this.ReplenishmentItems = new List<ReplenishmentData>();
-
-            foreach (var item in dtos)
-            {
-                var a = new ReplenishmentData()
-                {
-                    ItemId = item.Id,
-                    Name = item.Name
-                };
-
-                this.ReplenishmentItems.Add(a);
-            }
+            this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x));
         }
 
         protected async Task HandleValidSubmit()
         {
-            await this.ItemService.ReplenishItems(this.ReplenishmentItems);
+            //await this.ItemService.ReplenishItems(this.ReplenishmentItems);
         }
     }
 }

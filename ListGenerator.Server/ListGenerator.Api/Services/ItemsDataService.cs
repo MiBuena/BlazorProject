@@ -83,18 +83,21 @@ namespace ListGenerator.Api.Services
             _itemsRepository.SaveChanges();
         }
 
-        public IEnumerable<ShoppingListItem> CalculateGenerationList()
+        public IEnumerable<ItemDto> GetShoppingList()
         {
-            var a = _itemsRepository.All()
-                .Where(x => DateTime.Compare(x.NextReplenishmentDate, DateTime.Now) < 1)
-                .Select(x => new ShoppingListItem()
+            var dateTimeNow = _dateTimeProvider.GetDateTimeNow();
+
+            var itemsNeedingReplenishment = _itemsRepository.All()
+                .Where(x => x.NextReplenishmentDate <= dateTimeNow)
+                .Select(x => new ItemDto()
                 {
                     Id = x.Id,
                     Name = x.Name,
+                    ReplenishmentPeriod = x.ReplenishmentPeriod
                 })
                 .ToList();
 
-            return a;
+            return itemsNeedingReplenishment;
         }
 
         public void ReplenishItems(IEnumerable<ReplenishmentData> replenishmentDatas)

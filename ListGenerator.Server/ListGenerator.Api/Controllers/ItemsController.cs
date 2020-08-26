@@ -64,7 +64,7 @@ namespace ListGenerator.Api.Controllers
         [HttpGet("shoppinglist")]
         public IActionResult GetShoppingList()
         {
-            var shoppingItems = _itemsDataService.CalculateGenerationList();
+            var shoppingItems = _itemsDataService.GetShoppingList();
             return Ok(shoppingItems);
         }
 

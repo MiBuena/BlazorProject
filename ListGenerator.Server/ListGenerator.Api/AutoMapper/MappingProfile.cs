@@ -20,6 +20,10 @@ namespace ListGenerator.Api.AutoMapper
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
 
             CreateMap<ItemDto, Item>();
+
+            CreateMap<ItemDto, PurchaseItemViewModel>()
+                .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id));
+
         }
     }
 }
