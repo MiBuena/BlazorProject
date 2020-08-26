@@ -23,6 +23,6 @@ namespace ListGenerator.Api.Interfaces
 
         IEnumerable<ItemDto> GetShoppingList();
 
-        void ReplenishItems(IEnumerable<ReplenishmentData> replenishmentData);
+        void ReplenishItems(ReplenishmentDto dto);
     }
 }

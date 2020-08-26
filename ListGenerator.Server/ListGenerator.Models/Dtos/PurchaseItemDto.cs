@@ -4,12 +4,9 @@ using System.Text;
 
 namespace ListGenerator.Models.Dtos
 {
-    public class PurchaseDto
+    public class PurchaseItemDto
     {
-        public int Id { get; set; }
-
-        public DateTime DateOfPurchase { get; set; }
-
+        public int ItemId { get; set; }
         public int Quantity { get; set; }
     }
 }

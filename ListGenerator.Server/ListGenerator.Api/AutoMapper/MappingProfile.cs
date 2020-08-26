@@ -24,6 +24,9 @@ namespace ListGenerator.Api.AutoMapper
             CreateMap<ItemDto, PurchaseItemViewModel>()
                 .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id));
 
+            CreateMap<PurchaseItemViewModel, PurchaseItemDto>()
+                .ForMember(item => item.Quantity, opt => opt.MapFrom(a => int.Parse(a.Quantity)));
+
         }
     }
 }

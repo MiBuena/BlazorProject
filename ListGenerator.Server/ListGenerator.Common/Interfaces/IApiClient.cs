@@ -10,13 +10,9 @@ namespace ListGenerator.Common.Interfaces
     {
         Task<T> GetAsync<T>(string requestUri);
 
-        Task<ItemsOverviewResponse> GetItems(string requestUri);
-
         Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string errorMessage = null);
 
         Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null);
-
-
 
         Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
     }

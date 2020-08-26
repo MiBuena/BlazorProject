@@ -100,19 +100,19 @@ namespace ListGenerator.Api.Services
             return itemsNeedingReplenishment;
         }
 
-        public void ReplenishItems(IEnumerable<ReplenishmentData> replenishmentDatas)
+        public void ReplenishItems(ReplenishmentDto replenishmentData)
         {
             var allItems = _itemsRepository.All().ToList();
 
-            foreach (var replenishmentData in replenishmentDatas)
+            foreach (var purchaseItem in replenishmentData.Purchaseitems)
             {
-                var item = allItems.FirstOrDefault(x => x.Id == replenishmentData.ItemId);
+                var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
 
-                var coveredWeeks = double.Parse(replenishmentData.Quantity) * item.ReplenishmentPeriod;
+                var coveredWeeks = double.Parse(purchaseItem.Quantity.ToString()) * item.ReplenishmentPeriod;
 
                 var days = coveredWeeks * 7;
 
-                var newReplenishmentDate = DateTime.Now.AddDays(days);
+                var newReplenishmentDate = _dateTimeProvider.GetDateTimeNow().AddDays(days);
 
                 item.NextReplenishmentDate = newReplenishmentDate;
             }

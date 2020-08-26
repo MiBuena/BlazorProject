@@ -25,6 +25,6 @@ namespace ListGenerator.ServerProject.Services
 
         Task<ApiResponse> DeleteItem(int item);
         
-        Task<ApiResponse> ReplenishItems(IEnumerable<ReplenishmentData> items);
+        Task<ApiResponse> ReplenishItems(IEnumerable<PurchaseItemViewModel> items);
     }
 }

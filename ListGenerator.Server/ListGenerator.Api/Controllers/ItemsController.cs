@@ -20,12 +20,9 @@ namespace ListGenerator.Api.Controllers
     {
         private readonly IItemsDataService _itemsDataService;
 
-        private readonly IMapper _mapper;
 
-
-        public ItemsController(IMapper mapper, IItemsDataService itemsDataService)
+        public ItemsController(IItemsDataService itemsDataService)
         {
-            _mapper = mapper;
             _itemsDataService = itemsDataService;
         }
 
@@ -44,7 +41,7 @@ namespace ListGenerator.Api.Controllers
         }
 
         [HttpPost("replenish")]
-        public IActionResult ReplenishItems([FromBody] ReplenishmentModel model)
+        public IActionResult ReplenishItems([FromBody] ReplenishmentDto model)
         {
             if (model == null)
             {
@@ -56,7 +53,7 @@ namespace ListGenerator.Api.Controllers
                 return BadRequest(ModelState);
             }
 
-            _itemsDataService.ReplenishItems(model.ReplenishmentData);
+            _itemsDataService.ReplenishItems(model);
 
             return Ok();
         }

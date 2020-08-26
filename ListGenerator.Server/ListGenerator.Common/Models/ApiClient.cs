@@ -14,11 +14,6 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Common.Models
 {
-    public class ItemsWithLastPurchaseReponse : ApiResponse
-    {
-        public IEnumerable<ItemPurchaseDto> Items { get; set; }
-    }
-
     public class ApiClient : IApiClient
     {
         private readonly HttpClient _httpClient;
@@ -74,19 +69,6 @@ namespace ListGenerator.Common.Models
             var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
 
             return apiReponse;
-        }
-
-        public async Task<ItemsOverviewResponse> GetItems(string requestUri)
-        {
-            var httpResponse = await _httpClient.GetStreamAsync(requestUri);
-
-            var deserializedItems = await _jsonHelper.Deserialize2<IEnumerable<Item>>(httpResponse);
-
-            var itemsViewModels = deserializedItems.Select(x => _mapper.Map<Item, ItemViewModel>(x)).ToList();
-
-            var itemsOverviewResponse = ResponseBuilder.BuildItemsOverviewResponse(itemsViewModels);
-
-            return itemsOverviewResponse;
         }
     }
 }

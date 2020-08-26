@@ -30,7 +30,7 @@ namespace ListGenerator.ServerProject.Pages
 
         protected async Task HandleValidSubmit()
         {
-            //await this.ItemService.ReplenishItems(this.ReplenishmentItems);
+            await this.ItemService.ReplenishItems(this.ReplenishmentItems);
         }
     }
 }
