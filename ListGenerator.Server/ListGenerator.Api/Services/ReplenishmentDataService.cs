@@ -36,7 +36,7 @@ namespace ListGenerator.Api.Services
             foreach (var purchaseItem in replenishmentData.Purchaseitems)
             {
                 var purchase = _mapper.Map<PurchaseItemDto, Purchase>(purchaseItem);
-                
+
                 replenishment.Purchase.Add(purchase);
 
 

@@ -17,8 +17,9 @@ else
             <tr>
                 <th>Name</th>
                 <th>Replenishment Period (in weeks)</th>
-                <th>Last replenishment date</th>
-                <th>Next replenishment date</th>
+                <th>Last purchase quantity</th>
+                <th>Last purchase date</th>
+                <th>Next purchase date</th>
                 <th></th>
             </tr>
         </thead>
@@ -35,9 +36,23 @@ else
                     @item.ReplenishmentPeriod
                 </td>
                 <td class="@item.ReplenishmentSignalClass">
+                    @if (item.LastReplenishmentQuantity.HasValue)
+                    {
+                        @item.LastReplenishmentQuantity.Value
+                    }
+                    else
+                    {
+                        @:-
+                    }
+                </td>
+                <td class="@item.ReplenishmentSignalClass">
                     @if (item.LastReplenishmentDate.HasValue)
                     {
                         @item.LastReplenishmentDate.Value.ToString("d.MM.yyyy")
+                    }
+                    else
+                    {
+                        @:-
                     }
                 </td>
                 <td class="@item.ReplenishmentSignalClass">

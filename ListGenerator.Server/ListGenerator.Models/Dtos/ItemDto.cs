@@ -15,5 +15,7 @@ namespace ListGenerator.Models.Dtos
         public DateTime NextReplenishmentDate { get; set; }
 
         public DateTime? LastReplenishmentDate { get; set; }
+
+        public int? LastReplenishmentQuantity { get; set; }
     }
 }
