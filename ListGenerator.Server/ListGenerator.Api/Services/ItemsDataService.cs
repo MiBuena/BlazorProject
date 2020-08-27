@@ -53,14 +53,9 @@ namespace ListGenerator.Api.Services
         }
         public ItemDto GetItem(int itemId)
         {
-            var dto = _itemsRepository.All()
-                .Select(x => new ItemDto()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ReplenishmentPeriod = x.ReplenishmentPeriod,
-                })
-                .FirstOrDefault(x => x.Id == itemId);
+            var query = _itemsRepository.All().Where(x => x.Id == itemId);
+
+            var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
 
             return dto;
         }
@@ -116,16 +111,11 @@ namespace ListGenerator.Api.Services
         {
             var dateTimeNow = _dateTimeProvider.GetDateTimeNow();
 
-            var itemsNeedingReplenishment = _itemsRepository.All()
-                .Where(x => x.NextReplenishmentDate <= dateTimeNow)
-                .Select(x => new ItemDto()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ReplenishmentPeriod = x.ReplenishmentPeriod,
-                })
-                .ToList();
+            var query = _itemsRepository.All()
+                .Where(x => x.NextReplenishmentDate <= dateTimeNow);
 
+            var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
+            
             return itemsNeedingReplenishment;
         }
     }

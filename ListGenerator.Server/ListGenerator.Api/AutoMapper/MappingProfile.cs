@@ -22,7 +22,8 @@ namespace ListGenerator.Api.AutoMapper
                 .ReverseMap()
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
             
-            CreateMap<ItemDto, Item>();
+            CreateMap<ItemDto, Item>()
+                .ReverseMap();
 
             CreateMap<ItemDto, PurchaseItemViewModel>()
                 .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id));
