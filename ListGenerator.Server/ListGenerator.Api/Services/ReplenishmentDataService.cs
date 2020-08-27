@@ -50,11 +50,9 @@ namespace ListGenerator.Api.Services
 
         private DateTime CalculateNextPurchaseDateTime(PurchaseItemDto purchaseItem, Item item)
         {
-            var coveredWeeks = double.Parse(purchaseItem.Quantity.ToString()) * item.ReplenishmentPeriod;
+            var coveredDays = double.Parse(purchaseItem.Quantity.ToString()) * item.ReplenishmentPeriod;
 
-            var days = coveredWeeks * 7;
-
-            var newReplenishmentDate = _dateTimeProvider.GetDateTimeNow().AddDays(days);
+            var newReplenishmentDate = _dateTimeProvider.GetDateTimeNow().AddDays(coveredDays);
 
             return newReplenishmentDate;
         }
