@@ -11,7 +11,7 @@ namespace ListGenerator.Api.Interfaces
 {
     public interface IItemsDataService
     {
-        IEnumerable<ItemDto> GetOverviewItemsModels();
+        IEnumerable<ItemOverviewDto> GetOverviewItemsModels();
 
         ItemDto GetItem(int itemId);
 

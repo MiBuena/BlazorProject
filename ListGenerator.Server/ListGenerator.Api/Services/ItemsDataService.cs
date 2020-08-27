@@ -27,7 +27,7 @@ namespace ListGenerator.Api.Services
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public IEnumerable<ItemDto> GetOverviewItemsModels()
+        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels()
         {
             var dtos = _itemsRepository.All()
                 .Select(x => new ItemOverviewDto()

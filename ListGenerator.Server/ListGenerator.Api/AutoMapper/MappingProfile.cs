@@ -3,10 +3,6 @@ using ListGenerator.Models.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace ListGenerator.Api.AutoMapper
 {
@@ -35,8 +31,6 @@ namespace ListGenerator.Api.AutoMapper
                 .ForMember(item => item.Quantity, opt => opt.MapFrom(a => int.Parse(a.Quantity)));
 
             CreateMap<PurchaseItemDto, Purchase>();
-
-
         }
     }
 }
