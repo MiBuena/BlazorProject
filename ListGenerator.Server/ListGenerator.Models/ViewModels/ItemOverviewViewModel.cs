@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ListGenerator.Models.Dtos
+namespace ListGenerator.Models.ViewModels
 {
-    public class ItemOverviewDto : ItemDto
+    public class ItemOverviewViewModel : ItemViewModel
     {
         public DateTime NextReplenishmentDate { get; set; }
 
         public DateTime? LastReplenishmentDate { get; set; }
 
         public int? LastReplenishmentQuantity { get; set; }
+
+        public string ReplenishmentSignalClass { get; set; }
     }
 }

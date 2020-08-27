@@ -18,13 +18,5 @@ namespace ListGenerator.Models.ViewModels
         [MinLength(1)]
         [MaxLength(2)]
         public string ReplenishmentPeriod { get; set; } = "1";
-
-        public DateTime NextReplenishmentDate { get; set; }
-
-        public DateTime? LastReplenishmentDate { get; set; }
-
-        public int? LastReplenishmentQuantity { get; set; }
-
-        public string ReplenishmentSignalClass { get; set; }
     }
 }

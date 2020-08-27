@@ -11,11 +11,5 @@ namespace ListGenerator.Models.Dtos
         public string Name { get; set; }
 
         public double ReplenishmentPeriod { get; set; }
-
-        public DateTime NextReplenishmentDate { get; set; }
-
-        public DateTime? LastReplenishmentDate { get; set; }
-
-        public int? LastReplenishmentQuantity { get; set; }
     }
 }

@@ -12,7 +12,7 @@ namespace ListGenerator.ServerProject.Services
 {
     public interface IItemService
     {
-        Task<IEnumerable<ItemDto>> GetItemsOverviewModels();
+        Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels();
         Task<ItemDto> GetItem(int id);
         Task<IEnumerable<ItemDto>> GetShoppingListItems();
 

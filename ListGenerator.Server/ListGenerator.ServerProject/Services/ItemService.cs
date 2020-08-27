@@ -31,9 +31,9 @@ namespace ListGenerator.ServerProject.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ItemDto>> GetItemsOverviewModels()
+        public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
         {
-            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>("api/items/overview");
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemOverviewDto>>("api/items/overview");
 
             return dtos;
         }

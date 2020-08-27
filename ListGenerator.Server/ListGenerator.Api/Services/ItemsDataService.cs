@@ -30,7 +30,7 @@ namespace ListGenerator.Api.Services
         public IEnumerable<ItemDto> GetOverviewItemsModels()
         {
             var dtos = _itemsRepository.All()
-                .Select(x => new ItemDto()
+                .Select(x => new ItemOverviewDto()
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -57,7 +57,6 @@ namespace ListGenerator.Api.Services
                     Id = x.Id,
                     Name = x.Name,
                     ReplenishmentPeriod = x.ReplenishmentPeriod,
-                    NextReplenishmentDate = x.NextReplenishmentDate
                 })
                 .FirstOrDefault(x => x.Id == itemId);
 
@@ -104,7 +103,6 @@ namespace ListGenerator.Api.Services
                     Id = x.Id,
                     Name = x.Name,
                     ReplenishmentPeriod = x.ReplenishmentPeriod,
-                    NextReplenishmentDate = x.NextReplenishmentDate
                 })
                 .ToList();
 

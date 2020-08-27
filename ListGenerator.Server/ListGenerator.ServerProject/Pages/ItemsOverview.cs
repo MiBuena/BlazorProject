@@ -20,7 +20,7 @@ namespace ListGenerator.ServerProject.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
-        public IEnumerable<ItemViewModel> Items { get; set; }
+        public IEnumerable<ItemOverviewViewModel> Items { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
 
@@ -34,7 +34,7 @@ namespace ListGenerator.ServerProject.Pages
         protected override async Task OnInitializedAsync()
         {
             var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemDto, ItemViewModel>(x));
+            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
         }
 
         protected void QuickAddItem()
@@ -45,7 +45,7 @@ namespace ListGenerator.ServerProject.Pages
         public async void AddItemDialog_OnDialogClose()
         {
             var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemDto, ItemViewModel>(x));
+            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
             StateHasChanged();
         }
 
@@ -57,7 +57,7 @@ namespace ListGenerator.ServerProject.Pages
         public async void EditItemDialog_OnDialogClose()
         {
             var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemDto, ItemViewModel>(x));
+            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
             StateHasChanged();
         }
         protected void DeleteItemQuestion(int id)
@@ -68,7 +68,7 @@ namespace ListGenerator.ServerProject.Pages
         public async void DeleteItemDialog_OnDialogClose()
         {
             var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemDto, ItemViewModel>(x));
+            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
             StateHasChanged();
         }
 
