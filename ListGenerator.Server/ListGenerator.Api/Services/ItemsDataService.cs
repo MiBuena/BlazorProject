@@ -78,18 +78,27 @@ namespace ListGenerator.Api.Services
 
         public void UpdateItem(ItemDto itemDto)
         {
-            var itemEntity = _mapper.Map<ItemDto, Item>(itemDto); 
-            
-            _itemsRepository.Update(itemEntity);
+            var itemToUpdate = _itemsRepository.All().FirstOrDefault(x => x.Id == itemDto.Id);
 
-            _itemsRepository.SaveChanges();
+            if(itemToUpdate != null)
+            {
+                itemToUpdate.Name = itemDto.Name;
+                itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
+               
+                _itemsRepository.Update(itemToUpdate);
+                _itemsRepository.SaveChanges();
+            }
         }
 
         public void DeleteItem(int id)
         {
             var itemToDelete = _itemsRepository.All().FirstOrDefault(x => x.Id == id);
-            _itemsRepository.Delete(itemToDelete);
-            _itemsRepository.SaveChanges();
+
+            if (itemToDelete != null)
+            {
+                _itemsRepository.Delete(itemToDelete);
+                _itemsRepository.SaveChanges();
+            }
         }
 
         public IEnumerable<ItemDto> GetShoppingList()
