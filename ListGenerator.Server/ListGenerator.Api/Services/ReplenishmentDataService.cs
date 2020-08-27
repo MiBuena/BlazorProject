@@ -18,12 +18,12 @@ namespace ListGenerator.Api.Services
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IMapper _mapper;
 
-        public ReplenishmentDataService(IRepository<Item> items, IRepository<Replenishment> replenishmentRepository, IDateTimeProvider dateTimeProvider, IMapper mapper, IRepository<Purchase> purchaseRepository)
+        public ReplenishmentDataService(IRepository<Item> items, IRepository<Replenishment> replenishmentRepository, IDateTimeProvider dateTimeProvider, IMapper mapper, IRepository<Purchase> purchaseRepository) 
         {
             _itemsRepository = items;
+            _purchaseRepository = purchaseRepository;
             _dateTimeProvider = dateTimeProvider;
             _replenishmentRepository = replenishmentRepository;
-            _purchaseRepository = purchaseRepository;
             _mapper = mapper;
         }
 
@@ -42,15 +42,35 @@ namespace ListGenerator.Api.Services
 
                 var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
 
-                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(purchaseItem, item);
+                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity);
             }
 
             _itemsRepository.SaveChanges();
         }
 
-        private DateTime CalculateNextPurchaseDateTime(PurchaseItemDto purchaseItem, Item item)
+        public DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod)
         {
-            var coveredDays = double.Parse(purchaseItem.Quantity.ToString()) * item.ReplenishmentPeriod;
+            var lastPurchaseQuantity = GetItemLastPurchasedQuantity(itemId);
+
+            var newPurchaseDate = CalculateNextPurchaseDateTime(newItemReplenishmentPeriod, lastPurchaseQuantity);
+
+            return newPurchaseDate;
+        }
+
+        private int GetItemLastPurchasedQuantity(int itemId)
+        {
+            var lastPurchaseQuantity = _purchaseRepository.All()
+                .Where(x => x.ItemId == itemId)
+                .OrderByDescending(y => y.Replenishment.Date)
+                .Select(x => x.Quantity)
+                .FirstOrDefault();
+
+            return lastPurchaseQuantity;
+        }
+
+        private DateTime CalculateNextPurchaseDateTime(double itemReplenishmentPeriod, int purchasedQuantity)
+        {
+            var coveredDays = double.Parse(purchasedQuantity.ToString()) * itemReplenishmentPeriod;
 
             var newReplenishmentDate = _dateTimeProvider.GetDateTimeNow().AddDays(coveredDays);
 

@@ -19,12 +19,14 @@ namespace ListGenerator.Api.Services
         private readonly IRepository<Item> _itemsRepository;
         private readonly IMapper _mapper;
         private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IReplenishmentDataService _replenishmentDataService;
 
-        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper, IDateTimeProvider dateTimeProvider)
+        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper, IDateTimeProvider dateTimeProvider, IReplenishmentDataService replenishmentDataService)
         {
             _itemsRepository = itemsRepository;
             _mapper = mapper;
             _dateTimeProvider = dateTimeProvider;
+            _replenishmentDataService = replenishmentDataService;
         }
 
         public IEnumerable<ItemOverviewDto> GetOverviewItemsModels()
@@ -82,6 +84,15 @@ namespace ListGenerator.Api.Services
 
             if(itemToUpdate != null)
             {
+                var oldReplenishmentPeriod = itemToUpdate.ReplenishmentPeriod;
+                var newReplenishmentPeriod = itemDto.ReplenishmentPeriod;
+
+                if (newReplenishmentPeriod != oldReplenishmentPeriod)
+                {
+                    var newItemNextReplenishmentDate = _replenishmentDataService.RegenerateNextPurchaseDateTime(itemToUpdate.Id, newReplenishmentPeriod);
+                    itemToUpdate.NextReplenishmentDate = newItemNextReplenishmentDate;
+                }
+
                 itemToUpdate.Name = itemDto.Name;
                 itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
                

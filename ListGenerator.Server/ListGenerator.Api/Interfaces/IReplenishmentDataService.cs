@@ -9,5 +9,7 @@ namespace ListGenerator.Api.Interfaces
     public interface IReplenishmentDataService
     {
         void ReplenishItems(ReplenishmentDto dto);
+
+        DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod);
     }
 }
