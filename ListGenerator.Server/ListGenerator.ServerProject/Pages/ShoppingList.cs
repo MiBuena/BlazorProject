@@ -26,12 +26,12 @@ namespace ListGenerator.ServerProject.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
-        public IEnumerable<PurchaseItemViewModel> ReplenishmentItems { get; set; }
+        public List<PurchaseItemViewModel> ReplenishmentItems { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             var dtos = await ItemService.GetShoppingListItems();
-            this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x));
+            this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
         }
 
         protected async Task HandleValidSubmit()

@@ -12,7 +12,6 @@ else
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-
         <table class="itemsOverviewTable">
             <thead>
                 <tr>
@@ -20,40 +19,34 @@ else
                     <th>Replenishment quantity</th>
                 </tr>
             </thead>
-
             <tbody>
 
-                @foreach (var item in this.ReplenishmentItems)
+                @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
                 {
+
+                    var replenishmentItem = this.ReplenishmentItems[m];
+
                     <tr>
 
-                        <td> @item.Name</td>
+                        <td>@replenishmentItem.Name</td>
+
                         <td>
-                            <InputSelect class="tableInputSelect col-sm-2" @bind-Value="@item.Quantity">
+                            <InputSelect class="tableInputSelect col-sm-2" @bind-Value="@replenishmentItem.Quantity">
 
                                 @for (int i = 1; i <= 20; i++)
                                 {
-                                    @if (i == 1)
-                                    {
-                                        <option value="@i" selected="selected">@i</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@i">@i</option>
-                                    }
+                                    <option value="@i">@i</option>
                                 }
 
                             </InputSelect>
                         </td>
-
                     </tr>
                 }
-
             </tbody>
         </table>
-        
+
         <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
-    
+
     </EditForm>
 
 }
