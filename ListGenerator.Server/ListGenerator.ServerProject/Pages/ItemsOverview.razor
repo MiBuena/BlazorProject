@@ -29,13 +29,13 @@ else
             @foreach (var item in this.Items)
             {
             <tr>
-                <td class="@item.ReplenishmentSignalClass">
+                <td>
                     @item.Name
                 </td>
-                <td class="@item.ReplenishmentSignalClass">
+                <td>
                     @item.ReplenishmentPeriod
                 </td>
-                <td class="@item.ReplenishmentSignalClass">
+                <td>
                     @if (item.LastReplenishmentQuantity.HasValue)
                     {
                         @item.LastReplenishmentQuantity.Value
@@ -45,7 +45,7 @@ else
                         @:-
                     }
                 </td>
-                <td class="@item.ReplenishmentSignalClass">
+                <td>
                     @if (item.LastReplenishmentDate.HasValue)
                     {
                         @item.LastReplenishmentDate.Value.ToString("d.MM.yyyy")
@@ -55,7 +55,7 @@ else
                         @:-
                     }
                 </td>
-                <td class="@item.ReplenishmentSignalClass">
+                <td>
                     @item.NextReplenishmentDate.ToString("d.MM.yyyy")
                 </td>
                 <td>
