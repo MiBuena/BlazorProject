@@ -23,13 +23,8 @@ namespace ListGenerator.ServerProject.Services
             _mapper = mapper;
         }
 
-        public async Task<ApiResponse> ReplenishItems(IEnumerable<PurchaseItemViewModel> items)
+        public async Task<ApiResponse> ReplenishItems(ReplenishmentDto replenishmentModel)
         {
-            var replenishmentModel = new ReplenishmentDto()
-            {
-                Purchaseitems = items.Select(x => _mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x))
-            };
-
             var replenishmentJson = _jsonHelper.Serialize(replenishmentModel);
 
             var response = await _apiClient.PostAsync("api/replenishment/replenish", replenishmentJson, null);

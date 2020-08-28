@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Common.Models;
+using ListGenerator.Models.Dtos;
 using ListGenerator.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,6 @@ namespace ListGenerator.ServerProject.Services
 {
     public interface IReplenishmentService
     {
-        Task<ApiResponse> ReplenishItems(IEnumerable<PurchaseItemViewModel> items);
+        Task<ApiResponse> ReplenishItems(ReplenishmentDto replenishmentModel);
     }
 }

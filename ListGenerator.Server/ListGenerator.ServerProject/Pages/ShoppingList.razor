@@ -7,7 +7,7 @@
 }
 else
 {
-    <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@HandleValidSubmit">
+    <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
 
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -17,6 +17,7 @@ else
                 <tr>
                     <th>Name</th>
                     <th>Replenishment quantity</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -39,6 +40,9 @@ else
                                 }
 
                             </InputSelect>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
                         </td>
                     </tr>
                 }

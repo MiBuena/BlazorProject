@@ -34,9 +34,32 @@ namespace ListGenerator.ServerProject.Pages
             this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
         }
 
-        protected async Task HandleValidSubmit()
+        protected async Task ReplenishItem(int itemId)
         {
-            await this.ReplenishmentService.ReplenishItems(this.ReplenishmentItems);
+            var viewModel = this.ReplenishmentItems.FirstOrDefault(x => x.ItemId == itemId);
+
+            var dto = Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(viewModel);
+
+            var replenishmentModel = new ReplenishmentDto();
+
+            replenishmentModel.Purchaseitems.Add(dto);
+
+            await this.ReplenishmentService.ReplenishItems(replenishmentModel);
+
+            var dtos = await ItemService.GetShoppingListItems();
+            this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
+
+            StateHasChanged();
+        }
+
+        protected async Task ReplenishAllItems()
+        {
+            var replenishmentModel = new ReplenishmentDto()
+            {
+                Purchaseitems = this.ReplenishmentItems.Select(x => Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x)).ToList()
+            };
+
+            await this.ReplenishmentService.ReplenishItems(replenishmentModel);
             NavigateToAllItems();
         }
 
