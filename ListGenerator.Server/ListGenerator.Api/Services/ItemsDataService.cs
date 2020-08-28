@@ -47,6 +47,7 @@ namespace ListGenerator.Api.Services
                                                     .Select(m => m.Quantity)
                                                     .FirstOrDefault(),
                 })
+                .OrderBy(x => x.NextReplenishmentDate)
                 .ToList();
 
             return dtos;
@@ -112,7 +113,8 @@ namespace ListGenerator.Api.Services
             var date = DateTime.ParseExact(secondReplenishmentDate, "dd-MM-yyyy", null);
 
             var query = _itemsRepository.All()
-                .Where(x => x.NextReplenishmentDate.Date < date);
+                .Where(x => x.NextReplenishmentDate.Date < date)
+                .OrderBy(x => x.NextReplenishmentDate);
 
             var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
             

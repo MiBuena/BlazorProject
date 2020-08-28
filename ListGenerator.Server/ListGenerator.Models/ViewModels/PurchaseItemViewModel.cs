@@ -11,5 +11,7 @@ namespace ListGenerator.Models.ViewModels
         public string Name { get; set; }
 
         public string Quantity { get; set; } = "1";
+
+        public DateTime NextReplenishmentDate { get; set; }
     }
 }

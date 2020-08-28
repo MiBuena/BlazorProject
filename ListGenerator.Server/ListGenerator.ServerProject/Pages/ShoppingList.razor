@@ -12,7 +12,7 @@ else
 
         <div class="normalShoppingDay">
             Normal shopping day:
-            <InputSelect class="tableInputSelect col-sm-5" @bind-Value="this.UsualShoppingDay">
+            <InputSelect class="appInputSelect normalShoppingDaySelect" @bind-Value="this.UsualShoppingDay">
                 @foreach (var value in Enum.GetValues(typeof(DayOfWeek)))
                     {
                     <option value="@value">@value</option>
@@ -39,7 +39,8 @@ else
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Replenishment quantity</th>
+                    <th>Will run out of supplies on</th>
+                    <th>Quantity to buy</th>
                     <th></th>
                 </tr>
             </thead>
@@ -53,9 +54,9 @@ else
                     <tr>
 
                         <td>@replenishmentItem.Name</td>
-
+                        <td>@replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")</td>
                         <td>
-                            <InputSelect class="tableInputSelect col-sm-2" @bind-Value="@replenishmentItem.Quantity">
+                            <InputSelect class="appInputSelect tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
 
                                 @for (int i = 1; i <= 20; i++)
                                         {
