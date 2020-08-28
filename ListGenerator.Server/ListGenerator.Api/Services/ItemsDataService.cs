@@ -112,7 +112,7 @@ namespace ListGenerator.Api.Services
             var dateTimeNow = _dateTimeProvider.GetDateTimeNow();
 
             var query = _itemsRepository.All()
-                .Where(x => x.NextReplenishmentDate <= dateTimeNow);
+                .Where(x => x.NextReplenishmentDate.Date <= dateTimeNow.Date);
 
             var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
             
