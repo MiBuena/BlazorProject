@@ -107,12 +107,12 @@ namespace ListGenerator.Api.Services
             }
         }
 
-        public IEnumerable<ItemDto> GetShoppingList()
+        public IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate)
         {
-            var dateTimeNow = _dateTimeProvider.GetDateTimeNow();
+            var date = DateTime.ParseExact(secondReplenishmentDate, "dd-MM-yyyy", null);
 
             var query = _itemsRepository.All()
-                .Where(x => x.NextReplenishmentDate.Date <= dateTimeNow.Date);
+                .Where(x => x.NextReplenishmentDate.Date < date);
 
             var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
             

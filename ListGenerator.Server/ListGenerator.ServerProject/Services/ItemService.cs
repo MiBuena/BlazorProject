@@ -72,9 +72,10 @@ namespace ListGenerator.ServerProject.Services
             return response;
         }
 
-        public async Task<IEnumerable<ItemDto>> GetShoppingListItems()
+        public async Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate)
         {
-            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>("api/items/shoppinglist");
+            var internationalDateTime = secondReplenishmentDate.ToString("dd-MM-yyyy");
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>($"api/items/shoppinglist/{internationalDateTime}");
 
             return dtos;
         }

@@ -40,10 +40,10 @@ namespace ListGenerator.Api.Controllers
             return Ok(dto);
         }
 
-        [HttpGet("shoppinglist")]
-        public IActionResult GetShoppingList()
+        [HttpGet("shoppinglist/{secondReplenishmentDate}")]
+        public IActionResult GetShoppingList(string secondReplenishmentDate)
         {
-            var shoppingItems = _itemsDataService.GetShoppingList();
+            var shoppingItems = _itemsDataService.GetShoppingList(secondReplenishmentDate);
             return Ok(shoppingItems);
         }
 

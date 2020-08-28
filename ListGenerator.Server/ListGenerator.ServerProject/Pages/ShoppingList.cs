@@ -28,12 +28,30 @@ namespace ListGenerator.ServerProject.Pages
 
         public List<PurchaseItemViewModel> ReplenishmentItems { get; set; }
 
-        public DateTime ReplenishmentDate { get; set; } = DateTime.Now.Date;
+        public DateTime FirstReplenishmentDate { get; set; }
+
+        public DateTime SecondReplenishmentDate { get; set; }
+
+        public DayOfWeek UsualShoppingDay { get; set; }
+
 
         protected override async Task OnInitializedAsync()
         {
-            var dtos = await ItemService.GetShoppingListItems();
+            this.UsualShoppingDay = DayOfWeek.Sunday;
+            this.FirstReplenishmentDate = GetNextShoppingDay(UsualShoppingDay);
+            this.SecondReplenishmentDate = this.FirstReplenishmentDate.AddDays(7);
+
+            var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
             this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
+        }
+
+        private DateTime GetNextShoppingDay(DayOfWeek usualShoppingDay)
+        {
+            DateTime today = DateTime.Today;
+            int daysUntilUsualShoppingDay = ((int)usualShoppingDay - (int)today.DayOfWeek + 7) % 7;
+            DateTime nextShoppingDay = today.AddDays(daysUntilUsualShoppingDay);
+
+            return nextShoppingDay;
         }
 
         protected async Task ReplenishItem(int itemId)
@@ -43,12 +61,13 @@ namespace ListGenerator.ServerProject.Pages
             var dto = Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(viewModel);
 
             var replenishmentModel = new ReplenishmentDto();
-            replenishmentModel.ReplenishmentDate = ReplenishmentDate;
+            replenishmentModel.FirstReplenishmentDate = FirstReplenishmentDate;
+            replenishmentModel.SecondReplenishmentDate = SecondReplenishmentDate;
             replenishmentModel.Purchaseitems.Add(dto);
 
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
-            var dtos = await ItemService.GetShoppingListItems();
+            var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
             this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
 
             StateHasChanged();
@@ -58,7 +77,7 @@ namespace ListGenerator.ServerProject.Pages
         {
             var replenishmentModel = new ReplenishmentDto()
             {
-                ReplenishmentDate = ReplenishmentDate,
+                FirstReplenishmentDate = FirstReplenishmentDate,
                 Purchaseitems = this.ReplenishmentItems.Select(x => Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x)).ToList()
             };
 

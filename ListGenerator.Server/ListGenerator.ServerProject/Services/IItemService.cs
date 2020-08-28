@@ -14,7 +14,7 @@ namespace ListGenerator.ServerProject.Services
     {
         Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels();
         Task<ItemDto> GetItem(int id);
-        Task<IEnumerable<ItemDto>> GetShoppingListItems();
+        Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate);
 
         Task<ApiResponse> AddItem(ItemViewModel item);
 
