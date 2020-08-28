@@ -28,6 +28,8 @@ namespace ListGenerator.ServerProject.Pages
 
         public List<PurchaseItemViewModel> ReplenishmentItems { get; set; }
 
+        public DateTime ReplenishmentDate { get; set; } = DateTime.Now.Date;
+
         protected override async Task OnInitializedAsync()
         {
             var dtos = await ItemService.GetShoppingListItems();
@@ -41,7 +43,7 @@ namespace ListGenerator.ServerProject.Pages
             var dto = Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(viewModel);
 
             var replenishmentModel = new ReplenishmentDto();
-
+            replenishmentModel.ReplenishmentDate = ReplenishmentDate;
             replenishmentModel.Purchaseitems.Add(dto);
 
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
@@ -56,6 +58,7 @@ namespace ListGenerator.ServerProject.Pages
         {
             var replenishmentModel = new ReplenishmentDto()
             {
+                ReplenishmentDate = ReplenishmentDate,
                 Purchaseitems = this.ReplenishmentItems.Select(x => Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x)).ToList()
             };
 

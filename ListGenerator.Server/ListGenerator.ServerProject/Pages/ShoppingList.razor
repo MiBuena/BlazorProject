@@ -7,50 +7,53 @@
 }
 else
 {
-    <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
 
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+<EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
 
-        <table class="itemsOverviewTable">
-            <thead>
+    <InputDate @bind-Value="@this.ReplenishmentDate"></InputDate>
+
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <table class="itemsOverviewTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Replenishment quantity</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
+            {
+
+                var replenishmentItem = this.ReplenishmentItems[m];
+
                 <tr>
-                    <th>Name</th>
-                    <th>Replenishment quantity</th>
-                    <th></th>
+
+                    <td>@replenishmentItem.Name</td>
+
+                    <td>
+                        <InputSelect class="tableInputSelect col-sm-2" @bind-Value="@replenishmentItem.Quantity">
+
+                            @for (int i = 1; i <= 20; i++)
+                                    {
+                                <option value="@i">@i</option>
+                                    }
+
+                        </InputSelect>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
+            }
+        </tbody>
+    </table>
 
-                @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
-                {
+    <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
 
-                    var replenishmentItem = this.ReplenishmentItems[m];
-
-                    <tr>
-
-                        <td>@replenishmentItem.Name</td>
-
-                        <td>
-                            <InputSelect class="tableInputSelect col-sm-2" @bind-Value="@replenishmentItem.Quantity">
-
-                                @for (int i = 1; i <= 20; i++)
-                                {
-                                    <option value="@i">@i</option>
-                                }
-
-                            </InputSelect>
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-
-        <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
-
-    </EditForm>
+</EditForm>
 
 }
