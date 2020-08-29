@@ -7,30 +7,38 @@
 }
 else
 {
+    <div class="normalShoppingDay">
+        Normal shopping day:
+        <select class="appInputSelect normalShoppingDaySelect" @onchange="RegeneateList">
+
+            @foreach (var value in Enum.GetValues(typeof(DayOfWeek)))
+            {
+                <option value="@value">@value</option>
+            }
+        </select>
+
+    </div>
+
+
+    <div>Your shopping list for @this.FirstReplenishmentDate.ToString("d-MM-yyyy") is:</div>
+
+
 
     <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
 
-        <div class="normalShoppingDay">
-            Normal shopping day:
-            <InputSelect class="appInputSelect normalShoppingDaySelect" @bind-Value="this.UsualShoppingDay">
-                @foreach (var value in Enum.GetValues(typeof(DayOfWeek)))
-                    {
-                    <option value="@value">@value</option>
-                    }
-            </InputSelect>
-        </div>
-
-
-        @*<div>
+        <div>
+            <div>
                 Next replenishment date:
                 <InputDate @bind-Value="@this.FirstReplenishmentDate"></InputDate>
             </div>
-
             <div>
                 Date after next replenishment date:
                 <InputDate @bind-Value="@this.SecondReplenishmentDate"></InputDate>
-            </div>*@
+            </div>
+            
+           @*<a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>*@
 
+        </div>
 
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -53,8 +61,12 @@ else
 
                     <tr>
 
-                        <td>@replenishmentItem.Name</td>
-                        <td>@replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")</td>
+                        <td class="@replenishmentItem.ReplenishmentSignalClass">
+                            @replenishmentItem.Name
+                        </td>
+                        <td class="@replenishmentItem.ReplenishmentSignalClass">
+                            @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
+                        </td>
                         <td>
                             <InputSelect class="appInputSelect tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
 

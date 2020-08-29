@@ -13,5 +13,7 @@ namespace ListGenerator.Models.ViewModels
         public string Quantity { get; set; } = "1";
 
         public DateTime NextReplenishmentDate { get; set; }
+
+        public string ReplenishmentSignalClass { get; set; }
     }
 }

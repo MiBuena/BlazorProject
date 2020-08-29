@@ -38,11 +38,40 @@ namespace ListGenerator.ServerProject.Pages
         protected override async Task OnInitializedAsync()
         {
             this.UsualShoppingDay = DayOfWeek.Sunday;
+
+            await InitializeProperties();
+        }
+
+        private async Task InitializeProperties()
+        {
             this.FirstReplenishmentDate = GetNextShoppingDay(UsualShoppingDay);
             this.SecondReplenishmentDate = this.FirstReplenishmentDate.AddDays(7);
 
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
-            this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
+            var replenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
+
+            foreach (var item in replenishmentItems)
+            {
+                item.ReplenishmentSignalClass =
+                    item.NextReplenishmentDate < this.FirstReplenishmentDate
+                    ? "itemNeedsReplenishment"
+                    : "";
+            }
+            this.ReplenishmentItems = replenishmentItems;
+        }
+
+        protected async Task RegeneateList(ChangeEventArgs e)
+        {
+            UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString());
+
+            await InitializeProperties();
+        }
+
+        protected async Task RegeneateListDate(ChangeEventArgs e)
+        {
+            UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString()); 
+
+            await InitializeProperties();
         }
 
         private DateTime GetNextShoppingDay(DayOfWeek usualShoppingDay)
