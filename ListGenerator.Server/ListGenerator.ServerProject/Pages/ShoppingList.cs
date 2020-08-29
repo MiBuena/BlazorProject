@@ -34,7 +34,18 @@ namespace ListGenerator.ServerProject.Pages
 
         public DayOfWeek UsualShoppingDay { get; set; }
 
-  
+        protected void ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
+        {
+            this.FirstReplenishmentDate = DateTime.Parse(e.Value.ToString());
+        }
+
+        protected async Task ChangeSecondReplenishmentDateValue(ChangeEventArgs e)
+        {
+            this.SecondReplenishmentDate = DateTime.Parse(e.Value.ToString());
+            await InitializeReplenishmentItemsCollection();
+            StateHasChanged();
+        }
+
         protected override async Task OnInitializedAsync()
         {
             this.UsualShoppingDay = DayOfWeek.Sunday;
@@ -70,11 +81,6 @@ namespace ListGenerator.ServerProject.Pages
             this.FirstReplenishmentDate = GetNextShoppingDay(UsualShoppingDay);
             this.SecondReplenishmentDate = this.FirstReplenishmentDate.AddDays(7);
 
-            await InitializeReplenishmentItemsCollection();
-        }
-        
-        protected async Task RegeneateListFromDates()
-        {
             await InitializeReplenishmentItemsCollection();
         }
 

@@ -8,88 +8,92 @@
 else
 {
 
-<div class="normalShoppingDay">
-    <div>
-        Normal shopping day:
-    </div>
-    <select class="appInputControl normalShoppingDaySelect" @onchange="RegenerateListFromDayOfWeek">
-
-        @foreach (var value in Enum.GetValues(typeof(DayOfWeek)))
-        {
-            <option value="@value">@value</option>
-        }
-    </select>
-</div>
-
-
-
-<EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
-
-
-        <div class="customDatesWrapper">
-            <div>
-                Next replenishment date:
-                <InputDate class="appInputControl customDates" @bind-Value="@this.FirstReplenishmentDate"></InputDate>
-            </div>
-            <div>
-                Date after next replenishment date:
-                <InputDate class="appInputControl customDates" @bind-Value="@this.SecondReplenishmentDate"></InputDate>
-            </div>
-            <div class="customDatesButton">
-                <a class="btn btn-outline-primary" @onclick="@(x => RegeneateListFromDates())">Apply dates</a>
-            </div>
+    <div class="normalShoppingDay">
+        <div>
+            Normal shopping day:
         </div>
-    
+        <select class="appInputControl normalShoppingDaySelect" @onchange="RegenerateListFromDayOfWeek">
 
-    <div>Your shopping list for @this.FirstReplenishmentDate.ToString("d.MM.yyyy") is:</div>
-
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-
-    <table class="itemsOverviewTable">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Will run out of supplies on</th>
-                <th>Quantity to buy</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-
-            @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
+            @foreach (var value in Enum.GetValues(typeof(DayOfWeek)))
             {
-
-                var replenishmentItem = this.ReplenishmentItems[m];
-
-                <tr>
-
-                    <td class="@replenishmentItem.ReplenishmentSignalClass">
-                        @replenishmentItem.Name
-                    </td>
-                    <td class="@replenishmentItem.ReplenishmentSignalClass">
-                        @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
-                    </td>
-                    <td>
-                        <InputSelect class="appInputControl tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
-
-                            @for (int i = 1; i <= 20; i++)
-                                    {
-                                <option value="@i">@i</option>
-                                    }
-
-                        </InputSelect>
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
-                    </td>
-                </tr>
+                <option value="@value">@value</option>
             }
-        </tbody>
-    </table>
+        </select>
+    </div>
 
-    <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
 
-</EditForm>
+    <div class="customDatesWrapper">
+        <div>
+            Next replenishment date:
+
+            @{
+                var firstReplenishmentDate = this.FirstReplenishmentDate.ToString("yyyy-MM-dd");
+                var secondReplenishmentDate = this.SecondReplenishmentDate.ToString("yyyy-MM-dd");
+            }
+
+            <input type="date" class="appInputControl" value=@firstReplenishmentDate @onchange=@ChangeFirstReplenishmentDateValue />
+        </div>
+        <div>
+            Date after next replenishment date:
+            <input type="date" class="appInputControl" value=@secondReplenishmentDate @onchange=@ChangeSecondReplenishmentDateValue />
+        </div>
+    </div>
+
+
+    <div class="shoppingListHeadline">Your shopping list for @this.FirstReplenishmentDate.ToString("d.MM.yyyy") is:</div>
+
+
+    <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
+
+
+
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <table class="itemsOverviewTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Will run out of supplies on</th>
+                    <th>Quantity to buy</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
+                {
+
+                    var replenishmentItem = this.ReplenishmentItems[m];
+
+                    <tr>
+
+                        <td class="@replenishmentItem.ReplenishmentSignalClass">
+                            @replenishmentItem.Name
+                        </td>
+                        <td class="@replenishmentItem.ReplenishmentSignalClass">
+                            @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
+                        </td>
+                        <td>
+                            <InputSelect class="appInputControl tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
+
+                                @for (int i = 1; i <= 20; i++)
+                                        {
+                                    <option value="@i">@i</option>
+                                        }
+
+                            </InputSelect>
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
+
+    </EditForm>
 
 }
