@@ -34,19 +34,16 @@ namespace ListGenerator.ServerProject.Pages
 
         public DayOfWeek UsualShoppingDay { get; set; }
 
-
+  
         protected override async Task OnInitializedAsync()
         {
             this.UsualShoppingDay = DayOfWeek.Sunday;
 
-            await InitializeProperties();
+            await GenerateListFromDayOfWeek();
         }
 
-        private async Task InitializeProperties()
+        private async Task InitializeReplenishmentItemsCollection()
         {
-            this.FirstReplenishmentDate = GetNextShoppingDay(UsualShoppingDay);
-            this.SecondReplenishmentDate = this.FirstReplenishmentDate.AddDays(7);
-
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
             var replenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
 
@@ -60,18 +57,25 @@ namespace ListGenerator.ServerProject.Pages
             this.ReplenishmentItems = replenishmentItems;
         }
 
-        protected async Task RegeneateList(ChangeEventArgs e)
-        {
-            UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString());
 
-            await InitializeProperties();
+        protected async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
+        {
+            this.UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString());
+
+            await GenerateListFromDayOfWeek();
         }
 
-        protected async Task RegeneateListDate(ChangeEventArgs e)
+        protected async Task GenerateListFromDayOfWeek()
         {
-            UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString()); 
+            this.FirstReplenishmentDate = GetNextShoppingDay(UsualShoppingDay);
+            this.SecondReplenishmentDate = this.FirstReplenishmentDate.AddDays(7);
 
-            await InitializeProperties();
+            await InitializeReplenishmentItemsCollection();
+        }
+        
+        protected async Task RegeneateListFromDates()
+        {
+            await InitializeReplenishmentItemsCollection();
         }
 
         private DateTime GetNextShoppingDay(DayOfWeek usualShoppingDay)

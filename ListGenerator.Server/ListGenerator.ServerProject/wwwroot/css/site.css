@@ -210,7 +210,7 @@ app {
     margin-left: 70%;
 }
 
-.appInputSelect {
+.appInputControl {
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -234,10 +234,22 @@ app {
 }
 
 .normalShoppingDay{
-    float: right;
+    margin-left: 70%;
 }
 
 .normalShoppingDaySelect{
     width: 135px;
 }
 
+.customDates {
+    width: 175px;
+}
+
+.customDatesWrapper {
+    margin-bottom: 80px;
+    margin-top: 40px;
+}
+
+.customDatesButton{
+    margin-top: 20px;
+}
