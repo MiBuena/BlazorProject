@@ -31,11 +31,11 @@ else
                 var secondReplenishmentDate = this.SecondReplenishmentDate.ToString("yyyy-MM-dd");
             }
 
-            <input type="date" class="appInputControl" value=@firstReplenishmentDate @onchange=@ChangeFirstReplenishmentDateValue />
+            <input type="date" class="appInputControl" value=@firstReplenishmentDate @onchange=@ChangeFirstReplenishmentDateValue max="@this.SecondReplenishmentDate.ToString("yyyy-MM-dd")" />
         </div>
         <div>
             Date after next replenishment date:
-            <input type="date" class="appInputControl" value=@secondReplenishmentDate @onchange=@ChangeSecondReplenishmentDateValue />
+            <input type="date" class="appInputControl" value=@secondReplenishmentDate @onchange=@ChangeSecondReplenishmentDateValue min="@this.FirstReplenishmentDate.ToString("yyyy-MM-dd")" />
         </div>
     </div>
 
