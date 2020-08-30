@@ -85,7 +85,7 @@ namespace ListGenerator.Api.Services
 
                 if (newReplenishmentPeriod != oldReplenishmentPeriod)
                 {
-                    var newItemNextReplenishmentDate = _replenishmentDataService.RegenerateNextPurchaseDateTime(itemToUpdate.Id, newReplenishmentPeriod);
+                    var newItemNextReplenishmentDate = _replenishmentDataService.RegenerateNextPurchaseDateTime(itemToUpdate.Id, newReplenishmentPeriod, itemToUpdate.NextReplenishmentDate);
                     itemToUpdate.NextReplenishmentDate = newItemNextReplenishmentDate;
                 }
 

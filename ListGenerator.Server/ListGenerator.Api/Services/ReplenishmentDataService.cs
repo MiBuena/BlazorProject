@@ -42,17 +42,17 @@ namespace ListGenerator.Api.Services
 
                 var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
 
-                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity);
+                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity, item.NextReplenishmentDate);
             }
 
             _itemsRepository.SaveChanges();
         }
 
-        public DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod)
+        public DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate)
         {
             var lastPurchaseQuantity = GetItemLastPurchasedQuantity(itemId);
 
-            var newPurchaseDate = CalculateNextPurchaseDateTime(newItemReplenishmentPeriod, lastPurchaseQuantity);
+            var newPurchaseDate = CalculateNextPurchaseDateTime(newItemReplenishmentPeriod, lastPurchaseQuantity, previousReplenishmentDate);
 
             return newPurchaseDate;
         }
@@ -68,11 +68,19 @@ namespace ListGenerator.Api.Services
             return lastPurchaseQuantity;
         }
 
-        private DateTime CalculateNextPurchaseDateTime(double itemReplenishmentPeriod, int purchasedQuantity)
+        private DateTime CalculateNextPurchaseDateTime(double itemReplenishmentPeriod, int purchasedQuantity, DateTime previousReplenishmentDate)
         {
             var coveredDays = double.Parse(purchasedQuantity.ToString()) * itemReplenishmentPeriod;
 
-            var newReplenishmentDate = _dateTimeProvider.GetDateTimeNow().AddDays(coveredDays);
+            var dateTimeNow = _dateTimeProvider.GetDateTimeNow();
+            var baseDateToCalculateNextReplDate = dateTimeNow;
+
+            if(previousReplenishmentDate > dateTimeNow)
+            {
+                baseDateToCalculateNextReplDate = previousReplenishmentDate;
+            }
+
+            var newReplenishmentDate = baseDateToCalculateNextReplDate.AddDays(coveredDays);
 
             return newReplenishmentDate;
         }
