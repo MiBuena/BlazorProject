@@ -13,17 +13,15 @@ namespace ListGenerator.Api.Services
     public class ReplenishmentDataService : IReplenishmentDataService
     {
         private readonly IRepository<Item> _itemsRepository;
-        private readonly IRepository<Replenishment> _replenishmentRepository;
         private readonly IRepository<Purchase> _purchaseRepository;
         private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IMapper _mapper;
 
-        public ReplenishmentDataService(IRepository<Item> items, IRepository<Replenishment> replenishmentRepository, IDateTimeProvider dateTimeProvider, IMapper mapper, IRepository<Purchase> purchaseRepository) 
+        public ReplenishmentDataService(IRepository<Item> items, IDateTimeProvider dateTimeProvider, IMapper mapper, IRepository<Purchase> purchaseRepository) 
         {
             _itemsRepository = items;
             _purchaseRepository = purchaseRepository;
             _dateTimeProvider = dateTimeProvider;
-            _replenishmentRepository = replenishmentRepository;
             _mapper = mapper;
         }
 
@@ -31,13 +29,11 @@ namespace ListGenerator.Api.Services
         {
             var allItems = _itemsRepository.All().ToList();
 
-            var replenishment = AddReplenishmentDataToDb();
-
             foreach (var purchaseItem in replenishmentData.Purchaseitems)
             {
                 var purchase = _mapper.Map<PurchaseItemDto, Purchase>(purchaseItem);
 
-                replenishment.Purchase.Add(purchase);
+                _purchaseRepository.Add(purchase);
 
 
                 var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
@@ -61,7 +57,7 @@ namespace ListGenerator.Api.Services
         {
             var lastPurchaseQuantity = _purchaseRepository.All()
                 .Where(x => x.ItemId == itemId)
-                .OrderByDescending(y => y.Replenishment.Date)
+                .OrderByDescending(y => y.ReplenishmentDate)
                 .Select(x => x.Quantity)
                 .FirstOrDefault();
 
@@ -83,18 +79,6 @@ namespace ListGenerator.Api.Services
             var newReplenishmentDate = baseDateToCalculateNextReplDate.AddDays(coveredDays);
 
             return newReplenishmentDate;
-        }
-
-        public Replenishment AddReplenishmentDataToDb()
-        {
-            var replenishment = new Replenishment()
-            {
-                Date = _dateTimeProvider.GetDateTimeNow()
-            };
-
-            _replenishmentRepository.Add(replenishment);
-
-            return replenishment;
         }
     }
 }

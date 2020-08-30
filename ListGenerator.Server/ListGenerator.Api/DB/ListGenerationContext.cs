@@ -16,8 +16,6 @@ namespace ListGenerator.Api.DB
         
         public DbSet<Item> Items { get; set; }
 
-        public DbSet<Replenishment> Replenishments { get; set; }
-
         public DbSet<Purchase> Purchases { get; set; }
 
 
@@ -28,12 +26,6 @@ namespace ListGenerator.Api.DB
                 .HasOne(x => x.Item)
                 .WithMany(x => x.Purchases)
                 .HasForeignKey(x => x.ItemId);
-
-            modelBuilder
-                .Entity<Purchase>()
-                .HasOne(x => x.Replenishment)
-                .WithMany(x => x.Purchase)
-                .HasForeignKey(x => x.ReplenishmentId);
         }
     }
 }

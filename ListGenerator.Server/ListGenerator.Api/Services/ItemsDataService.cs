@@ -39,11 +39,11 @@ namespace ListGenerator.Api.Services
                     ReplenishmentPeriod = x.ReplenishmentPeriod,
                     NextReplenishmentDate = x.NextReplenishmentDate,
                     LastReplenishmentDate = x.Purchases
-                                                    .OrderByDescending(y => y.Replenishment.Date)
-                                                    .Select(m => m.Replenishment.Date)
+                                                    .OrderByDescending(y => y.ReplenishmentDate)
+                                                    .Select(m => m.ReplenishmentDate)
                                                     .FirstOrDefault(),
                     LastReplenishmentQuantity = x.Purchases
-                                                    .OrderByDescending(y => y.Replenishment.Date)
+                                                    .OrderByDescending(y => y.ReplenishmentDate)
                                                     .Select(m => m.Quantity)
                                                     .FirstOrDefault(),
                 })
