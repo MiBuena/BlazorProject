@@ -40,6 +40,7 @@ namespace ListGenerator.ServerProject
             services.AddTransient<IJsonHelper, JsonHelper>();
             services.AddTransient<IItemService, ItemService>();
             services.AddTransient<IReplenishmentService, ReplenishmentService>();
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services.AddHttpClient<IApiClient, ApiClient>(client =>
             {

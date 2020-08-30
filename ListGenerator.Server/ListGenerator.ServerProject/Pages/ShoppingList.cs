@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using ListGenerator.Common.Interfaces;
 using ListGenerator.Common.Models;
 using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
@@ -21,6 +22,9 @@ namespace ListGenerator.ServerProject.Pages
         public IReplenishmentService ReplenishmentService { get; set; }
 
         [Inject]
+        public IDateTimeProvider DateTimeProvider { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         [Inject]
@@ -33,6 +37,9 @@ namespace ListGenerator.ServerProject.Pages
         public DateTime SecondReplenishmentDate { get; set; }
 
         public DayOfWeek UsualShoppingDay { get; set; }
+
+        public DateTime DateTimeNow { get; set; }
+
 
         protected void ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
         {
@@ -48,6 +55,7 @@ namespace ListGenerator.ServerProject.Pages
 
         protected override async Task OnInitializedAsync()
         {
+            this.DateTimeNow = DateTimeProvider.GetDateTimeNow();
             this.UsualShoppingDay = DayOfWeek.Sunday;
 
             await GenerateListFromDayOfWeek();

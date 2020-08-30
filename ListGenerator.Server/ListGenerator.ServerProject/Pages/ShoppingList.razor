@@ -85,7 +85,7 @@ else
                             </InputSelect>
                         </td>
                         <td>
-                            <InputDate @bind-Value="@replenishmentItem.ReplenishmentDate"></InputDate>
+                            <InputDate class="appInputControl" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
                         </td>
                         <td>
                             <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
