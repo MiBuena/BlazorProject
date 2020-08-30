@@ -38,7 +38,7 @@ namespace ListGenerator.Api.Services
 
                 var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
 
-                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity, item.NextReplenishmentDate);
+                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity, item.NextReplenishmentDate, purchaseItem.ReplenishmentDate);
             }
 
             _itemsRepository.SaveChanges();
@@ -46,32 +46,30 @@ namespace ListGenerator.Api.Services
 
         public DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate)
         {
-            var lastPurchaseQuantity = GetItemLastPurchasedQuantity(itemId);
+            var itemLastPurchase = GetItemLastPurchase(itemId);
 
-            var newPurchaseDate = CalculateNextPurchaseDateTime(newItemReplenishmentPeriod, lastPurchaseQuantity, previousReplenishmentDate);
+            var newPurchaseDate = CalculateNextPurchaseDateTime(newItemReplenishmentPeriod, itemLastPurchase.Quantity, previousReplenishmentDate, itemLastPurchase.ReplenishmentDate);
 
             return newPurchaseDate;
         }
 
-        private int GetItemLastPurchasedQuantity(int itemId)
+        private Purchase GetItemLastPurchase(int itemId)
         {
-            var lastPurchaseQuantity = _purchaseRepository.All()
+            var lastPurchase = _purchaseRepository.All()
                 .Where(x => x.ItemId == itemId)
                 .OrderByDescending(y => y.ReplenishmentDate)
-                .Select(x => x.Quantity)
                 .FirstOrDefault();
 
-            return lastPurchaseQuantity;
+            return lastPurchase;
         }
 
-        private DateTime CalculateNextPurchaseDateTime(double itemReplenishmentPeriod, int purchasedQuantity, DateTime previousReplenishmentDate)
+        private DateTime CalculateNextPurchaseDateTime(double itemReplenishmentPeriod, int purchasedQuantity, DateTime previousReplenishmentDate, DateTime replenishmentDate)
         {
             var coveredDays = double.Parse(purchasedQuantity.ToString()) * itemReplenishmentPeriod;
 
-            var dateTimeNow = _dateTimeProvider.GetDateTimeNow();
-            var baseDateToCalculateNextReplDate = dateTimeNow;
+            var baseDateToCalculateNextReplDate = replenishmentDate;
 
-            if(previousReplenishmentDate > dateTimeNow)
+            if(previousReplenishmentDate > replenishmentDate)
             {
                 baseDateToCalculateNextReplDate = previousReplenishmentDate;
             }
