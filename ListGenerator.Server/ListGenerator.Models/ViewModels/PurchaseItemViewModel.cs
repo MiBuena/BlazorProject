@@ -15,5 +15,7 @@ namespace ListGenerator.Models.ViewModels
         public DateTime NextReplenishmentDate { get; set; }
 
         public string ReplenishmentSignalClass { get; set; }
+
+        public DateTime ReplenishmentDate { get; set; } = DateTime.Now;
     }
 }

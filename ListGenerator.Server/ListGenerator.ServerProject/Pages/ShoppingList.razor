@@ -85,6 +85,9 @@ else
                             </InputSelect>
                         </td>
                         <td>
+                            <InputDate @bind-Value="@replenishmentItem.ReplenishmentDate"></InputDate>
+                        </td>
+                        <td>
                             <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
                         </td>
                     </tr>

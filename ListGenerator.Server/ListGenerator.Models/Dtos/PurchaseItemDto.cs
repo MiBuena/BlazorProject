@@ -8,5 +8,6 @@ namespace ListGenerator.Models.Dtos
     {
         public int ItemId { get; set; }
         public int Quantity { get; set; }
+        public DateTime ReplenishmentDate { get; set; }
     }
 }
