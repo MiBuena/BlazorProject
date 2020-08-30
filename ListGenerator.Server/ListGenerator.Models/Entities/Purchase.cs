@@ -16,8 +16,6 @@ namespace ListGenerator.Models.Entities
 
         public int Quantity { get; set; }
 
-        public int ReplenishmentId { get; set; }
-
         [Required]
         public DateTime ReplenishmentDate { get; set; }
     }
