@@ -41,9 +41,6 @@ namespace ListGenerator.Web.Server.Repositories
 
         public Task<int> SaveChangesAsync() => this.Context.SaveChangesAsync();
 
-        public void SaveChanges()
-        {
-            this.Context.SaveChanges();
-        }
+        public void SaveChanges() => this.Context.SaveChanges();
     }
 }
