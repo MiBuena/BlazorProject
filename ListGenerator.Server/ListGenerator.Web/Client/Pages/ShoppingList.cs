@@ -5,6 +5,7 @@ using ListGenerator.Models;
 using ListGenerator.Models.Dtos;
 using ListGenerator.Models.ViewModels;
 using ListGenerator.Web.Client.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Web.Client.Pages
 {
+    [Authorize]
     public partial class ShoppingList
     {
         [Inject]
