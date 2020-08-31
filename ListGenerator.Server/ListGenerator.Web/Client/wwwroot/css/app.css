@@ -181,3 +181,76 @@ app {
         display: block;
     }
 }
+
+.periodMeasure {
+    margin-left: 10px;
+}
+
+.responseMessage {
+    margin-left: 40%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.errorMessage {
+    color: red;
+}
+
+.successMessage {
+    color: green;
+}
+
+.itemsOverviewTable {
+    width: 80%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.shoppingListButton {
+    margin-left: 70%;
+}
+
+.appInputControl {
+    height: calc(1.5em + .75rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.tableInputSelect {
+    width: 66px;
+}
+
+
+.itemNeedsReplenishment {
+    color: red;
+}
+
+.normalShoppingDay {
+    margin-left: 70%;
+}
+
+.normalShoppingDaySelect {
+    width: 135px;
+}
+
+.customDates {
+    width: 175px;
+}
+
+.customDatesWrapper {
+    margin-bottom: 80px;
+    margin-top: 40px;
+}
+
+.shoppingListHeadline {
+    margin-bottom: 120px;
+}
