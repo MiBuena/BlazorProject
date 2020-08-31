@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using ListGenerator.Web.Server.Data;
 using ListGenerator.Web.Server.Models;
+using AutoMapper;
 
 namespace ListGenerator.Web.Server
 {
@@ -35,6 +36,9 @@ namespace ListGenerator.Web.Server
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+            services.AddAutoMapper(typeof(Startup));
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();

@@ -11,11 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Api", "ListGe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.ServerProject", "ListGenerator.ServerProject\ListGenerator.ServerProject.csproj", "{D136B63F-A7AA-46FE-8DFE-3036074ED788}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Web.Server", "ListGenerator.Web\Server\ListGenerator.Web.Server.csproj", "{300DF669-9478-4855-A5F5-CC962143D40C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Server", "ListGenerator.Web\Server\ListGenerator.Web.Server.csproj", "{300DF669-9478-4855-A5F5-CC962143D40C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Web.Client", "ListGenerator.Web\Client\ListGenerator.Web.Client.csproj", "{75A993B8-036C-4729-AC4A-2C7E7BFE582A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Client", "ListGenerator.Web\Client\ListGenerator.Web.Client.csproj", "{75A993B8-036C-4729-AC4A-2C7E7BFE582A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Web.Shared", "ListGenerator.Web\Shared\ListGenerator.Web.Shared.csproj", "{880EF940-D36E-43DA-AB86-3653AAE6B344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Shared", "ListGenerator.Web\Shared\ListGenerator.Web.Shared.csproj", "{880EF940-D36E-43DA-AB86-3653AAE6B344}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
