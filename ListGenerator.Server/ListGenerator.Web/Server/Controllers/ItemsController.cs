@@ -1,12 +1,17 @@
-﻿using ListGenerator.Models.Dtos;
+﻿using IdentityServer4.Extensions;
+using ListGenerator.Models.Dtos;
+using ListGenerator.Web.Server.Extensions;
 using ListGenerator.Web.Server.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ListGenerator.Web.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemsController : ControllerBase
+    public class ItemsController : IdentityController
     {
         private readonly IItemsDataService _itemsDataService;
 

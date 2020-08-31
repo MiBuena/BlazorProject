@@ -31,11 +31,7 @@ namespace ListGenerator.Web.Client
             builder.Services.AddTransient<IItemService, ItemService>();
             builder.Services.AddTransient<IReplenishmentService, ReplenishmentService>();
             builder.Services.AddTransient<IDateTimeProvider, DateTimeProvider>();
-
-            builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
-            {
-                client.BaseAddress = new Uri("https://localhost:44392/");
-            });
+            builder.Services.AddTransient<IApiClient, ApiClient>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

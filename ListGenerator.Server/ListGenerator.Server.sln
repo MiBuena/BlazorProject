@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Models", "Lis
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Common", "ListGenerator.Common\ListGenerator.Common.csproj", "{4C842155-7DC7-4ABB-A154-5F2891C639B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Api", "ListGenerator.Api\ListGenerator.Api.csproj", "{AA514BF4-E903-4029-986E-30F0DBED226F}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Server", "ListGenerator.Web\Server\ListGenerator.Web.Server.csproj", "{300DF669-9478-4855-A5F5-CC962143D40C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Client", "ListGenerator.Web\Client\ListGenerator.Web.Client.csproj", "{75A993B8-036C-4729-AC4A-2C7E7BFE582A}"
@@ -29,10 +27,6 @@ Global
 		{4C842155-7DC7-4ABB-A154-5F2891C639B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4C842155-7DC7-4ABB-A154-5F2891C639B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4C842155-7DC7-4ABB-A154-5F2891C639B2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA514BF4-E903-4029-986E-30F0DBED226F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA514BF4-E903-4029-986E-30F0DBED226F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA514BF4-E903-4029-986E-30F0DBED226F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA514BF4-E903-4029-986E-30F0DBED226F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{300DF669-9478-4855-A5F5-CC962143D40C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{300DF669-9478-4855-A5F5-CC962143D40C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{300DF669-9478-4855-A5F5-CC962143D40C}.Release|Any CPU.ActiveCfg = Release|Any CPU
