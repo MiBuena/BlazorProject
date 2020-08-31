@@ -14,6 +14,11 @@ using System.Linq;
 using ListGenerator.Web.Server.Data;
 using ListGenerator.Web.Server.Models;
 using AutoMapper;
+using ListGenerator.Web.Server.Interfaces;
+using ListGenerator.Web.Server.Services;
+using ListGenerator.Web.Server.Repositories;
+using ListGenerator.Common.Interfaces;
+using ListGenerator.Common.Models;
 
 namespace ListGenerator.Web.Server
 {
@@ -37,6 +42,14 @@ namespace ListGenerator.Web.Server
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+            services.AddTransient<IItemsDataService, ItemsDataService>();
+
+            services.AddTransient<IReplenishmentDataService, ReplenishmentDataService>();
+
+            services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
+
+            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
 
             services.AddAutoMapper(typeof(Startup));
 

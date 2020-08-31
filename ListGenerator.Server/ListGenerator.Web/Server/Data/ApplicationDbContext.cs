@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ListGenerator.Models.Entities;
 
 namespace ListGenerator.Web.Server.Data
 {
@@ -17,5 +18,9 @@ namespace ListGenerator.Web.Server.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+
+        public DbSet<Item> Items { get; set; }
+
+        public DbSet<Purchase> Purchases { get; set; }
     }
 }

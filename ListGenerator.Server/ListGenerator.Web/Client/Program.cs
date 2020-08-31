@@ -9,6 +9,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using AutoMapper;
+using ListGenerator.Common.Interfaces;
+using ListGenerator.Web.Client.Services;
+using ListGenerator.Common.Models;
 
 namespace ListGenerator.Web.Client
 {
@@ -21,6 +24,18 @@ namespace ListGenerator.Web.Client
 
             builder.Services.AddHttpClient("ListGenerator.Web.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+
+
+            builder.Services.AddTransient<IJsonHelper, JsonHelper>();
+            builder.Services.AddTransient<IItemService, ItemService>();
+            builder.Services.AddTransient<IReplenishmentService, ReplenishmentService>();
+            builder.Services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+
+            builder.Services.AddHttpClient<IApiClient, ApiClient>(client =>
+            {
+                client.BaseAddress = new Uri("https://localhost:44392/");
+            });
 
             builder.Services.AddAutoMapper(typeof(Program));
 
