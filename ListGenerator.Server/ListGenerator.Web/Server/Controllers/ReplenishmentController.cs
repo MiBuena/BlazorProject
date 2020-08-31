@@ -1,12 +1,14 @@
 ﻿using ListGenerator.Models.Dtos;
 using ListGenerator.Web.Server.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ListGenerator.Web.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ReplenishmentController : ControllerBase
+    public class ReplenishmentController : IdentityController
     {
         private readonly IReplenishmentDataService _replenishmentDataService;
 

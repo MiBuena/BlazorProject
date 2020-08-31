@@ -29,9 +29,10 @@ namespace ListGenerator.Web.Server.Services
             _replenishmentDataService = replenishmentDataService;
         }
 
-        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels()
+        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId)
         {
             var dtos = _itemsRepository.All()
+                .Where(x=>x.UserId == userId)
                 .Select(x => new ItemOverviewDto()
                 {
                     Id = x.Id,
@@ -61,11 +62,13 @@ namespace ListGenerator.Web.Server.Services
             return dto;
         }
 
-        public int AddItem(ItemDto itemDto)
+        public int AddItem(string userId, ItemDto itemDto)
         {
             var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
 
             itemEntity.NextReplenishmentDate = _dateTimeProvider.GetDateTimeNow();
+
+            itemEntity.UserId = userId;
 
             _itemsRepository.Add(itemEntity);
 
@@ -74,7 +77,7 @@ namespace ListGenerator.Web.Server.Services
             return itemEntity.Id;
         }
 
-        public void UpdateItem(ItemDto itemDto)
+        public void UpdateItem(string userId, ItemDto itemDto)
         {
             var itemToUpdate = _itemsRepository.All().FirstOrDefault(x => x.Id == itemDto.Id);
 
@@ -91,6 +94,7 @@ namespace ListGenerator.Web.Server.Services
 
                 itemToUpdate.Name = itemDto.Name;
                 itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
+                itemToUpdate.UserId = userId;
                
                 _itemsRepository.Update(itemToUpdate);
                 _itemsRepository.SaveChanges();
@@ -108,12 +112,13 @@ namespace ListGenerator.Web.Server.Services
             }
         }
 
-        public IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate)
+        public IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId)
         {
             var date = DateTime.ParseExact(secondReplenishmentDate, "dd-MM-yyyy", null);
 
             var query = _itemsRepository.All()
-                .Where(x => x.NextReplenishmentDate.Date < date)
+                .Where(x => x.NextReplenishmentDate.Date < date
+                && x.UserId == userId)
                 .OrderBy(x => x.NextReplenishmentDate);
 
             var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();

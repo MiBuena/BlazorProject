@@ -24,7 +24,7 @@ namespace ListGenerator.Web.Server.Controllers
         [HttpGet("overview")]
         public IActionResult GetOverviewItems()
         {
-            var dtos = _itemsDataService.GetOverviewItemsModels();
+            var dtos = _itemsDataService.GetOverviewItemsModels(this.UserId);
             return Ok(dtos);
         }
 
@@ -38,7 +38,7 @@ namespace ListGenerator.Web.Server.Controllers
         [HttpGet("shoppinglist/{secondReplenishmentDate}")]
         public IActionResult GetShoppingList(string secondReplenishmentDate)
         {
-            var shoppingItems = _itemsDataService.GetShoppingList(secondReplenishmentDate);
+            var shoppingItems = _itemsDataService.GetShoppingList(secondReplenishmentDate, this.UserId);
             return Ok(shoppingItems);
         }
 
@@ -55,7 +55,7 @@ namespace ListGenerator.Web.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdItemId = _itemsDataService.AddItem(itemDto);
+            var createdItemId = _itemsDataService.AddItem(this.UserId, itemDto);
 
             return Created("items", createdItemId);
         }
@@ -80,7 +80,7 @@ namespace ListGenerator.Web.Server.Controllers
                 return NotFound();
             }
 
-            _itemsDataService.UpdateItem(itemDto);
+            _itemsDataService.UpdateItem(this.UserId, itemDto);
 
             return Ok();
         }

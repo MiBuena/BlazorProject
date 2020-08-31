@@ -14,11 +14,15 @@ namespace ListGenerator.Models.Entities
         [MaxLength(40)]
         public string Name { get; set; }
 
-        [Range(1, 52)]
         public double ReplenishmentPeriod { get; set; }
 
         [Required]
         public DateTime NextReplenishmentDate { get; set; }
+
+        public string UserId { get; set; }
+
+        [Required]
+        public ApplicationUser User { get; set; }
 
         public ICollection<Purchase> Purchases { get; set; } = new List<Purchase>();
     }

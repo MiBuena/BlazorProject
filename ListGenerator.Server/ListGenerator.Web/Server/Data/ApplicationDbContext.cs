@@ -17,5 +17,21 @@ namespace ListGenerator.Web.Server.Data
         public DbSet<Item> Items { get; set; }
 
         public DbSet<Purchase> Purchases { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<Purchase>()
+                .HasOne(p => p.Item)
+                .WithMany(b => b.Purchases)
+                .HasForeignKey(p => p.ItemId);
+
+            builder.Entity<Item>()
+                .HasOne(p => p.User)
+                .WithMany(b => b.Items)
+                .HasForeignKey(p => p.UserId);
+        }
     }
 }

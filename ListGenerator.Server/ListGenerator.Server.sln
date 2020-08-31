@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Server", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Client", "ListGenerator.Web\Client\ListGenerator.Web.Client.csproj", "{75A993B8-036C-4729-AC4A-2C7E7BFE582A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Shared", "ListGenerator.Web\Shared\ListGenerator.Web.Shared.csproj", "{880EF940-D36E-43DA-AB86-3653AAE6B344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Shared", "ListGenerator.Web\Shared\ListGenerator.Web.Shared.csproj", "{9E1FF46D-1118-4917-948A-AFD54A4FF4CB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{75A993B8-036C-4729-AC4A-2C7E7BFE582A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75A993B8-036C-4729-AC4A-2C7E7BFE582A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75A993B8-036C-4729-AC4A-2C7E7BFE582A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{880EF940-D36E-43DA-AB86-3653AAE6B344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{880EF940-D36E-43DA-AB86-3653AAE6B344}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{880EF940-D36E-43DA-AB86-3653AAE6B344}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{880EF940-D36E-43DA-AB86-3653AAE6B344}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E1FF46D-1118-4917-948A-AFD54A4FF4CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E1FF46D-1118-4917-948A-AFD54A4FF4CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E1FF46D-1118-4917-948A-AFD54A4FF4CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E1FF46D-1118-4917-948A-AFD54A4FF4CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
