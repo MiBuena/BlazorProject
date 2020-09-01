@@ -1,7 +1,4 @@
 ﻿using AutoMapper;
-using ListGenerator.Common.Interfaces;
-using ListGenerator.Common.Models;
-using ListGenerator.Models;
 using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Web.Shared.ViewModels;
 using ListGenerator.Web.Client.Services;
@@ -11,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ListGenerator.Web.Shared.Interfaces;
 
 namespace ListGenerator.Web.Client.Pages
 {

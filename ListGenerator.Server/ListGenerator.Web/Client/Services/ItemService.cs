@@ -1,17 +1,12 @@
 ﻿using AutoMapper;
-using ListGenerator.Common.Interfaces;
-using ListGenerator.Common.Models;
-using ListGenerator.Models;
+using ListGenerator.Web.Client.Models;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Models.Entities;
 using ListGenerator.Web.Shared.ViewModels;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
+using ListGenerator.Web.Client.Interfaces;
+using ListGenerator.Web.Shared.Interfaces;
 
 namespace ListGenerator.Web.Client.Services
 {

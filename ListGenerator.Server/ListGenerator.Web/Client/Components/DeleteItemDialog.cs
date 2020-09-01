@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using ListGenerator.Common.Models;
 using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Web.Shared.ViewModels;
 using ListGenerator.Web.Client.Services;

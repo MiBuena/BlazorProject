@@ -1,17 +1,15 @@
 using System;
 using System.Net.Http;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using System.Text;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using AutoMapper;
-using ListGenerator.Common.Interfaces;
 using ListGenerator.Web.Client.Services;
-using ListGenerator.Common.Models;
+using ListGenerator.Web.Shared.Interfaces;
+using ListGenerator.Web.Shared.Models;
+using ListGenerator.Web.Client.Interfaces;
+using ListGenerator.Web.Client.Models;
 
 namespace ListGenerator.Web.Client
 {

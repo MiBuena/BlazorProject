@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Models.Entities;
 using ListGenerator.Web.Shared.ViewModels;
 using System;
 
@@ -20,16 +19,11 @@ namespace ListGenerator.Web.Client.AutoMapper
                 .ReverseMap()
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
             
-            CreateMap<ItemDto, Item>()
-                .ReverseMap();
-
             CreateMap<ItemDto, PurchaseItemViewModel>()
                 .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id));
 
             CreateMap<PurchaseItemViewModel, PurchaseItemDto>()
                 .ForMember(item => item.Quantity, opt => opt.MapFrom(a => int.Parse(a.Quantity)));
-
-            CreateMap<PurchaseItemDto, Purchase>();
         }
     }
 }

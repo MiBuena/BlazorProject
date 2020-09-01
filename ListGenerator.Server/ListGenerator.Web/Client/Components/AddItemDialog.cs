@@ -1,10 +1,6 @@
-﻿using ListGenerator.Common.Models;
-using ListGenerator.Web.Shared.ViewModels;
+﻿using ListGenerator.Web.Shared.ViewModels;
 using ListGenerator.Web.Client.Services;
 using Microsoft.AspNetCore.Components;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace ListGenerator.Web.Client.Components

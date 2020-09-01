@@ -5,14 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ListGenerator.Web.Server.Data;
 using AutoMapper;
 using ListGenerator.Web.Server.Interfaces;
 using ListGenerator.Web.Server.Services;
-using ListGenerator.Web.Server.Repositories;
-using ListGenerator.Common.Interfaces;
-using ListGenerator.Common.Models;
-using ListGenerator.Models.Entities;
+using ListGeneratorListGenerator.Data.DB;
+using ListGenerator.Data.Entities;
+using ListGenerator.Data.Interfaces;
+using ListGenerator.Data.Repositories;
+using ListGenerator.Web.Shared.Interfaces;
+using ListGenerator.Web.Shared.Models;
 
 namespace ListGenerator.Web.Server
 {

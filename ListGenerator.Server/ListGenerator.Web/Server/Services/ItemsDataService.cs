@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using ListGenerator.Common.Interfaces;
-using ListGenerator.Models;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Models.Entities;
-using ListGenerator.Web.Shared.ViewModels;
 using ListGenerator.Web.Server.Interfaces;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
+using ListGenerator.Data.Interfaces;
+using ListGenerator.Data.Entities;
+using ListGenerator.Web.Shared.Interfaces;
 
 namespace ListGenerator.Web.Server.Services
 {

@@ -1,10 +1,5 @@
-﻿using ListGenerator.Models;
-using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Models.Entities;
-using System;
+﻿using ListGenerator.Web.Shared.Dtos;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ListGenerator.Web.Server.Interfaces
 {

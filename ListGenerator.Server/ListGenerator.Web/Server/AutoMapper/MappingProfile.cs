@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using ListGenerator.Data.Entities;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Models.Entities;
 using ListGenerator.Web.Shared.ViewModels;
-using System;
 
 namespace ListGenerator.Web.Server.AutoMapper
 {

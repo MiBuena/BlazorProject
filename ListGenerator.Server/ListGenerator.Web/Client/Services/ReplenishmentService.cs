@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
-using ListGenerator.Common.Interfaces;
-using ListGenerator.Common.Models;
+using ListGenerator.Web.Shared.Interfaces;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Web.Shared.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using ListGenerator.Web.Client.Interfaces;
+using ListGenerator.Web.Client.Models;
 
 namespace ListGenerator.Web.Client.Services
 {

@@ -1,7 +1,5 @@
-﻿using ListGenerator.Common.Models;
-using ListGenerator.Models;
+﻿using ListGenerator.Web.Client.Models;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Models.Entities;
 using ListGenerator.Web.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
