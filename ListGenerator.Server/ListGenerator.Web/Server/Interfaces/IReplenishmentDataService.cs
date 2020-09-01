@@ -10,6 +10,6 @@ namespace ListGenerator.Web.Server.Interfaces
     {
         void ReplenishItems(ReplenishmentDto dto);
 
-        DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate);
+        DateTime RegenerateNextReplenishmentDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate);
     }
 }

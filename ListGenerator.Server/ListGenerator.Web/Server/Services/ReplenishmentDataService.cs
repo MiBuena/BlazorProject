@@ -38,19 +38,24 @@ namespace ListGenerator.Web.Server.Services
 
                 var item = allItems.FirstOrDefault(x => x.Id == purchaseItem.ItemId);
 
-                item.NextReplenishmentDate = CalculateNextPurchaseDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity, item.NextReplenishmentDate, purchaseItem.ReplenishmentDate);
+                item.NextReplenishmentDate = CalculateNextReplenishmentDateTime(item.ReplenishmentPeriod, purchaseItem.Quantity, item.NextReplenishmentDate, purchaseItem.ReplenishmentDate);
             }
 
             _itemsRepository.SaveChanges();
         }
 
-        public DateTime RegenerateNextPurchaseDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate)
+        public DateTime RegenerateNextReplenishmentDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate)
         {
             var itemLastPurchase = GetItemLastPurchase(itemId);
 
-            var newPurchaseDate = CalculateNextPurchaseDateTime(newItemReplenishmentPeriod, itemLastPurchase.Quantity, previousReplenishmentDate, itemLastPurchase.ReplenishmentDate);
+            if(itemLastPurchase == null)
+            {
+                return previousReplenishmentDate;
+            }
 
-            return newPurchaseDate;
+            var newReplenishmentDate = CalculateNextReplenishmentDateTime(newItemReplenishmentPeriod, itemLastPurchase.Quantity, previousReplenishmentDate, itemLastPurchase.ReplenishmentDate);
+
+            return newReplenishmentDate;
         }
 
         private Purchase GetItemLastPurchase(int itemId)
@@ -63,7 +68,7 @@ namespace ListGenerator.Web.Server.Services
             return lastPurchase;
         }
 
-        private DateTime CalculateNextPurchaseDateTime(double itemReplenishmentPeriod, int purchasedQuantity, DateTime previousReplenishmentDate, DateTime replenishmentDate)
+        private DateTime CalculateNextReplenishmentDateTime(double itemReplenishmentPeriod, int purchasedQuantity, DateTime previousReplenishmentDate, DateTime replenishmentDate)
         {
             var coveredDays = double.Parse(purchasedQuantity.ToString()) * itemReplenishmentPeriod;
 
