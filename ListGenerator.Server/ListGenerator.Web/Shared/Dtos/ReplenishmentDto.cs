@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ListGenerator.Models.Dtos
+namespace ListGenerator.Web.Shared.Dtos
 {
     public class ReplenishmentDto
     {

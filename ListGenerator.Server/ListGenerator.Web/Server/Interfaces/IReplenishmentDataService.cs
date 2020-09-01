@@ -1,4 +1,4 @@
-﻿using ListGenerator.Models.Dtos;
+﻿using ListGenerator.Web.Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ListGenerator.Common.Interfaces;
-using ListGenerator.Models.Dtos;
+using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Web.Server.Interfaces;
 using System;

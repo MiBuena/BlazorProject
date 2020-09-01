@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ListGenerator.Models\ListGenerator.Models.csproj" />
+    <ProjectReference Include="..\ListGenerator.Web\Shared\ListGenerator.Web.Shared.csproj" />
   </ItemGroup>
 
 </Project>

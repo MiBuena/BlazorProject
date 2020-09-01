@@ -1,4 +1,4 @@
-﻿using ListGenerator.Models.Dtos;
+﻿using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Web.Server.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

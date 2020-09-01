@@ -1,12 +1,7 @@
 ﻿using AutoMapper;
-using ListGenerator.Models.Dtos;
+using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
 
 namespace ListGenerator.Common.AutoMapper
 {

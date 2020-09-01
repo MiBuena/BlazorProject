@@ -1,5 +1,5 @@
 ﻿using IdentityServer4.Extensions;
-using ListGenerator.Models.Dtos;
+using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Web.Server.Extensions;
 using ListGenerator.Web.Server.Interfaces;
 using Microsoft.AspNetCore.Authorization;

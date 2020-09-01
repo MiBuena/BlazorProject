@@ -2,7 +2,7 @@
 using ListGenerator.Common.Interfaces;
 using ListGenerator.Common.Models;
 using ListGenerator.Models;
-using ListGenerator.Models.Dtos;
+using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Models.Entities;
 using ListGenerator.Models.ViewModels;
 using Newtonsoft.Json;
