@@ -1,9 +1,4 @@
 ﻿using ListGenerator.Web.Client.Models;
-using ListGenerator.Web.Shared.Models;
-using ListGenerator.Web.Shared.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ListGenerator.Web.Client.Builders
 {
