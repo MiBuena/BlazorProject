@@ -40,7 +40,7 @@ else
     </div>
 
 
-    <div class="shoppingListHeadline">Your shopping list for @this.FirstReplenishmentDate.ToString("d.MM.yyyy") is:</div>
+    <div class="shoppingListHeadline">Your shopping list for <span class="shoppingListDate">@this.FirstReplenishmentDate.ToString("d.MM.yyyy")</span> is:</div>
 
 
     <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">

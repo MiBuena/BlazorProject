@@ -253,4 +253,7 @@ app {
 
 .shoppingListHeadline {
     margin-bottom: 120px;
+    font-weight: bold;
+    font-size: 20px;
 }
+
