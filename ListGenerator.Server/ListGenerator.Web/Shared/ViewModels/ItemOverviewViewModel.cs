@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ListGenerator.Models.ViewModels
+namespace ListGenerator.Web.Shared.ViewModels
 {
     public class ItemOverviewViewModel : ItemViewModel
     {

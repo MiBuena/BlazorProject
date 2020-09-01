@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Models.Entities;
-using ListGenerator.Models.ViewModels;
+using ListGenerator.Web.Shared.ViewModels;
 
 namespace ListGenerator.Common.AutoMapper
 {

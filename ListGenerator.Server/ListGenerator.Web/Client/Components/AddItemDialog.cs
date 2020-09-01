@@ -1,5 +1,5 @@
 ﻿using ListGenerator.Common.Models;
-using ListGenerator.Models.ViewModels;
+using ListGenerator.Web.Shared.ViewModels;
 using ListGenerator.Web.Client.Services;
 using Microsoft.AspNetCore.Components;
 using System;

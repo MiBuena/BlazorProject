@@ -3,7 +3,7 @@ using ListGenerator.Common.Builders;
 using ListGenerator.Common.Interfaces;
 using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Models.Entities;
-using ListGenerator.Models.ViewModels;
+using ListGenerator.Web.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
