@@ -46,6 +46,12 @@
                             <span class="periodMeasure">day(s)</span>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="nextReplenishmentDate" class="col-sm-3">Next Replenishment Date: </label>
+                            <InputDate class="appInputControl" @bind-Value="@ItemToUpdate.NextReplenishmentDate"></InputDate>
+                            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToUpdate.NextReplenishmentDate)" />
+                        </div>
+
                         <button type="submit" class="btn btn-primary edit-btn">Save item</button>
 
                     </EditForm>

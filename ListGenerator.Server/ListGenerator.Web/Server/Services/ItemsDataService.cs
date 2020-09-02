@@ -62,8 +62,6 @@ namespace ListGenerator.Web.Server.Services
         {
             var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
 
-            itemEntity.NextReplenishmentDate = _dateTimeProvider.GetDateTimeNow();
-
             itemEntity.UserId = userId;
 
             _itemsRepository.Add(itemEntity);
@@ -79,17 +77,9 @@ namespace ListGenerator.Web.Server.Services
 
             if(itemToUpdate != null)
             {
-                var oldReplenishmentPeriod = itemToUpdate.ReplenishmentPeriod;
-                var newReplenishmentPeriod = itemDto.ReplenishmentPeriod;
-
-                if (newReplenishmentPeriod != oldReplenishmentPeriod)
-                {
-                    var newItemNextReplenishmentDate = _replenishmentDataService.RegenerateNextReplenishmentDateTime(itemToUpdate.Id, newReplenishmentPeriod, itemToUpdate.NextReplenishmentDate);
-                    itemToUpdate.NextReplenishmentDate = newItemNextReplenishmentDate;
-                }
-
                 itemToUpdate.Name = itemDto.Name;
                 itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
+                itemToUpdate.NextReplenishmentDate = itemDto.NextReplenishmentDate;
                 itemToUpdate.UserId = userId;
                
                 _itemsRepository.Update(itemToUpdate);

@@ -9,7 +9,5 @@ namespace ListGenerator.Web.Server.Interfaces
     public interface IReplenishmentDataService
     {
         void ReplenishItems(ReplenishmentDto dto);
-
-        DateTime RegenerateNextReplenishmentDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate);
     }
 }

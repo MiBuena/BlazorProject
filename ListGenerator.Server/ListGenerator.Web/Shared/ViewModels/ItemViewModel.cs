@@ -18,5 +18,8 @@ namespace ListGenerator.Web.Shared.ViewModels
         [MinLength(1)]
         [MaxLength(2)]
         public string ReplenishmentPeriod { get; set; } = "1";
+
+        [Required]
+        public DateTime NextReplenishmentDate { get; set; } = DateTime.Now;
     }
 }

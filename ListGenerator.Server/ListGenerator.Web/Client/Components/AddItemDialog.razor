@@ -31,19 +31,25 @@
                             <InputSelect id="country" class="form-control col-sm-2" @bind-Value="@ItemToAdd.ReplenishmentPeriod">
 
                                 @for (int i = 1; i <= 90; i++)
-                                {
+                                    {
                                     @if (i == 1)
-                                    {
+                                        {
                                         <option value="@i" selected="selected">@i</option>
-                                    }
-                                    else
-                                    {
+                                        }
+                                        else
+                                        {
                                         <option value="@i">@i</option>
+                                        }
                                     }
-                                }
 
                             </InputSelect>
                             <span class="periodMeasure">day(s)</span>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="nextReplenishmentDate" class="col-sm-3">Next Replenishment Date: </label>
+                            <InputDate class="appInputControl" @bind-Value="@ItemToAdd.NextReplenishmentDate"></InputDate>
+                            <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToAdd.NextReplenishmentDate)" />
                         </div>
 
                         <button type="submit" class="btn btn-primary edit-btn">Save item</button>

@@ -45,30 +45,6 @@ namespace ListGenerator.Web.Server.Services
             _itemsRepository.SaveChanges();
         }
 
-        public DateTime RegenerateNextReplenishmentDateTime(int itemId, double newItemReplenishmentPeriod, DateTime previousReplenishmentDate)
-        {
-            var itemLastPurchase = GetItemLastPurchase(itemId);
-
-            if(itemLastPurchase == null)
-            {
-                return previousReplenishmentDate;
-            }
-
-            var newReplenishmentDate = CalculateNextReplenishmentDateTime(newItemReplenishmentPeriod, itemLastPurchase.Quantity, previousReplenishmentDate, itemLastPurchase.ReplenishmentDate);
-
-            return newReplenishmentDate;
-        }
-
-        private Purchase GetItemLastPurchase(int itemId)
-        {
-            var lastPurchase = _purchaseRepository.All()
-                .Where(x => x.ItemId == itemId)
-                .OrderByDescending(y => y.ReplenishmentDate)
-                .FirstOrDefault();
-
-            return lastPurchase;
-        }
-
         private DateTime CalculateNextReplenishmentDateTime(double itemReplenishmentPeriod, int purchasedQuantity, DateTime previousReplenishmentDate, DateTime replenishmentDate)
         {
             var coveredDays = double.Parse(purchasedQuantity.ToString()) * itemReplenishmentPeriod;
