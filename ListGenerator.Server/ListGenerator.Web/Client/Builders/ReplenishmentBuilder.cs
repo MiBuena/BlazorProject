@@ -1,4 +1,6 @@
-﻿using ListGenerator.Web.Shared.Dtos;
+﻿using AutoMapper;
+using ListGenerator.Web.Shared.Dtos;
+using ListGenerator.Web.Shared.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +10,25 @@ namespace ListGenerator.Web.Client.Builders
 {
     public class ReplenishmentBuilder : IReplenishmentBuilder
     {
-        public ReplenishmentDto BuildReplenishmentDto()
+        private readonly IMapper _mapper;
+
+        public ReplenishmentBuilder(IMapper mapper)
         {
-            throw new NotImplementedException();
+            _mapper = mapper;
+        }
+
+        public ReplenishmentDto BuildReplenishmentDto(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, PurchaseItemViewModel viewModel)
+        {
+            var dto = _mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(viewModel);
+
+            var replenishmentModel = new ReplenishmentDto()
+            {
+                FirstReplenishmentDate = firstReplenishmentDate,
+                SecondReplenishmentDate = secondReplenishmentDate
+            };
+
+            replenishmentModel.Purchaseitems.Add(dto);
+            return replenishmentModel;
         }
     }
 }

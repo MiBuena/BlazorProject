@@ -32,7 +32,7 @@ namespace ListGenerator.Web.Client
             builder.Services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddTransient<IApiClient, ApiClient>();
             builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
-
+            builder.Services.AddTransient<IReplenishmentBuilder, ReplenishmentBuilder>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

@@ -31,9 +31,11 @@ namespace ListGenerator.Web.Client.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
-
         [Inject]
         public IItemBuilder ItemBuilder { get; set; }
+
+        [Inject]
+        public IReplenishmentBuilder ReplenishmentBuilder { get; set; }
 
         public List<PurchaseItemViewModel> ReplenishmentItems { get; set; }
 
@@ -72,7 +74,6 @@ namespace ListGenerator.Web.Client.Pages
             this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 
-
         protected async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
         {
             this.UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString());
@@ -99,14 +100,8 @@ namespace ListGenerator.Web.Client.Pages
         protected async Task ReplenishItem(int itemId)
         {
             var viewModel = this.ReplenishmentItems.FirstOrDefault(x => x.ItemId == itemId);
-
-            var dto = Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(viewModel);
-
-            var replenishmentModel = new ReplenishmentDto();
-            replenishmentModel.FirstReplenishmentDate = FirstReplenishmentDate;
-            replenishmentModel.SecondReplenishmentDate = SecondReplenishmentDate;
-            replenishmentModel.Purchaseitems.Add(dto);
-
+            var replenishmentModel = ReplenishmentBuilder.BuildReplenishmentDto(this.FirstReplenishmentDate, this.SecondReplenishmentDate, viewModel);
+            
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
