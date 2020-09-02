@@ -9,16 +9,30 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Web.Client.Builders
 {
-    public static class ItemBuilder
+    public class ItemBuilder : IItemBuilder
     {
-        public static ItemViewModel Build(DateTime nextReplenishmentDate)
+        private IDateTimeProvider _dateTimeProvider;
+
+        public ItemBuilder(IDateTimeProvider dateTimeProvider)
+        {
+            _dateTimeProvider = dateTimeProvider;
+        }
+
+        public ItemViewModel BuildItemViewModel()
         {
             var model = new ItemViewModel()
             {
-                NextReplenishmentDate = nextReplenishmentDate
+                NextReplenishmentDate = _dateTimeProvider.GetDateTimeNowDate()
             };
 
             return model;
         }
+
+        //public IEnumerable<PurchaseItemViewModel> BuildPurchaseItemViewModels(hmentDate, IEnumerable<ItemDto> itemDtos)
+        //{
+
+        //}
+
+
     }
 }

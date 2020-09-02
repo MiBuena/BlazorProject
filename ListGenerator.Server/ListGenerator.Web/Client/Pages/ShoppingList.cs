@@ -74,6 +74,8 @@ namespace ListGenerator.Web.Client.Pages
                     ? "itemNeedsReplenishment"
                     : "";
 
+                item.ReplenishmentDate = DateTimeProvider.GetDateTimeNowDate();
+
                 var itemDto = dtos.FirstOrDefault(x => x.Id == item.ItemId);
 
                 item.Quantity = RecommendedPurchaseQuantity(itemDto.ReplenishmentPeriod, itemDto.NextReplenishmentDate).ToString();

@@ -10,6 +10,7 @@ using ListGenerator.Web.Shared.Interfaces;
 using ListGenerator.Web.Shared.Models;
 using ListGenerator.Web.Client.Interfaces;
 using ListGenerator.Web.Client.Models;
+using ListGenerator.Web.Client.Builders;
 
 namespace ListGenerator.Web.Client
 {
@@ -30,6 +31,8 @@ namespace ListGenerator.Web.Client
             builder.Services.AddTransient<IReplenishmentService, ReplenishmentService>();
             builder.Services.AddTransient<IDateTimeProvider, DateTimeProvider>();
             builder.Services.AddTransient<IApiClient, ApiClient>();
+            builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
+
 
             builder.Services.AddAutoMapper(typeof(Program));
 

@@ -20,11 +20,14 @@ namespace ListGenerator.Web.Client.Components
         [Parameter]
         public EventCallback<bool> CloseEventCallback { get; set; }
 
+        [Inject]
+        public IItemBuilder ItemBuilder { get; set; }
+
         public bool ShowDialog { get; set; }
 
         protected override void OnInitialized()
         {
-            ItemToAdd = ItemBuilder.Build(DateTimeProvider.GetDateTimeNowDate());
+            ItemToAdd = ItemBuilder.BuildItemViewModel();
         }
 
         public void Show()
