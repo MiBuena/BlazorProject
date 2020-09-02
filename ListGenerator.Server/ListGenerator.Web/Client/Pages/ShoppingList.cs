@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ListGenerator.Web.Shared.Interfaces;
 using System.Security.Cryptography.X509Certificates;
+using ListGenerator.Web.Client.Builders;
 
 namespace ListGenerator.Web.Client.Pages
 {
@@ -30,6 +31,10 @@ namespace ListGenerator.Web.Client.Pages
 
         [Inject]
         public IMapper Mapper { get; set; }
+
+
+        [Inject]
+        public IItemBuilder ItemBuilder { get; set; }
 
         public List<PurchaseItemViewModel> ReplenishmentItems { get; set; }
 
@@ -65,32 +70,9 @@ namespace ListGenerator.Web.Client.Pages
         private async Task InitializeReplenishmentItemsCollection()
         {
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
-            var replenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
-
-            foreach (var item in replenishmentItems)
-            {
-                item.ReplenishmentSignalClass =
-                    item.NextReplenishmentDate < this.FirstReplenishmentDate
-                    ? "itemNeedsReplenishment"
-                    : "";
-
-                item.ReplenishmentDate = DateTimeProvider.GetDateTimeNowDate();
-
-                var itemDto = dtos.FirstOrDefault(x => x.Id == item.ItemId);
-
-                item.Quantity = RecommendedPurchaseQuantity(itemDto.ReplenishmentPeriod, itemDto.NextReplenishmentDate).ToString();
-            }
-            this.ReplenishmentItems = replenishmentItems;
+            this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 
-        private double RecommendedPurchaseQuantity(double itemReplenishmentPeriod, DateTime nextReplenishmentDate)
-        {
-            var timeToBeCoveredWithSupplies = (this.SecondReplenishmentDate - nextReplenishmentDate).Days;
-
-            var neededQuantity = Math.Ceiling(timeToBeCoveredWithSupplies / itemReplenishmentPeriod);
-
-            return neededQuantity;
-        }
 
         protected async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
         {
