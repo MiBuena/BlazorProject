@@ -41,16 +41,16 @@ namespace ListGenerator.Web.Client.Pages
         public DateTime DateTimeNow { get; set; }
 
 
-        protected void ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
+        protected async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
         {
             this.FirstReplenishmentDate = DateTime.Parse(e.Value.ToString());
+            await InitializeReplenishmentItemsCollection();
         }
 
         protected async Task ChangeSecondReplenishmentDateValue(ChangeEventArgs e)
         {
             this.SecondReplenishmentDate = DateTime.Parse(e.Value.ToString());
             await InitializeReplenishmentItemsCollection();
-            StateHasChanged();
         }
 
         protected override async Task OnInitializedAsync()
@@ -80,7 +80,6 @@ namespace ListGenerator.Web.Client.Pages
         protected async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
         {
             this.UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString());
-
             await GenerateListFromDayOfWeek();
         }
 
@@ -116,8 +115,6 @@ namespace ListGenerator.Web.Client.Pages
 
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
             this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
-
-            StateHasChanged();
         }
 
         protected async Task ReplenishAllItems()
