@@ -12,7 +12,7 @@ namespace ListGenerator.Web.Client.Components
 {
     public partial class EditItemDialog
     {
-        public ItemViewModel ItemToUpdate { get; set; } = new ItemViewModel();
+        public ItemViewModel ItemToUpdate { get; set; }
 
         [Inject]
         public IItemService ItemService { get; set; }

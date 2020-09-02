@@ -2,24 +2,33 @@
 using ListGenerator.Web.Client.Services;
 using Microsoft.AspNetCore.Components;
 using System.Threading.Tasks;
+using ListGenerator.Web.Client.Builders;
+using ListGenerator.Web.Shared.Interfaces;
 
 namespace ListGenerator.Web.Client.Components
 {
     public partial class AddItemDialog
     {
-        public ItemViewModel ItemToAdd { get; set; } = new ItemViewModel();
+        public ItemViewModel ItemToAdd { get; set; }
 
         [Inject]
         public IItemService ItemService { get; set; }
+
+        [Inject]
+        private IDateTimeProvider DateTimeProvider { get; set; }
 
         [Parameter]
         public EventCallback<bool> CloseEventCallback { get; set; }
 
         public bool ShowDialog { get; set; }
 
+        protected override void OnInitialized()
+        {
+            ItemToAdd = ItemBuilder.Build(DateTimeProvider.GetDateTimeNowDate());
+        }
+
         public void Show()
         {
-            ItemToAdd = new ItemViewModel();
             ShowDialog = true;
             StateHasChanged();
         }
