@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ListGenerator.Web.Shared.Interfaces;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ListGenerator.Web.Client.Pages
 {
@@ -72,10 +73,22 @@ namespace ListGenerator.Web.Client.Pages
                     item.NextReplenishmentDate < this.FirstReplenishmentDate
                     ? "itemNeedsReplenishment"
                     : "";
+
+                var itemDto = dtos.FirstOrDefault(x => x.Id == item.ItemId);
+
+                item.Quantity = RecommendedPurchaseQuantity(itemDto.ReplenishmentPeriod, itemDto.NextReplenishmentDate).ToString();
             }
             this.ReplenishmentItems = replenishmentItems;
         }
 
+        private double RecommendedPurchaseQuantity(double itemReplenishmentPeriod, DateTime nextReplenishmentDate)
+        {
+            var timeToBeCoveredWithSupplies = (this.SecondReplenishmentDate - nextReplenishmentDate).Days;
+
+            var neededQuantity = Math.Ceiling(timeToBeCoveredWithSupplies / itemReplenishmentPeriod);
+
+            return neededQuantity;
+        }
 
         protected async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
         {

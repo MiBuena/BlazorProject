@@ -16,6 +16,6 @@ namespace ListGenerator.Web.Shared.ViewModels
 
         public string ReplenishmentSignalClass { get; set; }
 
-        public DateTime ReplenishmentDate { get; set; } = DateTime.Now;
+        public DateTime ReplenishmentDate { get; set; }
     }
 }

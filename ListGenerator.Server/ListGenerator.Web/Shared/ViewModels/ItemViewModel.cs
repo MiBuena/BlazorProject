@@ -20,6 +20,6 @@ namespace ListGenerator.Web.Shared.ViewModels
         public string ReplenishmentPeriod { get; set; } = "1";
 
         [Required]
-        public DateTime NextReplenishmentDate { get; set; } = DateTime.Now;
+        public DateTime NextReplenishmentDate { get; set; }
     }
 }

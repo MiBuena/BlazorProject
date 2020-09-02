@@ -11,5 +11,10 @@ namespace ListGenerator.Web.Shared.Models
         {
             return DateTime.Now;
         }
+
+        public DateTime GetDateTimeNowDate()
+        {
+            return DateTime.Now.Date;
+        }
     }
 }

@@ -7,5 +7,7 @@ namespace ListGenerator.Web.Shared.Interfaces
     public interface IDateTimeProvider
     {
         DateTime GetDateTimeNow();
+
+        DateTime GetDateTimeNowDate();
     }
 }
