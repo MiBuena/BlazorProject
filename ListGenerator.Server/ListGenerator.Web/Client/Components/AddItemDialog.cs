@@ -14,9 +14,6 @@ namespace ListGenerator.Web.Client.Components
         [Inject]
         public IItemService ItemService { get; set; }
 
-        [Inject]
-        private IDateTimeProvider DateTimeProvider { get; set; }
-
         [Parameter]
         public EventCallback<bool> CloseEventCallback { get; set; }
 

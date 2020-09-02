@@ -9,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ListGenerator.Web.Shared.Interfaces;
-using System.Security.Cryptography.X509Certificates;
 using ListGenerator.Web.Client.Builders;
 
 namespace ListGenerator.Web.Client.Pages
@@ -61,7 +60,7 @@ namespace ListGenerator.Web.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            this.DateTimeNow = DateTimeProvider.GetDateTimeNow();
+            this.DateTimeNow = DateTimeProvider.GetDateTimeNowDate();
             this.UsualShoppingDay = DayOfWeek.Sunday;
 
             await GenerateListFromDayOfWeek();
@@ -111,7 +110,7 @@ namespace ListGenerator.Web.Client.Pages
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
-            this.ReplenishmentItems = dtos.Select(x => Mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
+            this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 
         protected async Task ReplenishAllItems()
