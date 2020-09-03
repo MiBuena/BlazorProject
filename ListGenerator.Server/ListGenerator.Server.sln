@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGenerator.Web.Shared", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListGeneration.Data", "ListGeneration.Data\ListGeneration.Data.csproj", "{46A1CF06-6029-4F8F-8834-920D12246FAD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Web.UnitTests", "ListGenerator.Web.UnitTests\ListGenerator.Web.UnitTests.csproj", "{F8CB7933-DA82-4C84-95DA-94E34CDF60F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListGenerator.Web.UnitTests", "ListGenerator.Web.UnitTests\ListGenerator.Web.UnitTests.csproj", "{87F2BA75-8E1D-41C2-ABC5-97842E46CCFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,10 +35,10 @@ Global
 		{46A1CF06-6029-4F8F-8834-920D12246FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46A1CF06-6029-4F8F-8834-920D12246FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46A1CF06-6029-4F8F-8834-920D12246FAD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F8CB7933-DA82-4C84-95DA-94E34CDF60F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8CB7933-DA82-4C84-95DA-94E34CDF60F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8CB7933-DA82-4C84-95DA-94E34CDF60F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8CB7933-DA82-4C84-95DA-94E34CDF60F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87F2BA75-8E1D-41C2-ABC5-97842E46CCFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87F2BA75-8E1D-41C2-ABC5-97842E46CCFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87F2BA75-8E1D-41C2-ABC5-97842E46CCFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87F2BA75-8E1D-41C2-ABC5-97842E46CCFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
