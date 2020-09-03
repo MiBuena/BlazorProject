@@ -37,7 +37,7 @@ namespace ListGenerator.Web.Client.Pages
         [Inject]
         public IReplenishmentBuilder ReplenishmentBuilder { get; set; }
 
-        public List<PurchaseItemViewModel> ReplenishmentItems { get; set; }
+        public List<PurchaseItemViewModel> ReplenishmentItems { get; set; } = new List<PurchaseItemViewModel>();
 
         public DateTime FirstReplenishmentDate { get; set; }
 
@@ -47,6 +47,7 @@ namespace ListGenerator.Web.Client.Pages
 
         public DateTime DateTimeNow { get; set; }
 
+        public string ErrorMessage { get; set; }
 
         protected async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
         {
@@ -101,7 +102,7 @@ namespace ListGenerator.Web.Client.Pages
         {
             var viewModel = this.ReplenishmentItems.FirstOrDefault(x => x.ItemId == itemId);
             var replenishmentModel = ReplenishmentBuilder.BuildReplenishmentDto(this.FirstReplenishmentDate, this.SecondReplenishmentDate, viewModel);
-            
+
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
             var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);

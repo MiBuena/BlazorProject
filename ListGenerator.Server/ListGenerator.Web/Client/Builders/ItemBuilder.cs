@@ -33,7 +33,7 @@ namespace ListGenerator.Web.Client.Builders
         }
 
         public List<PurchaseItemViewModel> BuildPurchaseItemViewModels(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<ItemDto> itemsDtos)
-        {
+        {       
             var replenishmentItems = itemsDtos.Select(x => _mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
 
             foreach (var item in replenishmentItems)
