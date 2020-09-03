@@ -7,11 +7,6 @@ namespace ListGenerator.Web.Shared.Models
 {
     public class DateTimeProvider : IDateTimeProvider
     {
-        public DateTime GetDateTimeNow()
-        {
-            return DateTime.Now;
-        }
-
         public DateTime GetDateTimeNowDate()
         {
             return DateTime.Now.Date;
