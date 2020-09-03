@@ -22,13 +22,9 @@ namespace ListGenerator.Web.Client.Components
 
         public bool ShowDialog { get; set; }
 
-        protected override void OnInitialized()
-        {
-            ItemToAdd = ItemBuilder.BuildItemViewModel();
-        }
-
         public void Show()
         {
+            ItemToAdd = ItemBuilder.BuildItemViewModel();
             ShowDialog = true;
             StateHasChanged();
         }

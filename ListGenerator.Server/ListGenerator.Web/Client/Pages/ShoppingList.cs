@@ -110,11 +110,7 @@ namespace ListGenerator.Web.Client.Pages
 
         protected async Task ReplenishAllItems()
         {
-            var replenishmentModel = new ReplenishmentDto()
-            {
-                FirstReplenishmentDate = FirstReplenishmentDate,
-                Purchaseitems = this.ReplenishmentItems.Select(x => Mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x)).ToList()
-            };
+            var replenishmentModel = ReplenishmentBuilder.BuildReplenishmentDto(this.FirstReplenishmentDate, this.SecondReplenishmentDate, this.ReplenishmentItems);
 
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
             NavigateToAllItems();

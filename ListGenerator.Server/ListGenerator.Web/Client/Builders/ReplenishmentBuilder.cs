@@ -21,13 +21,29 @@ namespace ListGenerator.Web.Client.Builders
         {
             var dto = _mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(viewModel);
 
+            var replenishmentModel = GetReplenishmentDtoWithBasicProperties(firstReplenishmentDate, secondReplenishmentDate);
+
+            replenishmentModel.Purchaseitems.Add(dto);
+            return replenishmentModel;
+        }
+
+        public ReplenishmentDto BuildReplenishmentDto(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, List<PurchaseItemViewModel> viewModels)
+        {
+            var replenishmentModel = GetReplenishmentDtoWithBasicProperties(firstReplenishmentDate, secondReplenishmentDate);
+
+            replenishmentModel.Purchaseitems = viewModels.Select(x => _mapper.Map<PurchaseItemViewModel, PurchaseItemDto>(x)).ToList();
+
+            return replenishmentModel;
+        }
+
+        private ReplenishmentDto GetReplenishmentDtoWithBasicProperties(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate)
+        {
             var replenishmentModel = new ReplenishmentDto()
             {
                 FirstReplenishmentDate = firstReplenishmentDate,
                 SecondReplenishmentDate = secondReplenishmentDate
             };
 
-            replenishmentModel.Purchaseitems.Add(dto);
             return replenishmentModel;
         }
     }
