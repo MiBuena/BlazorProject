@@ -39,5 +39,38 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             //Assert
             result.NextReplenishmentDate.Should().BeSameDateAs(mockDate);
         }
+
+
+        [Test]
+        public void Should_HaveReplenishmentPeriod_SetToIntDefaultValueAsString()
+        {
+            //Arrange
+            var mockDate = new DateTime(2020, 09, 01);
+            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+
+            //Act
+            var result = _itemBuilder.BuildItemViewModel();
+
+            //Assert
+            result.ReplenishmentPeriod.Should().Be("1");
+        }
+
+        [Test]
+        public void Should_HaveAllOtherPropertiesExceptForNextReplenishmentDateAndReplenishmentPeriod_SetToTheirDefaultValues()
+        {
+            //Arrange
+            var mockDate = new DateTime(2020, 09, 01);
+            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+
+            //Act
+            var result = _itemBuilder.BuildItemViewModel();
+
+            //Assert
+
+            AssertAll(
+                () => result.Id.Should().Be(0),
+                () => result.Name.Should().BeNull()
+                );
+        }
     }
 }
