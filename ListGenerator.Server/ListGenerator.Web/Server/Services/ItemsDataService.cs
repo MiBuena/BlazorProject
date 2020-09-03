@@ -14,15 +14,11 @@ namespace ListGenerator.Web.Server.Services
     {
         private readonly IRepository<Item> _itemsRepository;
         private readonly IMapper _mapper;
-        private readonly IDateTimeProvider _dateTimeProvider;
-        private readonly IReplenishmentDataService _replenishmentDataService;
 
-        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper, IDateTimeProvider dateTimeProvider, IReplenishmentDataService replenishmentDataService)
+        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper)
         {
             _itemsRepository = itemsRepository;
             _mapper = mapper;
-            _dateTimeProvider = dateTimeProvider;
-            _replenishmentDataService = replenishmentDataService;
         }
 
         public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId)

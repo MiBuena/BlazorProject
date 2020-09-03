@@ -11,13 +11,11 @@ namespace ListGenerator.Web.Client.Services
     {
         private readonly IApiClient _apiClient;
         private readonly IJsonHelper _jsonHelper;
-        private readonly IMapper _mapper;
 
-        public ReplenishmentService(IApiClient apiClient, IJsonHelper jsonHelper, IMapper mapper)
+        public ReplenishmentService(IApiClient apiClient, IJsonHelper jsonHelper)
         {
             _apiClient = apiClient;
             _jsonHelper = jsonHelper;
-            _mapper = mapper;
         }
 
         public async Task<ApiResponse> ReplenishItems(ReplenishmentDto replenishmentModel)

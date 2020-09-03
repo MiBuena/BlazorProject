@@ -15,14 +15,12 @@ namespace ListGenerator.Web.Server.Services
     {
         private readonly IRepository<Item> _itemsRepository;
         private readonly IRepository<Purchase> _purchaseRepository;
-        private readonly IDateTimeProvider _dateTimeProvider;
         private readonly IMapper _mapper;
 
-        public ReplenishmentDataService(IRepository<Item> items, IDateTimeProvider dateTimeProvider, IMapper mapper, IRepository<Purchase> purchaseRepository) 
+        public ReplenishmentDataService(IRepository<Item> items, IMapper mapper, IRepository<Purchase> purchaseRepository) 
         {
             _itemsRepository = items;
             _purchaseRepository = purchaseRepository;
-            _dateTimeProvider = dateTimeProvider;
             _mapper = mapper;
         }
 
