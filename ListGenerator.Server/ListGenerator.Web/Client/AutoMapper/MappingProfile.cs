@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Web.Shared.ViewModels;
+using ListGenerator.Web.Client.ViewModels;
 using System;
 
 namespace ListGenerator.Web.Client.AutoMapper

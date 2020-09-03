@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ListGenerator.Web.Shared.ViewModels
+namespace ListGenerator.Web.Client.ViewModels
 {
     public class ItemViewModel
     {

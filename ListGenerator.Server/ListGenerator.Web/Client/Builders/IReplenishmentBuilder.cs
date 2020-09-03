@@ -1,5 +1,5 @@
 ﻿using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Web.Shared.ViewModels;
+using ListGenerator.Web.Client.ViewModels;
 using System;
 using System.Collections.Generic;
 

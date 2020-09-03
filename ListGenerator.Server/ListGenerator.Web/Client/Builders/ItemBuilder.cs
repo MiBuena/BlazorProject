@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using ListGenerator.Web.Shared.Dtos;
 using ListGenerator.Web.Shared.Interfaces;
-using ListGenerator.Web.Shared.ViewModels;
+using ListGenerator.Web.Client.ViewModels;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;

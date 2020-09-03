@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using ListGenerator.Web.Shared.Dtos;
-using ListGenerator.Web.Shared.ViewModels;
+using ListGenerator.Web.Client.ViewModels;
 using ListGenerator.Web.Client.Components;
 using ListGenerator.Web.Client.Services;
 using Microsoft.AspNetCore.Authorization;
