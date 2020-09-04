@@ -55,9 +55,9 @@ namespace ListGenerator.Web.Client.Services
 
         public void Sort(int id)
         {
-            var tableHeadings = Initialize();
+            var tableHeadings = GetItemsOverviewHeadings();
 
-            var sortingRules = GetSortingDirections();
+            var sortingRules = GetSortingDirections().ToList();
 
             var heading = tableHeadings.FirstOrDefault(x => x.Id == id);
 
@@ -67,7 +67,7 @@ namespace ListGenerator.Web.Client.Services
         }
 
 
-        public List<Heading> Initialize()
+        public List<Heading> GetItemsOverviewHeadings()
         {
             var defaultHeadingRule = new OverviewTableHeading()
             {
@@ -127,14 +127,6 @@ namespace ListGenerator.Web.Client.Services
 
             return tableHeadings;
         }
-
-        public async Task<List<Heading>> GetItemsOverviewHeadings()
-        {
-            var headings = Initialize();
-
-            return headings;
-        }
-
 
         public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
         {

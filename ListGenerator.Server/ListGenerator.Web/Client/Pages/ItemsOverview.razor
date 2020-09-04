@@ -17,7 +17,7 @@ else
             <tr>
                 @foreach (var item in this.OverviewTable.Headings)
                 {
-                    <th style="background-image: url(@item.HeadingRule.ImageUrl)">@item.ThTitle</th>
+                    <th style="background-image: url(@item.HeadingRule.ImageUrl)" @onclick="(x=> Sort(item.Id))">@item.ThTitle</th>
                 }
                 <th></th>
             </tr>

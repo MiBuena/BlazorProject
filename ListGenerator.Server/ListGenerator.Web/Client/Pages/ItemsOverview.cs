@@ -44,7 +44,7 @@ namespace ListGenerator.Web.Client.Pages
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            var headings = await ItemsService.GetItemsOverviewHeadings();
+            var headings = ItemsService.GetItemsOverviewHeadings();
 
             return new Table()
             {
