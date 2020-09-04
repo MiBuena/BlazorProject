@@ -33,8 +33,6 @@ namespace ListGenerator.Web.Client
             builder.Services.AddTransient<IApiClient, ApiClient>();
             builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
             builder.Services.AddTransient<IReplenishmentBuilder, ReplenishmentBuilder>();
-            builder.Services.AddTransient<ITableSortingService, TableSortingService>();
-
 
             builder.Services.AddAutoMapper(typeof(Program));
 

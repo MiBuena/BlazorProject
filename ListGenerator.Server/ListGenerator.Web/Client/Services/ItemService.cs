@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ListGenerator.Web.Client.Interfaces;
 using ListGenerator.Web.Shared.Interfaces;
+using System.Linq;
 
 namespace ListGenerator.Web.Client.Services
 {
@@ -25,6 +26,115 @@ namespace ListGenerator.Web.Client.Services
             _jsonHelper = jsonHelper;
             _mapper = mapper;
         }
+
+        public List<OverviewTableHeading> GetSortingDirections()
+        {
+            var sortingRules = new List<OverviewTableHeading>();
+
+            sortingRules.Add(new OverviewTableHeading()
+            {
+                ImageUrl = "/Images/sort_both.png",
+                SortingDirection = 0
+            });
+
+            sortingRules.Add(new OverviewTableHeading()
+            {
+                ImageUrl = "/Images/sort_asc.png",
+                SortingDirection = 1
+            });
+
+            sortingRules.Add(new OverviewTableHeading()
+            {
+                ImageUrl = "/Images/sort_desc.png",
+                SortingDirection = 2
+            });
+
+            return sortingRules;
+        }
+
+
+        public void Sort(int id)
+        {
+            var tableHeadings = Initialize();
+
+            var sortingRules = GetSortingDirections();
+
+            var heading = tableHeadings.FirstOrDefault(x => x.Id == id);
+
+            heading.SortingDirection = (heading.SortingDirection + 1) % 3;
+
+            heading.HeadingRule = sortingRules.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
+        }
+
+
+        public List<Heading> Initialize()
+        {
+            var defaultHeadingRule = new OverviewTableHeading()
+            {
+                ImageUrl = "/Images/sort_both.png",
+                SortingDirection = 0
+            };
+
+            var tableHeadings = new List<Heading>();
+
+            tableHeadings.Add(
+                new Heading()
+                {
+                    Id = 0,
+                    ThTitle = "Name",
+                    PropertyName = "Name",
+                    HeadingRule = defaultHeadingRule,
+                }
+            ); ;
+
+            tableHeadings.Add(
+                new Heading()
+                {
+                    Id = 1,
+                    ThTitle = "1 piece is consumed for (days)",
+                    PropertyName = "ReplenishmentPeriod",
+                    HeadingRule = defaultHeadingRule,
+                });
+
+
+            tableHeadings.Add(
+                new Heading()
+                {
+                    Id = 2,
+                    ThTitle = "Last purchase quantity",
+                    PropertyName = "LastReplenishmentQuantity",
+                    HeadingRule = defaultHeadingRule,
+                }
+            );
+
+            tableHeadings.Add(
+                new Heading()
+                {
+                    Id = 3,
+                    ThTitle = "Last purchase date",
+                    PropertyName = "LastReplenishmentDate",
+                    HeadingRule = defaultHeadingRule,
+                });
+
+            tableHeadings.Add(
+                new Heading()
+                {
+                    Id = 4,
+                    ThTitle = "Next replenishment date",
+                    PropertyName = "NextReplenishmentDate",
+                    HeadingRule = defaultHeadingRule,
+                });
+
+            return tableHeadings;
+        }
+
+        public async Task<List<Heading>> GetItemsOverviewHeadings()
+        {
+            var headings = Initialize();
+
+            return headings;
+        }
+
 
         public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
         {

@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace ListGenerator.Web.Client.Pages
 {
@@ -16,15 +17,12 @@ namespace ListGenerator.Web.Client.Pages
     public partial class ItemsOverview
     {
         [Inject]
-        public IItemService ItemService { get; set; }
+        public IItemService ItemsService { get; set; }
 
         [Inject]
         public IMapper Mapper { get; set; }
 
-        [Inject]
-        public ITableSortingService TableSortingService { get; set; }
-
-        public IEnumerable<ItemOverviewViewModel> Items { get; set; }
+        protected Table OverviewTable { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
 
@@ -35,10 +33,29 @@ namespace ListGenerator.Web.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+
         protected override async Task OnInitializedAsync()
         {
-            var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+            this.OverviewTable = await InitializeTable();
+        }
+
+        private async Task<Table> InitializeTable()
+        {
+            var dtos = await ItemsService.GetItemsOverviewModels();
+            var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+
+            var headings = await ItemsService.GetItemsOverviewHeadings();
+
+            return new Table()
+            {
+                Items = items,
+                Headings = headings
+            };
+        }
+
+        protected void Sort(int id)
+        {
+            this.ItemsService.Sort(id);
         }
 
         protected void QuickAddItem()
@@ -48,8 +65,7 @@ namespace ListGenerator.Web.Client.Pages
 
         public async void AddItemDialog_OnDialogClose()
         {
-            var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+            this.OverviewTable = await InitializeTable();
             StateHasChanged();
         }
 
@@ -60,8 +76,7 @@ namespace ListGenerator.Web.Client.Pages
 
         public async void EditItemDialog_OnDialogClose()
         {
-            var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+            this.OverviewTable = await InitializeTable();
             StateHasChanged();
         }
         protected void DeleteItemQuestion(int id)
@@ -71,8 +86,7 @@ namespace ListGenerator.Web.Client.Pages
 
         public async void DeleteItemDialog_OnDialogClose()
         {
-            var dtos = await ItemService.GetItemsOverviewModels();
-            this.Items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+            this.OverviewTable = await InitializeTable();
             StateHasChanged();
         }
 

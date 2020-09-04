@@ -202,7 +202,7 @@ app {
 }
 
 .itemsOverviewTable {
-    width: 80%;
+    width: 90%;
     text-align: center;
     vertical-align: middle;
 }
@@ -255,5 +255,11 @@ app {
     margin-bottom: 120px;
     font-weight: bold;
     font-size: 20px;
+}
+
+th {
+    background-repeat: no-repeat;
+    background-position: center right;
+    padding-right: 20px;
 }
 
