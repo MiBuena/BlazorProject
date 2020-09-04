@@ -21,6 +21,9 @@ namespace ListGenerator.Web.Client.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
+        [Inject]
+        public ITableSortingService TableSortingService { get; set; }
+
         public IEnumerable<ItemOverviewViewModel> Items { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
