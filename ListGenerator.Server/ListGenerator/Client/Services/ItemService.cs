@@ -65,13 +65,15 @@ namespace ListGenerator.Client.Services
 
             heading.HeadingRule = sortingRules.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
 
-            if(heading.SortingDirection == 1)
+            var propertyInfo = typeof(ItemOverviewViewModel).GetProperty(heading.PropertyName);
+
+            if (heading.SortingDirection == 1)
             {
-                items = items.OrderBy(x => x.GetType().GetProperty(heading.PropertyName));
+                items = items.OrderBy(x => propertyInfo.GetValue(x, null));
             }
             else
             {
-                items = items.OrderByDescending(x => x.GetType().GetProperty(heading.PropertyName));
+                items = items.OrderByDescending(x => propertyInfo.GetValue(x, null));
             }
 
 
