@@ -105,7 +105,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 1,
                     ThTitle = "1 piece is consumed for (days)",
-                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("ReplenishmentPeriod"),
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("ReplenishmentPeriodNumber"),
                     HeadingRule = NoSortingTableHeading,
                 });
 

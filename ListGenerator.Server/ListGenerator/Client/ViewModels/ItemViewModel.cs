@@ -20,6 +20,9 @@ namespace ListGenerator.Client.ViewModels
         public string ReplenishmentPeriod { get; set; }
 
         [Required]
+        public int ReplenishmentPeriodNumber { get; set; }
+
+        [Required]
         public DateTime NextReplenishmentDate { get; set; }
     }
 }

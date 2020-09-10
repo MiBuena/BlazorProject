@@ -11,7 +11,11 @@
                 </Template>
             </RadzenGridColumn>*@
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Title="Name" />
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriod" Title="1 piece is consumed for (days)" />
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Title="1 piece is consumed for (days)">
+            <Template Context="data">
+                @data.ReplenishmentPeriodNumber
+            </Template>
+        </RadzenGridColumn>
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Title="Last purchase quantity">
             <Template Context="data">
                 @if (data.LastReplenishmentQuantity == null)
