@@ -9,7 +9,7 @@ namespace ListGenerator.Client.Services
 {
     public class TableService : ITableService
     {
-        public List<OverviewTableHeading> GetSortingDirections()
+        private List<OverviewTableHeading> GetSortingDirections()
         {
             var sortingRules = new List<OverviewTableHeading>();
 
@@ -71,8 +71,18 @@ namespace ListGenerator.Client.Services
             };
         }
 
+        public Table GetTable(IEnumerable<ItemOverviewViewModel> items)
+        {
+            var headings = GetItemsOverviewHeadings();
 
-        public List<Heading> GetItemsOverviewHeadings()
+            return new Table()
+            {
+                Items = items,
+                Headings = headings
+            };
+        }
+
+        private List<Heading> GetItemsOverviewHeadings()
         {
             var defaultHeadingRule = new OverviewTableHeading()
             {

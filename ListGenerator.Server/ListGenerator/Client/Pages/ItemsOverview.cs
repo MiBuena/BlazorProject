@@ -47,13 +47,8 @@ namespace ListGenerator.Client.Pages
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            var headings = TableService.GetItemsOverviewHeadings();
-
-            return new Table()
-            {
-                Items = items,
-                Headings = headings
-            };
+            var table = TableService.GetTable(items);
+            return table;
         }
 
         protected void Sort(int id)

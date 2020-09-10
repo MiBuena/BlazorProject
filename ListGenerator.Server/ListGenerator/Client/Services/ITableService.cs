@@ -9,8 +9,7 @@ namespace ListGenerator.Client.Services
 {
     public interface ITableService
     {
-        List<OverviewTableHeading> GetSortingDirections();
         Table Sort(int id, IEnumerable<ItemOverviewViewModel> items);
-        List<Heading> GetItemsOverviewHeadings();
+        Table GetTable(IEnumerable<ItemOverviewViewModel> items);
     }
 }
