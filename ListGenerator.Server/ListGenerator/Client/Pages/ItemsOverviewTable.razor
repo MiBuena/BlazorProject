@@ -1,0 +1,46 @@
+﻿@page "/allitemstable"
+
+@using ListGenerator.Client.ViewModels;
+
+<RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10"
+            AllowSorting="true" Data="@Items" TItem="ItemOverviewViewModel" ColumnWidth="200px">
+    <Columns>
+        @*<RadzenGridColumn TItem="Employee" Property="Photo" Title="Photo" Sortable="false" Filterable="false">
+                <Template Context="data">
+                    <RadzenImage Path="@data?.Photo" />
+                </Template>
+            </RadzenGridColumn>*@
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Title="Name" />
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriod" Title="1 piece is consumed for (days)" />
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Title="Last purchase quantity">
+            <Template Context="data">
+                @if (data.LastReplenishmentQuantity == null)
+                {
+                    @:-
+                }
+                else
+                {
+                    @data.LastReplenishmentQuantity
+                }
+            </Template>
+        </RadzenGridColumn>
+
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentDate" Title="Last purchase date">
+            <Template Context="data">
+                @if (data.LastReplenishmentDate == null)
+                {
+                    @:-
+                }
+                else
+                {
+                    @String.Format("{0:d}", data.LastReplenishmentDate)
+                }
+            </Template>
+        </RadzenGridColumn>
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="NextReplenishmentDate" Title="Next replenishment date">
+            <Template Context="data">
+                @String.Format("{0:d}", data.NextReplenishmentDate)
+            </Template>
+        </RadzenGridColumn>
+    </Columns>
+</RadzenGrid>

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Client.Services
 {
-    public class TableService : ITableService
+    public class OwnTableService : IOwnTableService
     {
         public TableHeading NoSortingTableHeading { get; set; }
        
@@ -16,7 +16,7 @@ namespace ListGenerator.Client.Services
         public TableHeading DescendingSortingTableHeading { get; set; }
 
 
-        public TableService()
+        public OwnTableService()
         {
             InitializeSortingDirections();
         }

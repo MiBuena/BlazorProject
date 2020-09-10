@@ -1,31 +1,27 @@
 ﻿using AutoMapper;
-using ListGenerator.Shared.Dtos;
-using ListGenerator.Client.ViewModels;
 using ListGenerator.Client.Components;
+using ListGenerator.Client.Services;
+using ListGenerator.Client.ViewModels;
+using ListGenerator.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Reflection;
-using ListGenerator.Client.Services;
 
 namespace ListGenerator.Client.Pages
 {
     [Authorize]
-    public partial class ItemsOverview
+    public partial class ItemsOverviewTable
     {
         [Inject]
         public IItemService ItemsService { get; set; }
 
         [Inject]
-        public IOwnTableService OwnTableService { get; set; }
-
-        [Inject]
         public IMapper Mapper { get; set; }
 
-        protected Table<ItemOverviewViewModel> OverviewTable { get; set; }
+        public IEnumerable<ItemOverviewViewModel> Items { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
 
@@ -39,22 +35,14 @@ namespace ListGenerator.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            this.OverviewTable = await InitializeTable();
+            this.Items = await InitializeItems();
         }
 
-        private async Task<Table<ItemOverviewViewModel>> InitializeTable()
+        private async Task<IEnumerable<ItemOverviewViewModel>> InitializeItems()
         {
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
-
-            var table = OwnTableService.GetItemsOverviewTable(items);
-            return table;
-        }
-
-        protected void Sort(int id)
-        {
-            this.OverviewTable = this.OwnTableService.Sort(id, this.OverviewTable);
-            StateHasChanged();
+            return items;
         }
 
         protected void QuickAddItem()
@@ -64,7 +52,7 @@ namespace ListGenerator.Client.Pages
 
         public async void AddItemDialog_OnDialogClose()
         {
-            this.OverviewTable = await InitializeTable();
+            this.Items = await InitializeItems();
             StateHasChanged();
         }
 
@@ -75,7 +63,7 @@ namespace ListGenerator.Client.Pages
 
         public async void EditItemDialog_OnDialogClose()
         {
-            this.OverviewTable = await InitializeTable();
+            this.Items = await InitializeItems();
             StateHasChanged();
         }
         protected void DeleteItemQuestion(int id)
@@ -85,7 +73,7 @@ namespace ListGenerator.Client.Pages
 
         public async void DeleteItemDialog_OnDialogClose()
         {
-            this.OverviewTable = await InitializeTable();
+            this.Items = await InitializeItems();
             StateHasChanged();
         }
 

@@ -1,4 +1,5 @@
 ﻿@page "/shoppinglist"
+@using ListGenerator.Client.ViewModels
 
 
 @if (this.ReplenishmentItems == null)
@@ -44,8 +45,6 @@ else
 
 
     <EditForm Model="@this.ReplenishmentItems" OnValidSubmit="@ReplenishAllItems">
-
-
 
         <DataAnnotationsValidator />
         <ValidationSummary />

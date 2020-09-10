@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Client.Services
 {
-    public interface ITableService
+    public interface IOwnTableService
     {
         Table<T> Sort<T>(int id, Table<T> table);
         Table<ItemOverviewViewModel> GetItemsOverviewTable(IEnumerable<ItemOverviewViewModel> items);
