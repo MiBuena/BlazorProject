@@ -55,7 +55,6 @@ namespace ListGenerator.Client.Pages
         {
             this.OverviewTable = this.TableService.Sort(id, this.OverviewTable);
             StateHasChanged();
-
         }
 
         protected void QuickAddItem()

@@ -9,6 +9,13 @@ namespace ListGenerator.Client.Services
 {
     public class TableService : ITableService
     {
+        private List<OverviewTableHeading> SortingDirections { get; set; }
+
+        public TableService()
+        {
+            this.SortingDirections = GetSortingDirections();
+        }
+
         private List<OverviewTableHeading> GetSortingDirections()
         {
             var sortingRules = new List<OverviewTableHeading>();
@@ -36,8 +43,6 @@ namespace ListGenerator.Client.Services
 
         public Table Sort(int id, Table table)
         {
-            var sortingRules = GetSortingDirections().ToList();
-
             var heading = table.Headings.FirstOrDefault(x => x.Id == id);
 
             if (heading.SortingDirection == SortingDirection.NoSorting || heading.SortingDirection == SortingDirection.Ascending)
@@ -49,7 +54,7 @@ namespace ListGenerator.Client.Services
                 heading.SortingDirection--;
             }
 
-            heading.HeadingRule = sortingRules.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
+            heading.HeadingRule = SortingDirections.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
 
 
             if (heading.SortingDirection == SortingDirection.Ascending)
