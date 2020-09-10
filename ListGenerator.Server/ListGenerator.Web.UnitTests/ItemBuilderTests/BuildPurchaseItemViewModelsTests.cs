@@ -1,11 +1,8 @@
 ﻿using AutoMapper;
-using ListGenerator.Web.Client.Builders;
-using ListGenerator.Web.Shared.Interfaces;
+using ListGenerator.Shared.Interfaces;
 using Moq;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using ListGenerator.Client.Builders;
 
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {

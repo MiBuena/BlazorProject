@@ -61,19 +61,25 @@ namespace ListGenerator.Client.Services
 
             var heading = tableHeadings.FirstOrDefault(x => x.Id == id);
 
-            heading.SortingDirection = (heading.SortingDirection + 1) % 3;
-
-            heading.HeadingRule = sortingRules.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
-
-            var propertyInfo = typeof(ItemOverviewViewModel).GetProperty(heading.PropertyName);
-
-            if (heading.SortingDirection == 1)
+            if(heading.SortingDirection == 0 || heading.SortingDirection == 1)
             {
-                items = items.OrderBy(x => propertyInfo.GetValue(x, null));
+                heading.SortingDirection++;
             }
             else
             {
-                items = items.OrderByDescending(x => propertyInfo.GetValue(x, null));
+                heading.SortingDirection--;
+            }
+
+            heading.HeadingRule = sortingRules.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
+
+
+            if (heading.SortingDirection == 1)
+            {
+                items = items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
+            }
+            else
+            {
+                items = items.OrderByDescending(x => heading.PropertyInfo.GetValue(x, null)).ToList();
             }
 
 
@@ -100,7 +106,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 0,
                     ThTitle = "Name",
-                    PropertyName = "Name",
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("Name"),
                     HeadingRule = defaultHeadingRule,
                 }
             ); ;
@@ -110,7 +116,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 1,
                     ThTitle = "1 piece is consumed for (days)",
-                    PropertyName = "ReplenishmentPeriod",
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("ReplenishmentPeriod"),
                     HeadingRule = defaultHeadingRule,
                 });
 
@@ -120,7 +126,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 2,
                     ThTitle = "Last purchase quantity",
-                    PropertyName = "LastReplenishmentQuantity",
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("LastReplenishmentQuantity"),
                     HeadingRule = defaultHeadingRule,
                 }
             );
@@ -130,7 +136,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 3,
                     ThTitle = "Last purchase date",
-                    PropertyName = "LastReplenishmentDate",
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("LastReplenishmentDate"),
                     HeadingRule = defaultHeadingRule,
                 });
 
@@ -139,7 +145,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 4,
                     ThTitle = "Next replenishment date",
-                    PropertyName = "NextReplenishmentDate",
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("NextReplenishmentDate"),
                     HeadingRule = defaultHeadingRule,
                 });
 

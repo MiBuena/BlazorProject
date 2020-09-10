@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using FluentAssertions;
-using ListGenerator.Web.Client.Builders;
-using ListGenerator.Web.Shared.Interfaces;
+using ListGenerator.Client.Builders;
+using ListGenerator.Shared.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
@@ -23,7 +21,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
         {
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
             _mapperMock = new Mock<IMapper>();
-            _itemBuilder = new ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
+            _itemBuilder = new ListGenerator.Client.Builders.ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
         }
 
         [Test]

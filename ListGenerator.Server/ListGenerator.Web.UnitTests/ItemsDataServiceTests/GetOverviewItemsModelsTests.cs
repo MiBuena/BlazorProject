@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using ListGenerator.Data.Entities;
 using ListGenerator.Data.Interfaces;
-using ListGenerator.Web.Client.Builders;
-using ListGenerator.Web.Server.Interfaces;
-using ListGenerator.Web.Server.Services;
-using ListGenerator.Web.Shared.Interfaces;
+using ListGenerator.Server.Interfaces;
+using ListGenerator.Server.Services;
 using Moq;
 using NUnit.Framework;
 using System;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ListGenerator.Client.ViewModels
@@ -11,7 +12,7 @@ namespace ListGenerator.Client.ViewModels
 
         public string ThTitle { get; set; }
 
-        public string PropertyName { get; set; }
+        public PropertyInfo PropertyInfo { get; set; }
 
         public int SortingDirection { get; set; }
         public OverviewTableHeading HeadingRule { get; set; }
