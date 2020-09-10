@@ -10,11 +10,11 @@ namespace ListGenerator.Client.Services
     public class TableService : ITableService
     {
 
-        public OverviewTableHeading NoSortingTableHeading { get; set; }
+        public TableHeading NoSortingTableHeading { get; set; }
        
-        public OverviewTableHeading AscendingSortingTableHeading { get; set; }
+        public TableHeading AscendingSortingTableHeading { get; set; }
 
-        public OverviewTableHeading DescendingSortingTableHeading { get; set; }
+        public TableHeading DescendingSortingTableHeading { get; set; }
 
 
         public TableService()
@@ -24,19 +24,19 @@ namespace ListGenerator.Client.Services
 
         private void InitializeSortingDirections()
         {
-            this.NoSortingTableHeading = new OverviewTableHeading()
+            this.NoSortingTableHeading = new TableHeading()
             {
                 ImageUrl = "/Images/sort_both.png",
                 SortingDirection = SortingDirection.NoSorting
             };
 
-            this.AscendingSortingTableHeading = new OverviewTableHeading()
+            this.AscendingSortingTableHeading = new TableHeading()
             {
                 ImageUrl = "/Images/sort_asc.png",
                 SortingDirection = SortingDirection.Ascending
             };
 
-            this.DescendingSortingTableHeading = new OverviewTableHeading()
+            this.DescendingSortingTableHeading = new TableHeading()
             {
                 ImageUrl = "/Images/sort_desc.png",
                 SortingDirection = SortingDirection.Descending
@@ -45,6 +45,8 @@ namespace ListGenerator.Client.Services
 
         public Table<T> Sort<T>(int id, Table<T> table)
         {
+            var tableHeadings = GetItemsOverviewHeadings<T>();
+
             var heading = table.Headings.FirstOrDefault(x => x.Id == id);
 
             if (heading.HeadingRule.SortingDirection == SortingDirection.Descending)
@@ -63,7 +65,7 @@ namespace ListGenerator.Client.Services
 
         public Table<T> GetTable<T>(IEnumerable<T> items)
         {
-            var headings = GetItemsOverviewHeadings();
+            var headings = GetItemsOverviewHeadings<T>();
 
             return new Table<T>()
             {
@@ -72,9 +74,9 @@ namespace ListGenerator.Client.Services
             };
         }
 
-        private List<Heading> GetItemsOverviewHeadings()
+        private List<Heading> GetItemsOverviewHeadings<T>()
         {
-            var defaultHeadingRule = new OverviewTableHeading()
+            var defaultHeadingRule = new TableHeading()
             {
                 ImageUrl = "/Images/sort_both.png",
                 SortingDirection = 0
@@ -87,7 +89,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 0,
                     ThTitle = "Name",
-                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("Name"),
+                    PropertyInfo = typeof(T).GetProperty("Name"),
                     HeadingRule = defaultHeadingRule,
                 }
             ); ;
@@ -97,7 +99,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 1,
                     ThTitle = "1 piece is consumed for (days)",
-                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("ReplenishmentPeriod"),
+                    PropertyInfo = typeof(T).GetProperty("ReplenishmentPeriod"),
                     HeadingRule = defaultHeadingRule,
                 });
 
@@ -107,7 +109,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 2,
                     ThTitle = "Last purchase quantity",
-                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("LastReplenishmentQuantity"),
+                    PropertyInfo = typeof(T).GetProperty("LastReplenishmentQuantity"),
                     HeadingRule = defaultHeadingRule,
                 }
             );
@@ -117,7 +119,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 3,
                     ThTitle = "Last purchase date",
-                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("LastReplenishmentDate"),
+                    PropertyInfo = typeof(T).GetProperty("LastReplenishmentDate"),
                     HeadingRule = defaultHeadingRule,
                 });
 
@@ -126,12 +128,11 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 4,
                     ThTitle = "Next replenishment date",
-                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("NextReplenishmentDate"),
+                    PropertyInfo = typeof(T).GetProperty("NextReplenishmentDate"),
                     HeadingRule = defaultHeadingRule,
                 });
 
             return tableHeadings;
         }
-
     }
 }

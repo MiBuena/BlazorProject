@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Client.ViewModels
 {
-    public class OverviewTableHeading
+    public class TableHeading
     {
         public string ImageUrl { get; set; }
 

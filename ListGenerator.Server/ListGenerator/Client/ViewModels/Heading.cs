@@ -15,6 +15,6 @@ namespace ListGenerator.Client.ViewModels
 
         public PropertyInfo PropertyInfo { get; set; }
 
-        public OverviewTableHeading HeadingRule { get; set; }
+        public TableHeading HeadingRule { get; set; }
     }
 }
