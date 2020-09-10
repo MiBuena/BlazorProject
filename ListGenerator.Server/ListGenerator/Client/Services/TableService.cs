@@ -60,6 +60,7 @@ namespace ListGenerator.Client.Services
             }
 
             tableHeadings.Add(headingToSort);
+            tableHeadings = tableHeadings.OrderBy(x => x.Id).ToList();
 
             return table;
         }
