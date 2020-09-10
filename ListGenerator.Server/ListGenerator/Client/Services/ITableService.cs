@@ -10,6 +10,6 @@ namespace ListGenerator.Client.Services
     public interface ITableService
     {
         Table<T> Sort<T>(int id, Table<T> table);
-        Table<T> GetTable<T>(IEnumerable<T> items);
+        Table<ItemOverviewViewModel> GetItemsOverviewTable(IEnumerable<ItemOverviewViewModel> items);
     }
 }

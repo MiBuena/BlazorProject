@@ -64,11 +64,11 @@ namespace ListGenerator.Client.Services
             return table;
         }
 
-        public Table<T> GetTable<T>(IEnumerable<T> items)
+        public Table<ItemOverviewViewModel> GetItemsOverviewTable(IEnumerable<ItemOverviewViewModel> items)
         {
-            var headings = GetItemsOverviewHeadings<T>();
+            var headings = GetItemsOverviewHeadings();
 
-            return new Table<T>()
+            return new Table<ItemOverviewViewModel>()
             {
                 Items = items,
                 Headings = headings
@@ -85,7 +85,7 @@ namespace ListGenerator.Client.Services
             return headingsToRegenerate;
         }
 
-        private List<Heading> GetItemsOverviewHeadings<T>()
+        private List<Heading> GetItemsOverviewHeadings()
         {
             var tableHeadings = new List<Heading>();
 
@@ -94,7 +94,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 0,
                     ThTitle = "Name",
-                    PropertyInfo = typeof(T).GetProperty("Name"),
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("Name"),
                     HeadingRule = NoSortingTableHeading,
                 }
             ); ;
@@ -104,7 +104,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 1,
                     ThTitle = "1 piece is consumed for (days)",
-                    PropertyInfo = typeof(T).GetProperty("ReplenishmentPeriod"),
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("ReplenishmentPeriod"),
                     HeadingRule = NoSortingTableHeading,
                 });
 
@@ -114,7 +114,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 2,
                     ThTitle = "Last purchase quantity",
-                    PropertyInfo = typeof(T).GetProperty("LastReplenishmentQuantity"),
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("LastReplenishmentQuantity"),
                     HeadingRule = NoSortingTableHeading,
                 }
             );
@@ -124,7 +124,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 3,
                     ThTitle = "Last purchase date",
-                    PropertyInfo = typeof(T).GetProperty("LastReplenishmentDate"),
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("LastReplenishmentDate"),
                     HeadingRule = NoSortingTableHeading,
                 });
 
@@ -133,7 +133,7 @@ namespace ListGenerator.Client.Services
                 {
                     Id = 4,
                     ThTitle = "Next replenishment date",
-                    PropertyInfo = typeof(T).GetProperty("NextReplenishmentDate"),
+                    PropertyInfo = typeof(ItemOverviewViewModel).GetProperty("NextReplenishmentDate"),
                     HeadingRule = AscendingSortingTableHeading,
                 });
 
