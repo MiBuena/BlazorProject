@@ -15,7 +15,6 @@ namespace ListGenerator.Client.ViewModels
 
         public PropertyInfo PropertyInfo { get; set; }
 
-        public SortingDirection SortingDirection { get; set; }
         public OverviewTableHeading HeadingRule { get; set; }
     }
 }

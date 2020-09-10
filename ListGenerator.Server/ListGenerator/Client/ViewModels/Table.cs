@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Client.ViewModels
 {
-    public class Table
+    public class Table<T>
     {
         public List<Heading> Headings { get; set; } = new List<Heading>();
 
-        public IEnumerable<ItemOverviewViewModel> Items { get; set; } = new List<ItemOverviewViewModel>();
+        public IEnumerable<T> Items { get; set; } = new List<T>();
     }
 }

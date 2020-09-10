@@ -25,7 +25,7 @@ namespace ListGenerator.Client.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
-        protected Table OverviewTable { get; set; }
+        protected Table<ItemOverviewViewModel> OverviewTable { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
 
@@ -42,7 +42,7 @@ namespace ListGenerator.Client.Pages
             this.OverviewTable = await InitializeTable();
         }
 
-        private async Task<Table> InitializeTable()
+        private async Task<Table<ItemOverviewViewModel>> InitializeTable()
         {
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));

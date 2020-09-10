@@ -9,71 +9,63 @@ namespace ListGenerator.Client.Services
 {
     public class TableService : ITableService
     {
-        private List<OverviewTableHeading> SortingDirections { get; set; }
+
+        public OverviewTableHeading NoSortingTableHeading { get; set; }
+       
+        public OverviewTableHeading AscendingSortingTableHeading { get; set; }
+
+        public OverviewTableHeading DescendingSortingTableHeading { get; set; }
+
 
         public TableService()
         {
-            this.SortingDirections = GetSortingDirections();
+            InitializeSortingDirections();
         }
 
-        private List<OverviewTableHeading> GetSortingDirections()
+        private void InitializeSortingDirections()
         {
-            var sortingRules = new List<OverviewTableHeading>();
-
-            sortingRules.Add(new OverviewTableHeading()
+            this.NoSortingTableHeading = new OverviewTableHeading()
             {
                 ImageUrl = "/Images/sort_both.png",
                 SortingDirection = SortingDirection.NoSorting
-            });
+            };
 
-            sortingRules.Add(new OverviewTableHeading()
+            this.AscendingSortingTableHeading = new OverviewTableHeading()
             {
                 ImageUrl = "/Images/sort_asc.png",
                 SortingDirection = SortingDirection.Ascending
-            });
+            };
 
-            sortingRules.Add(new OverviewTableHeading()
+            this.DescendingSortingTableHeading = new OverviewTableHeading()
             {
                 ImageUrl = "/Images/sort_desc.png",
                 SortingDirection = SortingDirection.Descending
-            });
-
-            return sortingRules;
+            };
         }
 
-        public Table Sort(int id, Table table)
+        public Table<T> Sort<T>(int id, Table<T> table)
         {
             var heading = table.Headings.FirstOrDefault(x => x.Id == id);
 
-            if (heading.SortingDirection == SortingDirection.NoSorting || heading.SortingDirection == SortingDirection.Ascending)
+            if (heading.HeadingRule.SortingDirection == SortingDirection.Descending)
             {
-                heading.SortingDirection++;
-            }
-            else
-            {
-                heading.SortingDirection--;
-            }
-
-            heading.HeadingRule = SortingDirections.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
-
-
-            if (heading.SortingDirection == SortingDirection.Ascending)
-            {
-                table.Items = table.Items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
-            }
-            else
-            {
+                heading.HeadingRule = AscendingSortingTableHeading;
                 table.Items = table.Items.OrderByDescending(x => heading.PropertyInfo.GetValue(x, null)).ToList();
+            }
+            else
+            {
+                heading.HeadingRule = DescendingSortingTableHeading;
+                table.Items = table.Items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
             }
 
             return table;
         }
 
-        public Table GetTable(IEnumerable<ItemOverviewViewModel> items)
+        public Table<T> GetTable<T>(IEnumerable<T> items)
         {
             var headings = GetItemsOverviewHeadings();
 
-            return new Table()
+            return new Table<T>()
             {
                 Items = items,
                 Headings = headings
