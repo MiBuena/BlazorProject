@@ -7,6 +7,8 @@ namespace ListGenerator.Client.Enums
 {
     public enum SortingDirection
     {
-        
+        NoSorting,
+        Ascending,
+        Descending
     }
 }

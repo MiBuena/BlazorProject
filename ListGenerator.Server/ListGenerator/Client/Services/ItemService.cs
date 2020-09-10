@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ListGenerator.Client.Interfaces;
 using ListGenerator.Shared.Interfaces;
 using System.Linq;
+using ListGenerator.Client.Enums;
 
 namespace ListGenerator.Client.Services
 {
@@ -34,19 +35,19 @@ namespace ListGenerator.Client.Services
             sortingRules.Add(new OverviewTableHeading()
             {
                 ImageUrl = "/Images/sort_both.png",
-                SortingDirection = 0
+                SortingDirection = SortingDirection.NoSorting
             });
 
             sortingRules.Add(new OverviewTableHeading()
             {
                 ImageUrl = "/Images/sort_asc.png",
-                SortingDirection = 1
+                SortingDirection = SortingDirection.Ascending
             });
 
             sortingRules.Add(new OverviewTableHeading()
             {
                 ImageUrl = "/Images/sort_desc.png",
-                SortingDirection = 2
+                SortingDirection = SortingDirection.Descending
             });
 
             return sortingRules;
@@ -61,7 +62,7 @@ namespace ListGenerator.Client.Services
 
             var heading = tableHeadings.FirstOrDefault(x => x.Id == id);
 
-            if(heading.SortingDirection == 0 || heading.SortingDirection == 1)
+            if(heading.SortingDirection == SortingDirection.NoSorting || heading.SortingDirection == SortingDirection.Ascending)
             {
                 heading.SortingDirection++;
             }
@@ -73,7 +74,7 @@ namespace ListGenerator.Client.Services
             heading.HeadingRule = sortingRules.FirstOrDefault(x => x.SortingDirection == heading.SortingDirection);
 
 
-            if (heading.SortingDirection == 1)
+            if (heading.SortingDirection == SortingDirection.Ascending)
             {
                 items = items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
             }

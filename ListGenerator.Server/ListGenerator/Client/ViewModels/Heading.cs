@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ListGenerator.Client.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,7 +15,7 @@ namespace ListGenerator.Client.ViewModels
 
         public PropertyInfo PropertyInfo { get; set; }
 
-        public int SortingDirection { get; set; }
+        public SortingDirection SortingDirection { get; set; }
         public OverviewTableHeading HeadingRule { get; set; }
     }
 }

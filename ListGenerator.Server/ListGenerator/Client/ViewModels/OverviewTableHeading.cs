@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ListGenerator.Client.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,6 @@ namespace ListGenerator.Client.ViewModels
     {
         public string ImageUrl { get; set; }
 
-        public int SortingDirection { get; set; }
+        public SortingDirection SortingDirection { get; set; }
     }
 }
