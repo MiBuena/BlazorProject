@@ -20,6 +20,9 @@ namespace ListGenerator.Client.Pages
         public IItemService ItemsService { get; set; }
 
         [Inject]
+        public ITableService TableService { get; set; }
+
+        [Inject]
         public IMapper Mapper { get; set; }
 
         protected Table OverviewTable { get; set; }
@@ -44,7 +47,7 @@ namespace ListGenerator.Client.Pages
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            var headings = ItemsService.GetItemsOverviewHeadings();
+            var headings = TableService.GetItemsOverviewHeadings();
 
             return new Table()
             {
@@ -55,7 +58,7 @@ namespace ListGenerator.Client.Pages
 
         protected void Sort(int id)
         {
-            this.OverviewTable = this.ItemsService.Sort(id, this.OverviewTable.Items);
+            this.OverviewTable = this.TableService.Sort(id, this.OverviewTable.Items);
             StateHasChanged();
 
         }

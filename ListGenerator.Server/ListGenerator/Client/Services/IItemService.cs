@@ -10,10 +10,8 @@ namespace ListGenerator.Client.Services
 {
     public interface IItemService
     {
-        Table Sort(int id, IEnumerable<ItemOverviewViewModel> items);
-
-        List<Heading> GetItemsOverviewHeadings();
         Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels();
+
         Task<ItemDto> GetItem(int id);
         Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate);
 
