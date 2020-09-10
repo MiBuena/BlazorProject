@@ -34,13 +34,11 @@ namespace ListGenerator.Client.Services
             return sortingRules;
         }
 
-        public Table Sort(int id, IEnumerable<ItemOverviewViewModel> items)
+        public Table Sort(int id, Table table)
         {
-            var tableHeadings = GetItemsOverviewHeadings();
-
             var sortingRules = GetSortingDirections().ToList();
 
-            var heading = tableHeadings.FirstOrDefault(x => x.Id == id);
+            var heading = table.Headings.FirstOrDefault(x => x.Id == id);
 
             if (heading.SortingDirection == SortingDirection.NoSorting || heading.SortingDirection == SortingDirection.Ascending)
             {
@@ -56,19 +54,14 @@ namespace ListGenerator.Client.Services
 
             if (heading.SortingDirection == SortingDirection.Ascending)
             {
-                items = items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
+                table.Items = table.Items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
             }
             else
             {
-                items = items.OrderByDescending(x => heading.PropertyInfo.GetValue(x, null)).ToList();
+                table.Items = table.Items.OrderByDescending(x => heading.PropertyInfo.GetValue(x, null)).ToList();
             }
 
-
-            return new Table()
-            {
-                Items = items,
-                Headings = tableHeadings
-            };
+            return table;
         }
 
         public Table GetTable(IEnumerable<ItemOverviewViewModel> items)

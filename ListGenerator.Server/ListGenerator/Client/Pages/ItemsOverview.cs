@@ -53,7 +53,7 @@ namespace ListGenerator.Client.Pages
 
         protected void Sort(int id)
         {
-            this.OverviewTable = this.TableService.Sort(id, this.OverviewTable.Items);
+            this.OverviewTable = this.TableService.Sort(id, this.OverviewTable);
             StateHasChanged();
 
         }

@@ -9,7 +9,7 @@ namespace ListGenerator.Client.Services
 {
     public interface ITableService
     {
-        Table Sort(int id, IEnumerable<ItemOverviewViewModel> items);
+        Table Sort(int id, Table table);
         Table GetTable(IEnumerable<ItemOverviewViewModel> items);
     }
 }
