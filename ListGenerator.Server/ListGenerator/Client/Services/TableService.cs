@@ -9,7 +9,6 @@ namespace ListGenerator.Client.Services
 {
     public class TableService : ITableService
     {
-
         public TableHeading NoSortingTableHeading { get; set; }
        
         public TableHeading AscendingSortingTableHeading { get; set; }
@@ -45,20 +44,22 @@ namespace ListGenerator.Client.Services
 
         public Table<T> Sort<T>(int id, Table<T> table)
         {
-            var tableHeadings = GetItemsOverviewHeadings<T>();
-
-            var heading = table.Headings.FirstOrDefault(x => x.Id == id);
-
-            if (heading.HeadingRule.SortingDirection == SortingDirection.Descending)
+            var headingToSort = table.Headings.FirstOrDefault(x => x.Id == id);
+            var headingsToRegenerate = table.Headings.Where(x => x.Id != id).ToList();
+            var tableHeadings = RegenerateHeadings(headingsToRegenerate);
+         
+            if (headingToSort.HeadingRule.SortingDirection == SortingDirection.Descending)
             {
-                heading.HeadingRule = AscendingSortingTableHeading;
-                table.Items = table.Items.OrderByDescending(x => heading.PropertyInfo.GetValue(x, null)).ToList();
+                headingToSort.HeadingRule = AscendingSortingTableHeading;
+                table.Items = table.Items.OrderBy(x => headingToSort.PropertyInfo.GetValue(x, null)).ToList();
             }
             else
             {
-                heading.HeadingRule = DescendingSortingTableHeading;
-                table.Items = table.Items.OrderBy(x => heading.PropertyInfo.GetValue(x, null)).ToList();
+                headingToSort.HeadingRule = DescendingSortingTableHeading;
+                table.Items = table.Items.OrderByDescending(x => headingToSort.PropertyInfo.GetValue(x, null)).ToList();
             }
+
+            tableHeadings.Add(headingToSort);
 
             return table;
         }
@@ -74,14 +75,18 @@ namespace ListGenerator.Client.Services
             };
         }
 
+        private ICollection<Heading> RegenerateHeadings(ICollection<Heading> headingsToRegenerate)
+        {
+            foreach (var heading in headingsToRegenerate)
+            {
+                heading.HeadingRule = this.NoSortingTableHeading;
+            }
+
+            return headingsToRegenerate;
+        }
+
         private List<Heading> GetItemsOverviewHeadings<T>()
         {
-            var defaultHeadingRule = new TableHeading()
-            {
-                ImageUrl = "/Images/sort_both.png",
-                SortingDirection = 0
-            };
-
             var tableHeadings = new List<Heading>();
 
             tableHeadings.Add(
@@ -90,7 +95,7 @@ namespace ListGenerator.Client.Services
                     Id = 0,
                     ThTitle = "Name",
                     PropertyInfo = typeof(T).GetProperty("Name"),
-                    HeadingRule = defaultHeadingRule,
+                    HeadingRule = NoSortingTableHeading,
                 }
             ); ;
 
@@ -100,7 +105,7 @@ namespace ListGenerator.Client.Services
                     Id = 1,
                     ThTitle = "1 piece is consumed for (days)",
                     PropertyInfo = typeof(T).GetProperty("ReplenishmentPeriod"),
-                    HeadingRule = defaultHeadingRule,
+                    HeadingRule = NoSortingTableHeading,
                 });
 
 
@@ -110,7 +115,7 @@ namespace ListGenerator.Client.Services
                     Id = 2,
                     ThTitle = "Last purchase quantity",
                     PropertyInfo = typeof(T).GetProperty("LastReplenishmentQuantity"),
-                    HeadingRule = defaultHeadingRule,
+                    HeadingRule = NoSortingTableHeading,
                 }
             );
 
@@ -120,7 +125,7 @@ namespace ListGenerator.Client.Services
                     Id = 3,
                     ThTitle = "Last purchase date",
                     PropertyInfo = typeof(T).GetProperty("LastReplenishmentDate"),
-                    HeadingRule = defaultHeadingRule,
+                    HeadingRule = NoSortingTableHeading,
                 });
 
             tableHeadings.Add(
@@ -129,7 +134,7 @@ namespace ListGenerator.Client.Services
                     Id = 4,
                     ThTitle = "Next replenishment date",
                     PropertyInfo = typeof(T).GetProperty("NextReplenishmentDate"),
-                    HeadingRule = defaultHeadingRule,
+                    HeadingRule = AscendingSortingTableHeading,
                 });
 
             return tableHeadings;
