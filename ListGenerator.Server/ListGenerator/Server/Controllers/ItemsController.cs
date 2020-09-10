@@ -26,8 +26,6 @@ namespace ListGenerator.Server.Controllers
         public IActionResult GetOverviewItems()
         {
             var dtos = _itemsDataService.GetOverviewItemsModels(this.UserId);
-
-            var a = dtos.FirstOrDefault();
             return Ok(dtos);
         }
 
