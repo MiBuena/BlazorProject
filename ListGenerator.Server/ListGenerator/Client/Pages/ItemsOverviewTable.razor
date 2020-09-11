@@ -1,9 +1,10 @@
 ﻿@page "/allitemstable"
 
 @using ListGenerator.Client.ViewModels;
+@using ListGenerator.Shared.Extensions
 
 <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
-            AllowSorting="true" Data="@Items" TItem="ItemOverviewViewModel" ColumnWidth="200px">
+            AllowSorting="true" Data="@Items" TItem="ItemOverviewViewModel">
     <Columns>
         @*<RadzenGridColumn TItem="Employee" Property="Photo" Title="Photo" Sortable="false" Filterable="false">
                 <Template Context="data">
@@ -11,10 +12,10 @@
                 </Template>
             </RadzenGridColumn>*@
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Title="Name" />
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Title="1 piece is consumed for (days)">
-            <Template Context="data">
-                @data.ReplenishmentPeriodNumber
-            </Template>
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Width="220px">
+            <HeaderTemplate>
+                <span class="gridColumndStyle">1 piece is consumed for (days)</span>
+            </HeaderTemplate>
         </RadzenGridColumn>
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Title="Last purchase quantity">
             <Template Context="data">
@@ -28,7 +29,6 @@
                 }
             </Template>
         </RadzenGridColumn>
-
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentDate" Title="Last purchase date">
             <Template Context="data">
                 @if (data.LastReplenishmentDate == null)
@@ -37,13 +37,13 @@
                 }
                 else
                 {
-                    @String.Format("{0:d}", data.LastReplenishmentDate)
+                    @data.LastReplenishmentDate.Value.ToDateString()
                 }
             </Template>
         </RadzenGridColumn>
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="NextReplenishmentDate" Title="Next replenishment date">
             <Template Context="data">
-                @String.Format("{0:d}", data.NextReplenishmentDate)
+                @data.NextReplenishmentDate.ToDateString()
             </Template>
         </RadzenGridColumn>
     </Columns>

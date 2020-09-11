@@ -263,3 +263,13 @@ th {
     background-position: center right;
     padding-right: 20px;
 }
+
+.gridColumndStyle {
+    white-space: pre-wrap;
+    display: inline-block;
+    width: 180px;
+}
+
+.ui-sortable-column .fa {
+    vertical-align: top;
+}
