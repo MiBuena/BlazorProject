@@ -3,7 +3,7 @@
 @using ListGenerator.Client.ViewModels;
 @using ListGenerator.Shared.Extensions
 
-@{ 
+@{
     var columnSize = "160px";
 }
 
@@ -11,10 +11,10 @@
             AllowSorting="true" Data="@Items" TItem="ItemOverviewViewModel">
     <Columns>
         @*<RadzenGridColumn TItem="Employee" Property="Photo" Title="Photo" Sortable="false" Filterable="false">
-            <Template Context="data">
-                <RadzenImage Path="@data?.Photo" />
-            </Template>
-        </RadzenGridColumn>*@
+                <Template Context="data">
+                    <RadzenImage Path="@data?.Photo" />
+                </Template>
+            </RadzenGridColumn>*@
         <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Width="@columnSize">
             <HeaderTemplate>
                 <span class="gridColumn">Name</span>
@@ -75,3 +75,15 @@
         </RadzenGridColumn>
     </Columns>
 </RadzenGrid>
+
+
+<br />
+
+<RadzenButton Text="Quick add" Size="ButtonSize.Medium" Click="@QuickAddItem" ButtonStyle="ButtonStyle.Secondary">
+</RadzenButton>
+
+<AddItemDialog @ref="AddItemDialog" CloseEventCallback="@AddItemDialog_OnDialogClose"></AddItemDialog>
+
+<EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
+
+<DeleteItemDialog @ref="DeleteItemDialog" CloseEventCallback="@DeleteItemDialog_OnDialogClose"></DeleteItemDialog>
