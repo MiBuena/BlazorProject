@@ -3,21 +3,32 @@
 @using ListGenerator.Client.ViewModels;
 @using ListGenerator.Shared.Extensions
 
+@{ 
+    var columnSize = "160px";
+}
+
 <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
             AllowSorting="true" Data="@Items" TItem="ItemOverviewViewModel">
     <Columns>
         @*<RadzenGridColumn TItem="Employee" Property="Photo" Title="Photo" Sortable="false" Filterable="false">
-                <Template Context="data">
-                    <RadzenImage Path="@data?.Photo" />
-                </Template>
-            </RadzenGridColumn>*@
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Title="Name" />
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Width="220px">
+            <Template Context="data">
+                <RadzenImage Path="@data?.Photo" />
+            </Template>
+        </RadzenGridColumn>*@
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Width="@columnSize">
             <HeaderTemplate>
-                <span class="gridColumndStyle">1 piece is consumed for (days)</span>
+                <span class="gridColumn">Name</span>
             </HeaderTemplate>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Title="Last purchase quantity">
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Width="@columnSize" TextAlign="TextAlign.Center">
+            <HeaderTemplate>
+                <span class="gridColumn">1 piece is consumed for (days)</span>
+            </HeaderTemplate>
+        </RadzenGridColumn>
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Width="@columnSize" TextAlign="TextAlign.Center">
+            <HeaderTemplate>
+                <span class="gridColumn">Last purchase quantity</span>
+            </HeaderTemplate>
             <Template Context="data">
                 @if (data.LastReplenishmentQuantity == null)
                 {
@@ -29,7 +40,10 @@
                 }
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentDate" Title="Last purchase date">
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentDate" Width="@columnSize" TextAlign="TextAlign.Center">
+            <HeaderTemplate>
+                <span class="gridColumn">Last purchase date</span>
+            </HeaderTemplate>
             <Template Context="data">
                 @if (data.LastReplenishmentDate == null)
                 {
@@ -41,9 +55,22 @@
                 }
             </Template>
         </RadzenGridColumn>
-        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="NextReplenishmentDate" Title="Next replenishment date">
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Property="NextReplenishmentDate" Width="@columnSize" TextAlign="TextAlign.Center">
+            <HeaderTemplate>
+                <span class="gridColumn">Next replenishment date</span>
+            </HeaderTemplate>
             <Template Context="data">
                 @data.NextReplenishmentDate.ToDateString()
+            </Template>
+        </RadzenGridColumn>
+        <RadzenGridColumn TItem="ItemOverviewViewModel" Sortable="false">
+            <Template Context="item">
+                <RadzenButton Size="ButtonSize.Small" Click="@(x => QuickEditItem(item.Id))">
+                    Edit
+                </RadzenButton>
+                <RadzenButton Size="ButtonSize.Small" Click="@(x => DeleteItemQuestion(item.Id))">
+                    Delete
+                </RadzenButton>
             </Template>
         </RadzenGridColumn>
     </Columns>
