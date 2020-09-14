@@ -274,3 +274,15 @@ th {
 .ui-sortable-column .fa {
     vertical-align: top;
 }
+
+.row {
+    align-items: center;
+}
+
+.item-form-modal {
+    font-family: Source Sans Pro;
+}
+
+.item-form-button {
+    background: #479cc8;
+}
