@@ -1,21 +1,23 @@
 ﻿@if (ShowDialog)
 {
+    <div class="item-modal">
 
-    <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="titleLabel">Delete item</h5>
-                    <button @onclick="Close" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
+        <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="titleLabel">Delete item</h5>
+                        <button @onclick="Close" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
 
-                    Delete item @this.Item.Name ?
+                        Delete item @this.Item.Name ?
 
-                    <button @onclick="DeleteItem" class="btn btn-dark table-btn quick-add-btn">Delete</button>
+                        <button @onclick="DeleteItem" class="btn btn-dark table-btn quick-add-btn">Delete</button>
 
+                    </div>
                 </div>
             </div>
         </div>

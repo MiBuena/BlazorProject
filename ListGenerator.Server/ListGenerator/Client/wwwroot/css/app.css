@@ -279,10 +279,10 @@ th {
     align-items: center;
 }
 
-.item-form-modal {
+.item-modal {
     font-family: Source Sans Pro;
 }
 
-.item-form-button {
-    background: #479cc8;
+.modal-header {
+    background-color: #479cc8;
 }

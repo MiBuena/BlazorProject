@@ -2,7 +2,7 @@
 
 @if (ShowDialog)
 {
-    <div class="item-form-modal">
+    <div class="item-modal">
         <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -51,7 +51,7 @@
                                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToAdd.NextReplenishmentDate)" />
                             </div>
 
-                            <button type="submit" class="btn btn-primary edit-btn item-form-button">Save item</button>
+                            <button type="submit" class="btn btn-primary edit-btn">Save item</button>
 
                         </EditForm>
 
