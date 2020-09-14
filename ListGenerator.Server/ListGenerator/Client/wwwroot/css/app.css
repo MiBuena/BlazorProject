@@ -286,3 +286,7 @@ th {
 .modal-header {
     background-color: #479cc8;
 }
+
+.modal {
+    z-index: 0;
+}

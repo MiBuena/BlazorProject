@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
 
 namespace ListGenerator.Shared.Extensions
 {
     public static class DateTimeExtensions
     {
-        public static string ToDateString(this DateTime date)
+        public static string ToDateString(this DateTime date, string format = Constants.Constants.DateFormat)
         {
-            return date.ToString("dd.MM.yyyy");
+            return date.ToString(format);
         }
     }
 }
