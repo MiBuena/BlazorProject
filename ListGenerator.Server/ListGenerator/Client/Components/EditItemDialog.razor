@@ -3,7 +3,7 @@
 @if (ShowDialog)
 {
     <div class="item-modal">
-        <div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+        <div class="modal fade show d-block" tabindex="-1" role="dialog">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -48,7 +48,7 @@
 
                             <div class="form-group row">
                                 <label for="nextReplenishmentDate" class="col-sm-3">Next Replenishment Date: </label>
-                                <InputDate class="appInputControl" @bind-Value="@ItemToUpdate.NextReplenishmentDate"></InputDate>
+                                <RadzenDatePicker @bind-Value="@ItemToUpdate.NextReplenishmentDate" DateFormat="@Constants.DateFormat" />
                                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToUpdate.NextReplenishmentDate)" />
                             </div>
 
