@@ -208,8 +208,10 @@ app {
     vertical-align: middle;
 }
 
-.shoppingListButton {
-    margin-left: 70%;
+.shopping-list-button {
+    margin-left: 85%;
+    margin-bottom: 40px;
+    margin-top: 30px;
 }
 
 .appInputControl {
