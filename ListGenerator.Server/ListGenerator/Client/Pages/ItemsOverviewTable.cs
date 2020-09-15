@@ -44,34 +44,13 @@ namespace ListGenerator.Client.Pages
             await InitializeItems();
         }
 
-        private IEnumerable<ItemOverviewViewModel> CopyCollection(IEnumerable<ItemOverviewViewModel> originalItems)
-        {
-            var displayItems = new List<ItemOverviewViewModel>();
-
-            foreach (var item in originalItems)
-            {
-                displayItems.Add(new ItemOverviewViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name,
-                    LastReplenishmentDate = item.LastReplenishmentDate,
-                    LastReplenishmentQuantity = item.LastReplenishmentQuantity,
-                    NextReplenishmentDate = item.NextReplenishmentDate,
-                    ReplenishmentPeriod = item.ReplenishmentPeriod,
-                    ReplenishmentPeriodNumber = item.ReplenishmentPeriodNumber
-                });
-            }
-
-            return displayItems;
-        }
-
         private async Task InitializeItems()
         {
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
             this.OriginalItems = items;
-            this.DisplayItems = CopyCollection(this.OriginalItems);
+            this.DisplayItems = ItemsService.ApplyFilters(this.SearchWord, this.SearchDate, this.OriginalItems);
         }
 
         protected void Search()
