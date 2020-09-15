@@ -15,6 +15,8 @@ namespace ListGenerator.Client.Pages
     [Authorize]
     public partial class ItemsOverviewTable
     {
+        public string SearchWord { get; set; }
+
         [Inject]
         public IItemService ItemsService { get; set; }
 
@@ -43,6 +45,23 @@ namespace ListGenerator.Client.Pages
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
             return items;
+        }
+
+        protected void Change()
+        {
+            if (this.SearchWord == null)
+            {
+                this.SearchWord = string.Empty;
+            }
+
+            this.Items = this.Items
+            .Where(x =>
+               x.Name.ToLower().Contains(this.SearchWord.ToLower())
+            || x.ReplenishmentPeriod == this.SearchWord
+            || (x.LastReplenishmentQuantity.HasValue ? x.LastReplenishmentQuantity.Value.ToString() == this.SearchWord : false));
+
+
+            StateHasChanged();
         }
 
         protected void QuickAddItem()
