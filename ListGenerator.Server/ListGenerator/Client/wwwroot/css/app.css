@@ -282,7 +282,7 @@ th {
 }
 
 .item-modal {
-    font-family: Source Sans Pro;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 .modal-header {
@@ -303,4 +303,8 @@ th {
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.ui-datatable-thead th {
+    background-color: #479cc8;
 }
