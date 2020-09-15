@@ -28,6 +28,45 @@ namespace ListGenerator.Client.Services
             _mapper = mapper;
         }
 
+        public IEnumerable<ItemOverviewViewModel> ApplyFilters(string searchWord, DateTime? searchDate, IEnumerable<ItemOverviewViewModel> originalItems)
+        {
+            var items = FilterBySearchWord(searchWord, originalItems);
+
+            items = FilterByDate(searchDate, items);
+
+            return items;
+        }
+
+        private IEnumerable<ItemOverviewViewModel> FilterByDate(DateTime? searchDate, IEnumerable<ItemOverviewViewModel> items)
+        {
+            if (searchDate == null)
+            {
+                return items;
+            }
+
+            var result = items
+                .Where(x => x.NextReplenishmentDate.Date == searchDate.Value.Date
+                || x.LastReplenishmentDate == searchDate.Value.Date);
+
+            return result;
+        }
+
+        private IEnumerable<ItemOverviewViewModel> FilterBySearchWord(string searchWord, IEnumerable<ItemOverviewViewModel> items)
+        {
+            if (searchWord == null)
+            {
+                searchWord = string.Empty;
+            }
+
+            var result = items
+            .Where(x =>
+               x.Name.ToLower().Contains(searchWord.ToLower())
+            || x.ReplenishmentPeriod == searchWord
+            || (x.LastReplenishmentQuantity.HasValue ? x.LastReplenishmentQuantity.Value.ToString() == searchWord : false));
+
+            return result;
+        }
+
         public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
         {
             var dtos = await _apiClient.GetAsync<IEnumerable<ItemOverviewDto>>("api/items/overview");

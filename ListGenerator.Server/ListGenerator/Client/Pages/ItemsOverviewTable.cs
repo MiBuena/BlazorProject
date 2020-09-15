@@ -17,13 +17,17 @@ namespace ListGenerator.Client.Pages
     {
         public string SearchWord { get; set; }
 
+        public DateTime? SearchDate { get; set; }
+
         [Inject]
         public IItemService ItemsService { get; set; }
 
         [Inject]
         public IMapper Mapper { get; set; }
 
-        public IEnumerable<ItemOverviewViewModel> Items { get; set; }
+        public IEnumerable<ItemOverviewViewModel> DisplayItems { get; set; }
+
+        public IEnumerable<ItemOverviewViewModel> OriginalItems { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
 
@@ -37,30 +41,42 @@ namespace ListGenerator.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            this.Items = await InitializeItems();
+            await InitializeItems();
         }
 
-        private async Task<IEnumerable<ItemOverviewViewModel>> InitializeItems()
+        private IEnumerable<ItemOverviewViewModel> CopyCollection(IEnumerable<ItemOverviewViewModel> originalItems)
+        {
+            var displayItems = new List<ItemOverviewViewModel>();
+
+            foreach (var item in originalItems)
+            {
+                displayItems.Add(new ItemOverviewViewModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name,
+                    LastReplenishmentDate = item.LastReplenishmentDate,
+                    LastReplenishmentQuantity = item.LastReplenishmentQuantity,
+                    NextReplenishmentDate = item.NextReplenishmentDate,
+                    ReplenishmentPeriod = item.ReplenishmentPeriod,
+                    ReplenishmentPeriodNumber = item.ReplenishmentPeriodNumber
+                });
+            }
+
+            return displayItems;
+        }
+
+        private async Task InitializeItems()
         {
             var dtos = await ItemsService.GetItemsOverviewModels();
             var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
-            return items;
+
+            this.OriginalItems = items;
+            this.DisplayItems = CopyCollection(this.OriginalItems);
         }
 
-        protected void Change()
+        protected void Search()
         {
-            if (this.SearchWord == null)
-            {
-                this.SearchWord = string.Empty;
-            }
-
-            this.Items = this.Items
-            .Where(x =>
-               x.Name.ToLower().Contains(this.SearchWord.ToLower())
-            || x.ReplenishmentPeriod == this.SearchWord
-            || (x.LastReplenishmentQuantity.HasValue ? x.LastReplenishmentQuantity.Value.ToString() == this.SearchWord : false));
-
-
+            this.DisplayItems = ItemsService.ApplyFilters(this.SearchWord, this.SearchDate, this.OriginalItems);
             StateHasChanged();
         }
 
@@ -71,7 +87,7 @@ namespace ListGenerator.Client.Pages
 
         public async void AddItemDialog_OnDialogClose()
         {
-            this.Items = await InitializeItems();
+            await InitializeItems();
             StateHasChanged();
         }
 
@@ -82,7 +98,7 @@ namespace ListGenerator.Client.Pages
 
         public async void EditItemDialog_OnDialogClose()
         {
-            this.Items = await InitializeItems();
+            await this.InitializeItems();
             StateHasChanged();
         }
         protected void DeleteItemQuestion(int id)
@@ -92,7 +108,7 @@ namespace ListGenerator.Client.Pages
 
         public async void DeleteItemDialog_OnDialogClose()
         {
-            this.Items = await InitializeItems();
+            await InitializeItems();
             StateHasChanged();
         }
 

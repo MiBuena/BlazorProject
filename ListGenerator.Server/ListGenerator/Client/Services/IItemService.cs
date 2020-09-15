@@ -10,6 +10,8 @@ namespace ListGenerator.Client.Services
 {
     public interface IItemService
     {
+        IEnumerable<ItemOverviewViewModel> ApplyFilters(string searchWord, DateTime? searchDate, IEnumerable<ItemOverviewViewModel> originalItems);
+
         Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels();
 
         Task<ItemDto> GetItem(int id);
