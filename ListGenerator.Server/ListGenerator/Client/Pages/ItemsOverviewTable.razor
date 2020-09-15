@@ -28,19 +28,19 @@ else
                         <RadzenImage Path="@data?.Photo" />
                     </Template>
                 </RadzenGridColumn>*@
-            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Width="@columnSize">
+            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="Name" Width="@columnSize" HeaderCssClass="grid-column-header">
                 <HeaderTemplate>
-                    <span class="gridColumn">Name</span>
+                    <span class="grid-column-text">Name</span>
                 </HeaderTemplate>
             </RadzenGridColumn>
-            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Width="@columnSize" TextAlign="TextAlign.Center">
+            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="ReplenishmentPeriodNumber" Width="@columnSize" TextAlign="TextAlign.Center" HeaderCssClass="grid-column-header">
                 <HeaderTemplate>
-                    <span class="gridColumn">1 piece is consumed for (days)</span>
+                    <span class="grid-column-text">1 piece is consumed for (days)</span>
                 </HeaderTemplate>
             </RadzenGridColumn>
-            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Width="@columnSize" TextAlign="TextAlign.Center">
+            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentQuantity" Width="@columnSize" TextAlign="TextAlign.Center" HeaderCssClass="grid-column-header">
                 <HeaderTemplate>
-                    <span class="gridColumn">Last purchase quantity</span>
+                    <span class="grid-column-text">Last purchase quantity</span>
                 </HeaderTemplate>
                 <Template Context="data">
                     @if (data.LastReplenishmentQuantity == null)
@@ -53,9 +53,9 @@ else
                     }
                 </Template>
             </RadzenGridColumn>
-            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentDate" Width="@columnSize" TextAlign="TextAlign.Center">
+            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="LastReplenishmentDate" Width="@columnSize" TextAlign="TextAlign.Center" HeaderCssClass="grid-column-header">
                 <HeaderTemplate>
-                    <span class="gridColumn">Last purchase date</span>
+                    <span class="grid-column-text">Last purchase date</span>
                 </HeaderTemplate>
                 <Template Context="data">
                     @if (data.LastReplenishmentDate == null)
@@ -68,15 +68,18 @@ else
                     }
                 </Template>
             </RadzenGridColumn>
-            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="NextReplenishmentDate" Width="@columnSize" TextAlign="TextAlign.Center">
+            <RadzenGridColumn TItem="ItemOverviewViewModel" Property="NextReplenishmentDate" Width="@columnSize" TextAlign="TextAlign.Center" HeaderCssClass="grid-column-header">
                 <HeaderTemplate>
-                    <span class="gridColumn">Next replenishment date</span>
+                    <span class="grid-column-text">Next replenishment date</span>
                 </HeaderTemplate>
                 <Template Context="data">
                     @data.NextReplenishmentDate.ToDateString()
                 </Template>
             </RadzenGridColumn>
             <RadzenGridColumn TItem="ItemOverviewViewModel" Sortable="false">
+                <HeaderTemplate>
+                    <span class="grid-column-text">Actions</span>
+                </HeaderTemplate>
                 <Template Context="item">
                     <RadzenButton Size="ButtonSize.Small" Click="@(x => QuickEditItem(item.Id))">
                         Edit

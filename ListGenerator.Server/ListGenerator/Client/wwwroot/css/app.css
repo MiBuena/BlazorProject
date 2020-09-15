@@ -266,7 +266,7 @@ th {
     padding-right: 20px;
 }
 
-.gridColumn {
+.grid-column-text {
     white-space: pre-wrap;
     display: inline-block;
     text-align: center;
@@ -305,6 +305,6 @@ th {
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
-.ui-datatable-thead th {
-    background-color: #479cc8;
+.grid-column-header {
+    background-color: #479cc8 !important;
 }
