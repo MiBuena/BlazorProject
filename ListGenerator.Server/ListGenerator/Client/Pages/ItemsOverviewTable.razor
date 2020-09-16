@@ -14,9 +14,9 @@
 }
 else
 {
-    <input type="text" class="search-box" placeholder="Search..." @bind-value="SearchWord" @bind-value:event="oninput" @onkeyup="Search" />
+    <div class="search-holder"><span>Search by text</span> <input type="text" class="search-box" placeholder="Search..." @bind-value="SearchWord" @bind-value:event="oninput" @onkeyup="Search" /></div>
 
-    <RadzenDatePicker @bind-Value="SearchDate" DateFormat="d" Change="@(args => Search())" />
+    <div class="search-holder"><span>Search by date</span> <RadzenDatePicker @bind-Value="SearchDate" DateFormat="d" Change="@(args => Search())" /></div>
 
     <button @onclick="@NavigateToListGeneration" class="btn btn-outline-primary shopping-list-button">Generate shopping list</button>
 

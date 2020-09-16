@@ -202,12 +202,6 @@ app {
     color: green;
 }
 
-.itemsOverviewTable {
-    width: 90%;
-    text-align: center;
-    vertical-align: middle;
-}
-
 .shopping-list-button {
     margin-left: 85%;
     margin-bottom: 40px;
@@ -294,7 +288,7 @@ th {
 }
 
 .search-box {
-    display: block;
+    display: inline-block;
     font-size: 1rem;
     font-weight: 400;
     color: #495057;
@@ -307,4 +301,22 @@ th {
 
 .grid-column-header {
     background-color: #479cc8 !important;
+}
+
+.items-shopping-list-table {
+    width: 90%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.items-shopping-list-table th {
+    background-color: #e6ecef;
+    padding: 0.5rem 0 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.items-shopping-list-table thead th:not(:last-child) {
+    border-right: solid 1px #dfe7eb;
 }
