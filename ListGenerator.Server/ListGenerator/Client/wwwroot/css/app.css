@@ -320,3 +320,17 @@ th {
 .items-shopping-list-table thead th:not(:last-child) {
     border-right: solid 1px #dfe7eb;
 }
+
+.itemsOverviewTable {
+    width: 90%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.shoppingListButton {
+    margin-left: 70%;
+}
+
+.shopping-label {
+    font-weight: bold;
+}
