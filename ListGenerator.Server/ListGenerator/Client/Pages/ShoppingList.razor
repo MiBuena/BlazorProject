@@ -11,7 +11,7 @@ else
 
     <div class="normalShoppingDay">
         <div>
-            Normal shopping day:
+            Normal shopping day
         </div>
         <select class="appInputControl normalShoppingDaySelect" @onchange="RegenerateListFromDayOfWeek">
 
@@ -25,7 +25,7 @@ else
 
     <div class="customDatesWrapper">
         <div>
-            Next shopping date:
+            Next shopping date
 
             @{
                 var firstReplenishmentDate = this.FirstReplenishmentDate.ToString("yyyy-MM-dd");
@@ -35,7 +35,7 @@ else
             <input type="date" class="appInputControl" value=@firstReplenishmentDate @onchange=@ChangeFirstReplenishmentDateValue max="@this.SecondReplenishmentDate.ToString("yyyy-MM-dd")" />
         </div>
         <div>
-            Date after next shopping date:
+            Date after next shopping date
             <input type="date" class="appInputControl" value=@secondReplenishmentDate @onchange=@ChangeSecondReplenishmentDateValue min="@this.FirstReplenishmentDate.ToString("yyyy-MM-dd")" />
         </div>
     </div>
@@ -49,52 +49,53 @@ else
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-        <table class="itemsOverviewTable">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Will run out of supplies on</th>
-                    <th>Quantity to buy</th>
-                    <th>Shopping date</th>
-                </tr>
-            </thead>
-            <tbody>
+                <table class="items-shopping-list-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Will run out of supplies on</th>
+                            <th>Quantity to buy</th>
+                            <th>Shopping date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
-                {
+                        @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
+                        {
 
-                    var replenishmentItem = this.ReplenishmentItems[m];
+                            var replenishmentItem = this.ReplenishmentItems[m];
 
-                    <tr>
+                            <tr>
 
-                        <td class="@replenishmentItem.ReplenishmentSignalClass">
-                            @replenishmentItem.Name
-                        </td>
-                        <td class="@replenishmentItem.ReplenishmentSignalClass">
-                            @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
-                        </td>
-                        <td>
-                            <InputSelect class="appInputControl tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
+                                <td class="@replenishmentItem.ReplenishmentSignalClass">
+                                    @replenishmentItem.Name
+                                </td>
+                                <td class="@replenishmentItem.ReplenishmentSignalClass">
+                                    @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
+                                </td>
+                                <td>
+                                    <InputSelect class="appInputControl tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
 
-                                @for (int i = 1; i <= 20; i++)
-                                        {
-                                    <option value="@i">@i</option>
-                                        }
+                                        @for (int i = 1; i <= 20; i++)
+                                                {
+                                            <option value="@i">@i</option>
+                                                }
 
-                            </InputSelect>
-                        </td>
-                        <td>
-                            <InputDate class="appInputControl" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
-                        </td>
-                        <td>
-                            <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                                    </InputSelect>
+                                </td>
+                                <td>
+                                    <InputDate class="appInputControl" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
+                                </td>
+                                <td>
+                                    <a class="btn btn-outline-primary" @onclick="@(x=> ReplenishItem(replenishmentItem.ItemId))">Replenish</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
-        <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
+                <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
 
     </EditForm>
 
