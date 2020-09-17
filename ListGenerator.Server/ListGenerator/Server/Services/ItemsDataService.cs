@@ -23,9 +23,12 @@ namespace ListGenerator.Server.Services
 
         public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy)
         {
-            string a = "NextReplenishmentDate";
-
             var query = GetBaseQuery(userId);
+
+            if (orderBy != null)
+            {
+                query = Sort(orderBy, query);
+            }
 
             var pagedQuery = query
                 .Skip(skip.Value)
@@ -33,6 +36,68 @@ namespace ListGenerator.Server.Services
                 .ToList();
 
             return pagedQuery;
+        }
+
+        private IQueryable<ItemOverviewDto> Sort(string orderBy, IQueryable<ItemOverviewDto> query)
+        {
+            var splitted = orderBy.Split(" ");
+
+            if(splitted[1] == "asc")
+            {
+                query = SortByAscending(splitted[0], query);
+            }
+            else
+            {
+                query = SortByDescending(splitted[0], query);
+            }
+
+            return query;
+        }
+
+        private IQueryable<ItemOverviewDto> SortByAscending(string column, IQueryable<ItemOverviewDto> query)
+        {
+            switch (column)
+            {
+                case "Name":
+                    query = query.OrderBy(x => x.Name);
+                    break;
+                case "ReplenishmentPeriod":
+                    query = query.OrderBy(x => x.ReplenishmentPeriod);
+                    break;
+                case "NextReplenishmentDate":
+                    query = query.OrderBy(x => x.NextReplenishmentDate);
+                    break;
+                case "LastReplenishmentQuantity":
+                    query = query.OrderBy(x => x.LastReplenishmentQuantity);
+                    break;
+                default:
+                    break;
+            }
+
+            return query;
+        }
+
+        private IQueryable<ItemOverviewDto> SortByDescending(string column, IQueryable<ItemOverviewDto> query)
+        {
+            switch (column)
+            {
+                case "Name":
+                    query = query.OrderByDescending(x => x.Name);
+                    break;
+                case "ReplenishmentPeriod":
+                    query = query.OrderByDescending(x => x.ReplenishmentPeriod);
+                    break;
+                case "NextReplenishmentDate":
+                    query = query.OrderByDescending(x => x.NextReplenishmentDate);
+                    break;
+                case "LastReplenishmentQuantity":
+                    query = query.OrderByDescending(x => x.LastReplenishmentQuantity);
+                    break;
+                default:
+                    break;
+            }
+
+            return query;
         }
 
         private IQueryable<ItemOverviewDto> GetBaseQuery(string userId)

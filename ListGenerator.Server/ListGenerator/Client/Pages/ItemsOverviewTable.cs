@@ -49,11 +49,12 @@ namespace ListGenerator.Client.Pages
 
         private async Task InitializeItems()
         {
-            //var dtos = await ItemsService.GetItemsOverviewModels(null, null, null);
-            //var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+            var dtos = await this.ItemsService.GetItemsOverviewModels(0, 5, null);
+            var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            this.OriginalItems = new List<ItemOverviewViewModel>();
-            this.DisplayItems = new List<ItemOverviewViewModel>();
+            this.DisplayItems = items;
+
+            Count = 25;
         }
 
         protected async Task LoadData(LoadDataArgs args)
