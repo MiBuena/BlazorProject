@@ -20,7 +20,7 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId)
+        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy)
         {
             var dtos = _itemsRepository.All()
                 .Where(x=>x.UserId == userId)

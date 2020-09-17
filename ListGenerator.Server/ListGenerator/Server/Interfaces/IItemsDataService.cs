@@ -5,7 +5,7 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IItemsDataService
     {
-        IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId);
+        IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy);
 
         ItemDto GetItem(int itemId);
 

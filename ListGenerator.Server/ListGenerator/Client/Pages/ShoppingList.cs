@@ -119,7 +119,7 @@ namespace ListGenerator.Client.Pages
 
         protected void NavigateToAllItems()
         {
-            NavigationManager.NavigateTo("/allitems");
+            NavigationManager.NavigateTo("/allitemstable");
         }
     }
 }

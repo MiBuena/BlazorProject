@@ -34,9 +34,6 @@
     <Content Update="Pages\Index.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
-    <Content Update="Pages\ItemsOverview.razor">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </Content>
     <Content Update="Pages\ShoppingList.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>

@@ -5,6 +5,7 @@ using ListGenerator.Client.ViewModels;
 using ListGenerator.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Radzen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,8 @@ namespace ListGenerator.Client.Pages
         public string SearchWord { get; set; }
 
         public DateTime? SearchDate { get; set; }
+
+        public int Count { get; set; }
 
         [Inject]
         public IItemService ItemsService { get; set; }
@@ -46,12 +49,36 @@ namespace ListGenerator.Client.Pages
 
         private async Task InitializeItems()
         {
-            var dtos = await ItemsService.GetItemsOverviewModels();
-            var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+            //var dtos = await ItemsService.GetItemsOverviewModels(null, null, null);
+            //var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            this.OriginalItems = items;
-            this.DisplayItems = ItemsService.ApplyFilters(this.SearchWord, this.SearchDate, this.OriginalItems);
+            this.OriginalItems = new List<ItemOverviewViewModel>();
+            this.DisplayItems = new List<ItemOverviewViewModel>();
         }
+
+        protected async Task LoadData(LoadDataArgs args)
+        {
+            var dtos = await this.ItemsService.GetItemsOverviewModels(args.Skip, args.Top, args.OrderBy);
+
+            var query = this.DisplayItems.AsQueryable();
+
+            if (!string.IsNullOrEmpty(args.Filter))
+            {
+                //query = query.Where(args.Filter);
+            }
+
+            if (!string.IsNullOrEmpty(args.OrderBy))
+            {
+                //query = query.OrderBy(args.OrderBy);
+            }
+
+            //employees = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
+
+            //count = dbContext.Employees.Count();
+
+            await InvokeAsync(StateHasChanged);
+        }
+
 
         protected void Search()
         {
