@@ -26,7 +26,7 @@ namespace ListGenerator.Client.Builders
             var model = new ItemViewModel()
             {
                 NextReplenishmentDate = _dateTimeProvider.GetDateTimeNowDate(),
-                ReplenishmentPeriod = "1"
+                ReplenishmentPeriodString = "1"
             };
 
             return model;

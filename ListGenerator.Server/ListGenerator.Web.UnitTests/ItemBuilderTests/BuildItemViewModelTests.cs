@@ -50,7 +50,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var result = _itemBuilder.BuildItemViewModel();
 
             //Assert
-            result.ReplenishmentPeriod.Should().Be("1");
+            result.ReplenishmentPeriodString.Should().Be("1");
         }
 
         [Test]

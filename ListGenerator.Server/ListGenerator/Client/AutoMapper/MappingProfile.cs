@@ -10,16 +10,16 @@ namespace ListGenerator.Client.AutoMapper
         public MappingProfile()
         {
             CreateMap<ItemOverviewDto, ItemOverviewViewModel>()
-                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
-                .ForMember(item => item.ReplenishmentPeriodNumber, opt => opt.MapFrom(a => a.ReplenishmentPeriod))
+                .ForMember(item => item.ReplenishmentPeriodString, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
+                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod))
                 .ReverseMap()
-                .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
+                .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriodString)));
 
             CreateMap<ItemDto, ItemViewModel>()
-                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
-                .ForMember(item => item.ReplenishmentPeriodNumber, opt => opt.MapFrom(a => a.ReplenishmentPeriod))
+                .ForMember(item => item.ReplenishmentPeriodString, opt => opt.MapFrom(a => a.ReplenishmentPeriod.ToString()))
+                .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod))
                 .ReverseMap()
-                .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriod)));
+                .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriodString)));
             
             CreateMap<ItemDto, PurchaseItemViewModel>()
                 .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id));

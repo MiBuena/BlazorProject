@@ -17,10 +17,10 @@ namespace ListGenerator.Client.ViewModels
         [Required]
         [MinLength(1)]
         [MaxLength(2)]
-        public string ReplenishmentPeriod { get; set; }
+        public string ReplenishmentPeriodString { get; set; }
 
         [Required]
-        public int ReplenishmentPeriodNumber { get; set; }
+        public int ReplenishmentPeriod { get; set; }
 
         [Required]
         public DateTime NextReplenishmentDate { get; set; }

@@ -61,7 +61,7 @@ namespace ListGenerator.Client.Services
             var result = items
             .Where(x =>
                x.Name.ToLower().Contains(searchWord.ToLower())
-            || x.ReplenishmentPeriod == searchWord
+            || x.ReplenishmentPeriodString == searchWord
             || (x.LastReplenishmentQuantity.HasValue ? x.LastReplenishmentQuantity.Value.ToString() == searchWord : false));
 
             return result;
