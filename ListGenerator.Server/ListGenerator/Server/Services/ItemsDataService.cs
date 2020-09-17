@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ListGenerator.Data.Interfaces;
 using ListGenerator.Data.Entities;
+using System.Linq.Expressions;
 
 namespace ListGenerator.Server.Services
 {
@@ -22,28 +23,41 @@ namespace ListGenerator.Server.Services
 
         public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy)
         {
-            var dtos = _itemsRepository.All()
-                .Where(x=>x.UserId == userId)
-                .Select(x => new ItemOverviewDto()
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                    ReplenishmentPeriod = x.ReplenishmentPeriod,
-                    NextReplenishmentDate = x.NextReplenishmentDate,
-                    LastReplenishmentDate = x.Purchases
-                                                    .OrderByDescending(y => y.ReplenishmentDate)
-                                                    .Select(m => m.ReplenishmentDate)
-                                                    .FirstOrDefault(),
-                    LastReplenishmentQuantity = x.Purchases
-                                                    .OrderByDescending(y => y.ReplenishmentDate)
-                                                    .Select(m => m.Quantity)
-                                                    .FirstOrDefault(),
-                })
-                .OrderBy(x => x.NextReplenishmentDate)
+            string a = "NextReplenishmentDate";
+
+            var query = GetBaseQuery(userId);
+
+            var pagedQuery = query
+                .Skip(skip.Value)
+                .Take(top.Value)
                 .ToList();
 
-            return dtos;
+            return pagedQuery;
         }
+
+        private IQueryable<ItemOverviewDto> GetBaseQuery(string userId)
+        {
+            var query = _itemsRepository.All()
+                .Where(x => x.UserId == userId)
+                .Select(x => new ItemOverviewDto()
+                 {
+                     Id = x.Id,
+                     Name = x.Name,
+                     ReplenishmentPeriod = x.ReplenishmentPeriod,
+                     NextReplenishmentDate = x.NextReplenishmentDate,
+                     LastReplenishmentDate = x.Purchases
+                                     .OrderByDescending(y => y.ReplenishmentDate)
+                                     .Select(m => m.ReplenishmentDate)
+                                     .FirstOrDefault(),
+                     LastReplenishmentQuantity = x.Purchases
+                                     .OrderByDescending(y => y.ReplenishmentDate)
+                                     .Select(m => m.Quantity)
+                                     .FirstOrDefault(),
+                 });
+
+            return query;
+        }
+
         public ItemDto GetItem(int itemId)
         {
             var query = _itemsRepository.All().Where(x => x.Id == itemId);
@@ -70,13 +84,13 @@ namespace ListGenerator.Server.Services
         {
             var itemToUpdate = _itemsRepository.All().FirstOrDefault(x => x.Id == itemDto.Id);
 
-            if(itemToUpdate != null)
+            if (itemToUpdate != null)
             {
                 itemToUpdate.Name = itemDto.Name;
                 itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
                 itemToUpdate.NextReplenishmentDate = itemDto.NextReplenishmentDate;
                 itemToUpdate.UserId = userId;
-               
+
                 _itemsRepository.Update(itemToUpdate);
                 _itemsRepository.SaveChanges();
             }
@@ -103,7 +117,7 @@ namespace ListGenerator.Server.Services
                 .OrderBy(x => x.NextReplenishmentDate);
 
             var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
-            
+
             return itemsNeedingReplenishment;
         }
     }

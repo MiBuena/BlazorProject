@@ -59,8 +59,11 @@ namespace ListGenerator.Client.Pages
         protected async Task LoadData(LoadDataArgs args)
         {
             var dtos = await this.ItemsService.GetItemsOverviewModels(args.Skip, args.Top, args.OrderBy);
+            var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            var query = this.DisplayItems.AsQueryable();
+            this.DisplayItems = items;
+
+            Count = 25;
 
             if (!string.IsNullOrEmpty(args.Filter))
             {
