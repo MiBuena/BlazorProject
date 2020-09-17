@@ -69,7 +69,11 @@ namespace ListGenerator.Client.Services
 
         public async Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels()
         {
-            var dtos = await _apiClient.GetAsync<IEnumerable<ItemOverviewDto>>("api/items/overview");
+            int? skip = 5;
+            int? top = 4;
+            string orderBy = "Name asc";
+
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemOverviewDto>>($"api/items/overview/{skip}/{top}/{orderBy}");
 
             return dtos;
         }

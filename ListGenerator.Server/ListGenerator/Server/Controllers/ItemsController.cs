@@ -22,8 +22,8 @@ namespace ListGenerator.Server.Controllers
             _itemsDataService = itemsDataService;
         }
 
-        [HttpGet("overview")]
-        public IActionResult GetOverviewItems()
+        [HttpGet("overview/{skip}/{top}/{orderby}")]
+        public IActionResult GetOverviewItems(int? skip, int? top, string orderBy)
         {
             var dtos = _itemsDataService.GetOverviewItemsModels(this.UserId);
             return Ok(dtos);
