@@ -6,6 +6,7 @@ using ListGenerator.Shared.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Radzen;
+using Radzen.Blazor;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,8 @@ namespace ListGenerator.Client.Pages
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
+        protected RadzenGrid<ItemOverviewViewModel> Table { get; set; }
+
 
         protected async Task LoadData(LoadDataArgs args)
         {
@@ -68,8 +71,9 @@ namespace ListGenerator.Client.Pages
             AddItemDialog.Show();
         }
 
-        public void AddItemDialog_OnDialogClose()
+        public async void AddItemDialog_OnDialogClose()
         {
+            await Table.Reload();
             StateHasChanged();
         }
 
@@ -78,8 +82,9 @@ namespace ListGenerator.Client.Pages
             EditItemDialog.Show(id);
         }
 
-        public void EditItemDialog_OnDialogClose()
+        public async void EditItemDialog_OnDialogClose()
         {
+            await Table.Reload();
             StateHasChanged();
         }
 
@@ -88,8 +93,9 @@ namespace ListGenerator.Client.Pages
             DeleteItemDialog.Show(id);
         }
 
-        public void DeleteItemDialog_OnDialogClose()
+        public async void DeleteItemDialog_OnDialogClose()
         {
+            await Table.Reload();
             StateHasChanged();
         }
 
