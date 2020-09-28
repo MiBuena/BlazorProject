@@ -21,7 +21,22 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy)
+        public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, int? top, int? skip, string orderBy)
+        {
+            var dtos = GetOverviewItemsModels(userId, top, skip, orderBy);
+
+            var itemsCount = _itemsRepository.All().Count();
+
+            var pageDto = new ItemsOverviewPageDto()
+            {
+                OverviewItems = dtos,
+                TotalItemsCount = itemsCount
+            };
+
+            return pageDto;
+        }
+
+        private IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy)
         {
             var query = GetBaseQuery(userId);
 

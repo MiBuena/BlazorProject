@@ -5,16 +5,16 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IItemsDataService
     {
-        IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy);
-
         ItemDto GetItem(int itemId);
 
         int AddItem(string userId, ItemDto itemDto);
 
         void UpdateItem(string userId, ItemDto itemDto);
 
-        void DeleteItem(int id);     
+        void DeleteItem(int id);
 
         IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId);
+        
+        ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, int? top, int? skip, string orderBy);
     }
 }

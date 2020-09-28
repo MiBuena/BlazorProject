@@ -42,47 +42,20 @@ namespace ListGenerator.Client.Pages
         public NavigationManager NavigationManager { get; set; }
 
 
-        protected override async Task OnInitializedAsync()
-        {
-            await InitializeItems();
-        }
-
-        private async Task InitializeItems()
-        {
-            var dtos = await this.ItemsService.GetItemsOverviewModels(0, 5, null);
-            var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
-
-            this.DisplayItems = items;
-
-            Count = 25;
-        }
-
         protected async Task LoadData(LoadDataArgs args)
         {
-            var dtos = await this.ItemsService.GetItemsOverviewModels(args.Skip, args.Top, args.OrderBy);
-            var items = dtos.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
-
-            this.DisplayItems = items;
-
-            Count = 25;
-
-            if (!string.IsNullOrEmpty(args.Filter))
-            {
-                //query = query.Where(args.Filter);
-            }
-
-            if (!string.IsNullOrEmpty(args.OrderBy))
-            {
-                //query = query.OrderBy(args.OrderBy);
-            }
-
-            //employees = query.Skip(args.Skip.Value).Take(args.Top.Value).ToList();
-
-            //count = dbContext.Employees.Count();
-
+            await InitializeData(args.Skip, args.Top, args.OrderBy);
             await InvokeAsync(StateHasChanged);
         }
 
+        private async Task InitializeData(int? skip, int? top, string orderBy)
+        {
+            var dto = await this.ItemsService.GetItemsOverviewPageModel(skip, top, orderBy);
+            var items = dto.OverviewItems.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+
+            this.DisplayItems = items;
+            this.Count = dto.TotalItemsCount;
+        }
 
         protected void Search()
         {
@@ -95,9 +68,8 @@ namespace ListGenerator.Client.Pages
             AddItemDialog.Show();
         }
 
-        public async void AddItemDialog_OnDialogClose()
+        public void AddItemDialog_OnDialogClose()
         {
-            await InitializeItems();
             StateHasChanged();
         }
 
@@ -106,19 +78,18 @@ namespace ListGenerator.Client.Pages
             EditItemDialog.Show(id);
         }
 
-        public async void EditItemDialog_OnDialogClose()
+        public void EditItemDialog_OnDialogClose()
         {
-            await this.InitializeItems();
             StateHasChanged();
         }
+
         protected void DeleteItemQuestion(int id)
         {
             DeleteItemDialog.Show(id);
         }
 
-        public async void DeleteItemDialog_OnDialogClose()
+        public void DeleteItemDialog_OnDialogClose()
         {
-            await InitializeItems();
             StateHasChanged();
         }
 

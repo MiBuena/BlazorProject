@@ -7,13 +7,6 @@
     var columnSize = "160px";
 }
 
-
-@if (this.DisplayItems == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
     <div class="search-holder"><span>Search by text</span> <input type="text" class="search-box" placeholder="Search..." @bind-value="SearchWord" @bind-value:event="oninput" @onkeyup="Search" /></div>
 
     <div class="search-holder"><span>Search by date</span> <RadzenDatePicker @bind-Value="SearchDate" DateFormat="d" Change="@(args => Search())" /></div>
@@ -102,4 +95,3 @@ else
     <EditItemDialog @ref="EditItemDialog" CloseEventCallback="@EditItemDialog_OnDialogClose"></EditItemDialog>
 
     <DeleteItemDialog @ref="DeleteItemDialog" CloseEventCallback="@DeleteItemDialog_OnDialogClose"></DeleteItemDialog>
-}

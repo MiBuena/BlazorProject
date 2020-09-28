@@ -11,10 +11,11 @@ namespace ListGenerator.Client.Services
     public interface IItemService
     {
         IEnumerable<ItemOverviewViewModel> ApplyFilters(string searchWord, DateTime? searchDate, IEnumerable<ItemOverviewViewModel> originalItems);
-
-        Task<IEnumerable<ItemOverviewDto>> GetItemsOverviewModels(int? skip, int? top, string orderBy);
-
+        
+        Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? skip, int? top, string orderBy);
+        
         Task<ItemDto> GetItem(int id);
+        
         Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate);
 
         Task<ApiResponse> AddItem(ItemViewModel item);
