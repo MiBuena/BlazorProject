@@ -22,10 +22,10 @@ namespace ListGenerator.Server.Controllers
             _itemsDataService = itemsDataService;
         }
 
-        [HttpGet("overview/{skip}/{top}/{orderBy?}")]
-        public IActionResult GetOverviewItems(int skip, int top, string orderBy)
+        [HttpGet("overview/{pageSize}/{skipItems}/{orderBy?}")]
+        public IActionResult GetOverviewItems(int pageSize, int skipItems, string orderBy)
         {
-            var dto = _itemsDataService.GetItemsOverviewPageModel(this.UserId, top, skip, orderBy);
+            var dto = _itemsDataService.GetItemsOverviewPageModel(this.UserId, pageSize, skipItems, orderBy);
             return Ok(dto);
         }
 

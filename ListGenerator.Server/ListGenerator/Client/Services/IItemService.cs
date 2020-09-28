@@ -12,7 +12,7 @@ namespace ListGenerator.Client.Services
     {
         IEnumerable<ItemOverviewViewModel> ApplyFilters(string searchWord, DateTime? searchDate, IEnumerable<ItemOverviewViewModel> originalItems);
         
-        Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? skip, int? top, string orderBy);
+        Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy);
         
         Task<ItemDto> GetItem(int id);
         

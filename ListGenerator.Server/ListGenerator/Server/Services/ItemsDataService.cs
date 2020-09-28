@@ -21,11 +21,11 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
-        public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, int? top, int? skip, string orderBy)
+        public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, int? top, int? skipItems, string orderBy)
         {
-            var dtos = GetOverviewItemsModels(userId, top, skip, orderBy);
+            var dtos = GetOverviewItemsModels(userId, top, skipItems, orderBy);
 
-            var itemsCount = _itemsRepository.All().Count();
+            var itemsCount = _itemsRepository.All().Where(x=>x.UserId == userId).Count();
 
             var pageDto = new ItemsOverviewPageDto()
             {
@@ -36,7 +36,7 @@ namespace ListGenerator.Server.Services
             return pageDto;
         }
 
-        private IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? top, int? skip, string orderBy)
+        private IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? pageSize, int? skipItems, string orderBy)
         {
             var query = GetBaseQuery(userId);
 
@@ -55,8 +55,8 @@ namespace ListGenerator.Server.Services
             }
 
             var pagedQuery = query
-                .Skip(skip.Value)
-                .Take(top.Value)
+                .Skip(skipItems.Value)
+                .Take(pageSize.Value)
                 .ToList();
 
             return pagedQuery;

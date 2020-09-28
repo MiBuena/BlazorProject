@@ -67,9 +67,9 @@ namespace ListGenerator.Client.Services
             return result;
         }
 
-        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? skip, int? top, string orderBy)
+        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy)
         {
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/{skip}/{top}/{orderBy}");
+            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/{pageSize}/{skipItems}/{orderBy}");
 
             return dto;
         }
