@@ -25,9 +25,18 @@ namespace ListGenerator.Server.Services
         {
             var query = GetBaseQuery(userId);
 
+            string orderByColumn = null;
+            string orderByDirection = null;
+
             if (orderBy != null)
             {
-                query = Sort(orderBy, query);
+                orderByColumn = orderBy.Split(" ")[0];
+                orderByDirection = orderBy.Split(" ")[1];
+            }
+
+            if (orderByColumn != null && orderByDirection != null)
+            {
+                query = Sort(orderByColumn, orderByDirection, query);
             }
 
             var pagedQuery = query
@@ -38,17 +47,15 @@ namespace ListGenerator.Server.Services
             return pagedQuery;
         }
 
-        private IQueryable<ItemOverviewDto> Sort(string orderBy, IQueryable<ItemOverviewDto> query)
+        private IQueryable<ItemOverviewDto> Sort(string orderByColumn, string orderByDirection, IQueryable<ItemOverviewDto> query)
         {
-            var splitted = orderBy.Split(" ");
-
-            if(splitted[1] == "asc")
+            if(orderByDirection == "asc")
             {
-                query = SortByAscending(splitted[0], query);
+                query = SortByAscending(orderByColumn, query);
             }
             else
             {
-                query = SortByDescending(splitted[0], query);
+                query = SortByDescending(orderByColumn, query);
             }
 
             return query;
