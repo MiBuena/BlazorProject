@@ -23,9 +23,14 @@ namespace ListGenerator.Server.Services
 
         public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)
         {
-            var dtos = GetOverviewItemsModels(userId, dto);
+            var query = GetOverviewItemsModels(userId, dto);
 
-            var itemsCount = dtos.Count();
+            var dtos = query
+                .Skip(dto.SkipItems.Value)
+                .Take(dto.PageSize.Value)
+                .ToList();
+
+            var itemsCount = query.Count();
 
             var pageDto = new ItemsOverviewPageDto()
             {
@@ -36,11 +41,11 @@ namespace ListGenerator.Server.Services
             return pageDto;
         }
 
-        private IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, FilterPatemetersDto dto)
+        private IQueryable<ItemOverviewDto> GetOverviewItemsModels(string userId, FilterPatemetersDto dto)
         {
             var query = GetBaseQuery(userId);
 
-            if(dto.SearchWord != null)
+            if (dto.SearchWord != null)
             {
                 query = query.Where(x => x.Name.ToLower().Contains(dto.SearchWord.ToLower()));
             }
@@ -50,17 +55,12 @@ namespace ListGenerator.Server.Services
                 query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);
             }
 
-            var pagedQuery = query
-                .Skip(dto.SkipItems.Value)
-                .Take(dto.PageSize.Value)
-                .ToList();
-
-            return pagedQuery;
+            return query;
         }
 
         private IQueryable<ItemOverviewDto> Sort(string orderByColumn, string orderByDirection, IQueryable<ItemOverviewDto> query)
         {
-            if(orderByDirection == "asc")
+            if (orderByDirection == "asc")
             {
                 query = SortByAscending(orderByColumn, query);
             }
@@ -123,20 +123,20 @@ namespace ListGenerator.Server.Services
             var query = _itemsRepository.All()
                 .Where(x => x.UserId == userId)
                 .Select(x => new ItemOverviewDto()
-                 {
-                     Id = x.Id,
-                     Name = x.Name,
-                     ReplenishmentPeriod = x.ReplenishmentPeriod,
-                     NextReplenishmentDate = x.NextReplenishmentDate,
-                     LastReplenishmentDate = x.Purchases
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    ReplenishmentPeriod = x.ReplenishmentPeriod,
+                    NextReplenishmentDate = x.NextReplenishmentDate,
+                    LastReplenishmentDate = x.Purchases
                                      .OrderByDescending(y => y.ReplenishmentDate)
                                      .Select(m => m.ReplenishmentDate)
                                      .FirstOrDefault(),
-                     LastReplenishmentQuantity = x.Purchases
+                    LastReplenishmentQuantity = x.Purchases
                                      .OrderByDescending(y => y.ReplenishmentDate)
                                      .Select(m => m.Quantity)
                                      .FirstOrDefault(),
-                 });
+                });
 
             return query;
         }
