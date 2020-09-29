@@ -40,6 +40,11 @@ namespace ListGenerator.Server.Services
         {
             var query = GetBaseQuery(userId);
 
+            if(dto.SearchWord != null)
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(dto.SearchWord.ToLower()));
+            }
+
             if (dto.OrderByColumn != null && dto.OrderByDirection != null)
             {
                 query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);
