@@ -9,6 +9,7 @@ using ListGenerator.Client.Interfaces;
 using ListGenerator.Shared.Interfaces;
 using System.Linq;
 using ListGenerator.Client.Enums;
+using System.Globalization;
 
 namespace ListGenerator.Client.Services
 {
@@ -39,7 +40,14 @@ namespace ListGenerator.Client.Services
                 orderByDirection = orderBy.Split(" ")[1];
             }
 
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={orderByColumn}&OrderByDirection={orderByDirection}&SearchWord={searchWord}&SearchDate={searchDate}");
+            string dateToString = null;
+
+            if(searchDate != null)
+            {
+                dateToString = searchDate.Value.ToString("s", CultureInfo.InvariantCulture);
+            }
+
+            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={orderByColumn}&OrderByDirection={orderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
 
             return dto;
         }

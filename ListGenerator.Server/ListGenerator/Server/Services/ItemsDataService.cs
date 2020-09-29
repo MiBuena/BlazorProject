@@ -7,6 +7,7 @@ using System.Linq;
 using ListGenerator.Data.Interfaces;
 using ListGenerator.Data.Entities;
 using System.Linq.Expressions;
+using System.Globalization;
 
 namespace ListGenerator.Server.Services
 {
@@ -52,9 +53,11 @@ namespace ListGenerator.Server.Services
 
             if(dto.SearchDate != null)
             {
+                var parsedDate = DateTime.ParseExact(dto.SearchDate, "s",
+                              CultureInfo.InvariantCulture);
                 query = query
-                    .Where(x => x.LastReplenishmentDate == dto.SearchDate 
-                || x.NextReplenishmentDate == dto.SearchDate);
+                    .Where(x => x.LastReplenishmentDate == parsedDate 
+                || x.NextReplenishmentDate == parsedDate);
             }
 
             if (dto.OrderByColumn != null && dto.OrderByDirection != null)

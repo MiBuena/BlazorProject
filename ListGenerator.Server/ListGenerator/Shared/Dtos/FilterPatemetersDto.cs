@@ -16,6 +16,6 @@ namespace ListGenerator.Shared.Dtos
 
         public string SearchWord { get; set; }
 
-        public DateTime? SearchDate { get; set; }
+        public string SearchDate { get; set; }
     }
 }
