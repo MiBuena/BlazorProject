@@ -9,10 +9,8 @@ using System.Threading.Tasks;
 namespace ListGenerator.Client.Services
 {
     public interface IItemService
-    {
-        IEnumerable<ItemOverviewViewModel> ApplyFilters(string searchWord, DateTime? searchDate, IEnumerable<ItemOverviewViewModel> originalItems);
-        
-        Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy);
+    {        
+        Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord);
         
         Task<ItemDto> GetItem(int id);
         

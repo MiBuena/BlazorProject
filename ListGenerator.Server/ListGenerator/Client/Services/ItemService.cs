@@ -27,49 +27,10 @@ namespace ListGenerator.Client.Services
             _jsonHelper = jsonHelper;
             _mapper = mapper;
         }
-
-        public IEnumerable<ItemOverviewViewModel> ApplyFilters(string searchWord, DateTime? searchDate, IEnumerable<ItemOverviewViewModel> originalItems)
+        
+        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord)
         {
-            var items = FilterBySearchWord(searchWord, originalItems);
-
-            items = FilterByDate(searchDate, items);
-
-            return items;
-        }
-
-        private IEnumerable<ItemOverviewViewModel> FilterByDate(DateTime? searchDate, IEnumerable<ItemOverviewViewModel> items)
-        {
-            if (searchDate == null)
-            {
-                return items;
-            }
-
-            var result = items
-                .Where(x => x.NextReplenishmentDate.Date == searchDate.Value.Date
-                || x.LastReplenishmentDate == searchDate.Value.Date);
-
-            return result;
-        }
-
-        private IEnumerable<ItemOverviewViewModel> FilterBySearchWord(string searchWord, IEnumerable<ItemOverviewViewModel> items)
-        {
-            if (searchWord == null)
-            {
-                searchWord = string.Empty;
-            }
-
-            var result = items
-            .Where(x =>
-               x.Name.ToLower().Contains(searchWord.ToLower())
-            || x.ReplenishmentPeriodString == searchWord
-            || (x.LastReplenishmentQuantity.HasValue ? x.LastReplenishmentQuantity.Value.ToString() == searchWord : false));
-
-            return result;
-        }
-
-        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy)
-        {
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/{pageSize}/{skipItems}/{orderBy}");
+            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderBy={orderBy}&SearchWord={searchWord}");
 
             return dto;
         }

@@ -9,6 +9,17 @@ using System.Linq;
 
 namespace ListGenerator.Server.Controllers
 {
+    public class A
+    {
+        public int? PageSize { get; set; }
+
+        public int? SkipItems { get; set; }
+
+        public string OrderBy { get; set; }
+
+        public string SearchWord { get; set; }
+    }
+
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
@@ -22,10 +33,10 @@ namespace ListGenerator.Server.Controllers
             _itemsDataService = itemsDataService;
         }
 
-        [HttpGet("overview/{pageSize}/{skipItems}/{orderBy?}")]
-        public IActionResult GetOverviewItems(int pageSize, int skipItems, string orderBy)
+        [HttpGet("overview/{aa.PageSize:int?}/{aa.SkipItems:int?}/{aa.OrderBy?}/{aa.SearchWord?}")]
+        public IActionResult GetOverviewItems([FromQuery] A aa)
         {
-            var dto = _itemsDataService.GetItemsOverviewPageModel(this.UserId, pageSize, skipItems, orderBy);
+            var dto = _itemsDataService.GetItemsOverviewPageModel(this.UserId, aa.PageSize, aa.SkipItems, aa.OrderBy);
             return Ok(dto);
         }
 

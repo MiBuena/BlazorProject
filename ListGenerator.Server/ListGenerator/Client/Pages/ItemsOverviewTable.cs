@@ -47,22 +47,22 @@ namespace ListGenerator.Client.Pages
 
         protected async Task LoadData(LoadDataArgs args)
         {
-            await InitializeData(args.Top, args.Skip, args.OrderBy);
+            await InitializeData(args.Top, args.Skip, args.OrderBy, this.SearchWord);
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task InitializeData(int? pageSize, int? skipItems, string orderBy)
+        private async Task InitializeData(int? pageSize, int? skipItems, string orderBy, string searchWord)
         {
-            var dto = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy);
+            var dto = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy, searchWord);
             var items = dto.OverviewItems.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
             this.DisplayItems = items;
             this.Count = dto.TotalItemsCount;
         }
 
-        protected void Search()
+        protected async void Search()
         {
-            this.DisplayItems = ItemsService.ApplyFilters(this.SearchWord, this.SearchDate, this.OriginalItems);
+            await InitializeData(this.Table.PageSize, 0, null, this.SearchWord);
             StateHasChanged();
         }
 
