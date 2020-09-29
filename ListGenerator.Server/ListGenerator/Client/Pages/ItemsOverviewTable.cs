@@ -62,7 +62,7 @@ namespace ListGenerator.Client.Pages
 
         protected async void Search()
         {
-            await InitializeData(this.Table.PageSize, 0, null, this.SearchWord);
+            await Table.Reload();
             StateHasChanged();
         }
 

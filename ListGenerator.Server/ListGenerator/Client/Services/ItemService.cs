@@ -30,7 +30,16 @@ namespace ListGenerator.Client.Services
         
         public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord)
         {
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderBy={orderBy}&SearchWord={searchWord}");
+            string orderByColumn = null;
+            string orderByDirection = null;
+
+            if (orderBy != null)
+            {
+                orderByColumn = orderBy.Split(" ")[0];
+                orderByDirection = orderBy.Split(" ")[1];
+            }
+
+            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={orderByColumn}&OrderByDirection={orderByDirection}&SearchWord={searchWord}");
 
             return dto;
         }

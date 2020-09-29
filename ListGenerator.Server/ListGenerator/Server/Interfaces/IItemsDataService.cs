@@ -15,6 +15,6 @@ namespace ListGenerator.Server.Interfaces
 
         IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId);
         
-        ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, int? pageSize, int? skipItems, string orderBy);
+        ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto);
     }
 }

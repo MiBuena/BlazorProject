@@ -21,11 +21,11 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
-        public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, int? top, int? skipItems, string orderBy)
+        public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)
         {
-            var dtos = GetOverviewItemsModels(userId, top, skipItems, orderBy);
+            var dtos = GetOverviewItemsModels(userId, dto);
 
-            var itemsCount = _itemsRepository.All().Where(x=>x.UserId == userId).Count();
+            var itemsCount = dtos.Count();
 
             var pageDto = new ItemsOverviewPageDto()
             {
@@ -36,27 +36,18 @@ namespace ListGenerator.Server.Services
             return pageDto;
         }
 
-        private IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, int? pageSize, int? skipItems, string orderBy)
+        private IEnumerable<ItemOverviewDto> GetOverviewItemsModels(string userId, FilterPatemetersDto dto)
         {
             var query = GetBaseQuery(userId);
 
-            string orderByColumn = null;
-            string orderByDirection = null;
-
-            if (orderBy != null)
+            if (dto.OrderByColumn != null && dto.OrderByDirection != null)
             {
-                orderByColumn = orderBy.Split(" ")[0];
-                orderByDirection = orderBy.Split(" ")[1];
-            }
-
-            if (orderByColumn != null && orderByDirection != null)
-            {
-                query = Sort(orderByColumn, orderByDirection, query);
+                query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);
             }
 
             var pagedQuery = query
-                .Skip(skipItems.Value)
-                .Take(pageSize.Value)
+                .Skip(dto.SkipItems.Value)
+                .Take(dto.PageSize.Value)
                 .ToList();
 
             return pagedQuery;
