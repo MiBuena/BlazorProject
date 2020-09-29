@@ -23,7 +23,7 @@ namespace ListGenerator.Server.Services
 
         public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)
         {
-            var query = GetOverviewItemsModels(userId, dto);
+            var query = GetOverviewItemsQuery(userId, dto);
 
             var dtos = query
                 .Skip(dto.SkipItems.Value)
@@ -41,7 +41,7 @@ namespace ListGenerator.Server.Services
             return pageDto;
         }
 
-        private IQueryable<ItemOverviewDto> GetOverviewItemsModels(string userId, FilterPatemetersDto dto)
+        private IQueryable<ItemOverviewDto> GetOverviewItemsQuery(string userId, FilterPatemetersDto dto)
         {
             var query = GetBaseQuery(userId);
 
