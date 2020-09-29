@@ -47,13 +47,13 @@ namespace ListGenerator.Client.Pages
 
         protected async Task LoadData(LoadDataArgs args)
         {
-            await InitializeData(args.Top, args.Skip, args.OrderBy, this.SearchWord);
+            await InitializeData(args.Top, args.Skip, args.OrderBy, this.SearchWord, this.SearchDate);
             await InvokeAsync(StateHasChanged);
         }
 
-        private async Task InitializeData(int? pageSize, int? skipItems, string orderBy, string searchWord)
+        private async Task InitializeData(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
         {
-            var dto = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy, searchWord);
+            var dto = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy, searchWord, searchDate);
             var items = dto.OverviewItems.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
             this.DisplayItems = items;

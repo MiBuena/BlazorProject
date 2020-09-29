@@ -7,8 +7,13 @@
     var columnSize = "160px";
 }
 
-<div class="search-holder"><span>Search by text</span> <input type="text" class="search-box" placeholder="Search..." @bind-value="SearchWord" /></div>
-<button @onclick="@Search"><i class="fa fa-search"></i></button>
+<div class="search-holder">
+    <span class="search-label">Search by text</span>
+    <input class="search-input" type="search" placeholder="Search..." @bind-value="SearchWord">
+    <button type="button" @onclick="@Search" class="search-button">
+        <i class="material-icons search-magnifier">search</i>
+    </button>
+</div>
 
 <div class="search-holder"><span>Search by date</span> <RadzenDatePicker @bind-Value="SearchDate" DateFormat="d" Change="@(args => Search())" /></div>
 

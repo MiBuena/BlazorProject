@@ -50,6 +50,13 @@ namespace ListGenerator.Server.Services
                 query = query.Where(x => x.Name.ToLower().Contains(dto.SearchWord.ToLower()));
             }
 
+            if(dto.SearchDate != null)
+            {
+                query = query
+                    .Where(x => x.LastReplenishmentDate == dto.SearchDate 
+                || x.NextReplenishmentDate == dto.SearchDate);
+            }
+
             if (dto.OrderByColumn != null && dto.OrderByDirection != null)
             {
                 query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);

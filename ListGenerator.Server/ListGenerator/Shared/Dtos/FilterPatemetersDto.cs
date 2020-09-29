@@ -15,5 +15,7 @@ namespace ListGenerator.Shared.Dtos
         public string OrderByDirection { get; set; }
 
         public string SearchWord { get; set; }
+
+        public DateTime? SearchDate { get; set; }
     }
 }

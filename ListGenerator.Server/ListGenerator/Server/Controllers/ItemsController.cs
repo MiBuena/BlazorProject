@@ -22,7 +22,7 @@ namespace ListGenerator.Server.Controllers
             _itemsDataService = itemsDataService;
         }
 
-        [HttpGet("overview/{dto.PageSize:int?}/{dto.SkipItems:int?}/{dto.OrderByColumn?}/{dto.OrderByDirection?}/{dto.SearchWord?}/")]
+        [HttpGet("overview/{dto.PageSize:int?}/{dto.SkipItems:int?}/{dto.OrderByColumn?}/{dto.OrderByDirection?}/{dto.SearchWord?}/{dto.SearchDate?}")]
         public IActionResult GetOverviewItems([FromQuery] FilterPatemetersDto dto)
         {
             var overviewDto = _itemsDataService.GetItemsOverviewPageModel(this.UserId, dto);

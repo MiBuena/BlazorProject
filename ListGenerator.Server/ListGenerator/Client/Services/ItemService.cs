@@ -28,7 +28,7 @@ namespace ListGenerator.Client.Services
             _mapper = mapper;
         }
         
-        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord)
+        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
         {
             string orderByColumn = null;
             string orderByDirection = null;
@@ -39,7 +39,7 @@ namespace ListGenerator.Client.Services
                 orderByDirection = orderBy.Split(" ")[1];
             }
 
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={orderByColumn}&OrderByDirection={orderByDirection}&SearchWord={searchWord}");
+            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={orderByColumn}&OrderByDirection={orderByDirection}&SearchWord={searchWord}&SearchDate={searchDate}");
 
             return dto;
         }
