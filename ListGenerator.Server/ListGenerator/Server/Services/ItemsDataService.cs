@@ -9,6 +9,7 @@ using ListGenerator.Data.Entities;
 using System.Linq.Expressions;
 using System.Globalization;
 using ListGenerator.Server.Extensions;
+using ListGenerator.Shared.Enums;
 
 namespace ListGenerator.Server.Services
 {
@@ -80,11 +81,11 @@ namespace ListGenerator.Server.Services
             return query;
         }
 
-        private IQueryable<ItemOverviewDto> Sort(string orderByColumn, string orderByDirection, IQueryable<ItemOverviewDto> query)
+        private IQueryable<ItemOverviewDto> Sort(string orderByColumn, SortingDirection? orderByDirection, IQueryable<ItemOverviewDto> query)
         {
             if (orderByColumn != null && orderByDirection != null)
             {
-                if (orderByDirection == "asc")
+                if (orderByDirection == SortingDirection.Ascending)
                 {
                     query = query.OrderByProperty(orderByColumn);
                 }

@@ -36,7 +36,6 @@ namespace ListGenerator.Client
             builder.Services.AddTransient<IApiClient, ApiClient>();
             builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
             builder.Services.AddTransient<IReplenishmentBuilder, ReplenishmentBuilder>();
-            builder.Services.AddTransient<IOwnTableService, OwnTableService>();
 
             builder.Services.AddAutoMapper(typeof(Program));
 

@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 using ListGenerator.Client.Interfaces;
 using ListGenerator.Shared.Interfaces;
 using System.Linq;
-using ListGenerator.Client.Enums;
 using System.Globalization;
+using ListGenerator.Shared.Enums;
+using ListGenerator.Shared.Constants;
 
 namespace ListGenerator.Client.Services
 {
@@ -28,28 +29,37 @@ namespace ListGenerator.Client.Services
             _jsonHelper = jsonHelper;
             _mapper = mapper;
         }
-        
+
         public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
         {
-            string orderByColumn = null;
-            string orderByDirection = null;
-
-            if (orderBy != null)
-            {
-                orderByColumn = orderBy.Split(" ")[0];
-                orderByDirection = orderBy.Split(" ")[1];
-            }
+            var sortingData = GetSortingData(orderBy);
 
             string dateToString = null;
 
-            if(searchDate != null)
+            if (searchDate != null)
             {
                 dateToString = searchDate.Value.ToString("s", CultureInfo.InvariantCulture);
             }
 
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={orderByColumn}&OrderByDirection={orderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
+            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={sortingData.OrderByColumn}&OrderByDirection={sortingData.OrderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
 
             return dto;
+        }
+
+        private SortingData GetSortingData(string orderBy)
+        {
+            var sortingData = new SortingData();
+
+            if (orderBy != null)
+            {
+                sortingData.OrderByColumn = orderBy.Split(" ")[0];
+
+                sortingData.OrderByDirection = orderBy.Split(" ")[1] == Constants.GridAscendingKeyword
+                    ? SortingDirection.Ascending 
+                    : sortingData.OrderByDirection = SortingDirection.Descending;
+            }
+
+            return sortingData;
         }
 
         public async Task<ItemDto> GetItem(int id)
@@ -93,5 +103,11 @@ namespace ListGenerator.Client.Services
 
             return dtos;
         }
+    }
+
+    public class SortingData
+    {
+        public string OrderByColumn { get; set; }
+        public SortingDirection? OrderByDirection { get; set; }
     }
 }

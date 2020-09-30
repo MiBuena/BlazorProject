@@ -1,8 +1,4 @@
-﻿using ListGenerator.Client.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using ListGenerator.Shared.Enums;
 
 namespace ListGenerator.Client.ViewModels
 {

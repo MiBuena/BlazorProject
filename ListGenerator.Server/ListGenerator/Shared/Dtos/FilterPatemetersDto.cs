@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ListGenerator.Shared.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,7 +13,7 @@ namespace ListGenerator.Shared.Dtos
 
         public string OrderByColumn { get; set; }
 
-        public string OrderByDirection { get; set; }
+        public SortingDirection? OrderByDirection { get; set; }
 
         public string SearchWord { get; set; }
 
