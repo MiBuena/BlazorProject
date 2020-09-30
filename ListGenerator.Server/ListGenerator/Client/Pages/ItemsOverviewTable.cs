@@ -60,6 +60,15 @@ namespace ListGenerator.Client.Pages
             this.Count = dto.TotalItemsCount;
         }
 
+        protected async void ClearFilters()
+        {
+            this.SearchWord = null;
+            this.SearchDate = null;
+
+            await Table.Reload();
+            StateHasChanged();
+        }
+
         protected async void Search()
         {
             await Table.Reload();

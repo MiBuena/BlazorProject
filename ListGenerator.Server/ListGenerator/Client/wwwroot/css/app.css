@@ -340,8 +340,9 @@ th {
     display: inline-block;
 }
 
-.search-button {
+.basic-button {
     display: inline-block;
+    vertical-align: middle;
     background-color: white;
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
@@ -369,4 +370,12 @@ th {
     border: 1px solid #ced4da;
     border-radius: .25rem;
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.clear-filters-button {
+    margin-left:10px;
+}
+
+.search-holder {
+    margin-bottom: 5px;
 }
