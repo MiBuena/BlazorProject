@@ -62,7 +62,7 @@ namespace ListGenerator.Server.Services
         {
             if (searchDate != null)
             {
-                var parsedDate = DateTimeHelper.ToDateFromInvariantDateAsString(searchDate);
+                var parsedDate = DateTimeHelper.ToDateFromTransferDateAsString(searchDate);
 
                 query = query
                     .Where(x => x.LastReplenishmentDate == parsedDate
@@ -173,7 +173,7 @@ namespace ListGenerator.Server.Services
 
         public IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId)
         {
-            var date = DateTime.ParseExact(secondReplenishmentDate, "dd-MM-yyyy", null);
+            var date = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDate);
 
             var query = _itemsRepository.All()
                 .Where(x => x.NextReplenishmentDate.Date < date

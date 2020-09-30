@@ -33,7 +33,7 @@ namespace ListGenerator.Client.Services
         {
             var sortingData = GetSortingData(orderBy);
 
-            var dateToString = DateTimeHelper.ToInvariantDateAsString(searchDate);    
+            var dateToString = DateTimeHelper.ToTransferDateAsString(searchDate);    
 
             var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={sortingData.OrderByColumn}&OrderByDirection={sortingData.OrderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
 
@@ -92,8 +92,8 @@ namespace ListGenerator.Client.Services
 
         public async Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate)
         {
-            var internationalDateTime = secondReplenishmentDate.ToString("dd-MM-yyyy");
-            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>($"api/items/shoppinglist/{internationalDateTime}");
+            var invariantDate = DateTimeHelper.ToTransferDateAsString(secondReplenishmentDate);
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>($"api/items/shoppinglist/{invariantDate}");
 
             return dtos;
         }

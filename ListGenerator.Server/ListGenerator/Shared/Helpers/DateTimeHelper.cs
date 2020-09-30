@@ -7,7 +7,7 @@ namespace ListGenerator.Shared.Helpers
 {
     public class DateTimeHelper
     {
-        public static string ToInvariantDateAsString(DateTime? date)
+        public static string ToTransferDateAsString(DateTime? date)
         {
             string dateAsString = null;
 
@@ -19,7 +19,13 @@ namespace ListGenerator.Shared.Helpers
             return dateAsString;
         }
 
-        public static DateTime ToDateFromInvariantDateAsString(string dateAsString)
+        public static string ToTransferDateAsString(DateTime date)
+        {
+            string dateAsString = date.ToString(Constants.Constants.DateTransferFormat, CultureInfo.InvariantCulture);
+            return dateAsString;
+        }
+
+        public static DateTime ToDateFromTransferDateAsString(string dateAsString)
         {
             var parsedDate = DateTime.ParseExact(dateAsString, Constants.Constants.DateTransferFormat, CultureInfo.InvariantCulture);
             return parsedDate;

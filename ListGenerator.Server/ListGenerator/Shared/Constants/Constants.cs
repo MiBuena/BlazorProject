@@ -12,6 +12,6 @@ namespace ListGenerator.Shared.Constants
 
         public const string GridDescendingKeyword = "desc";
 
-        public const string DateTransferFormat = "d";
+        public const string DateTransferFormat = "dd-MM-yyyy";
     }
 }
