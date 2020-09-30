@@ -10,6 +10,7 @@ using System.Linq.Expressions;
 using System.Globalization;
 using ListGenerator.Server.Extensions;
 using ListGenerator.Shared.Enums;
+using ListGenerator.Shared.Helpers;
 
 namespace ListGenerator.Server.Services
 {
@@ -61,8 +62,8 @@ namespace ListGenerator.Server.Services
         {
             if (searchDate != null)
             {
-                var parsedDate = DateTime.ParseExact(searchDate, "s",
-                              CultureInfo.InvariantCulture);
+                var parsedDate = DateTimeHelper.ToDateFromInvariantDateAsString(searchDate);
+
                 query = query
                     .Where(x => x.LastReplenishmentDate == parsedDate
                 || x.NextReplenishmentDate == parsedDate);

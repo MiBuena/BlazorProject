@@ -7,10 +7,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ListGenerator.Client.Interfaces;
 using ListGenerator.Shared.Interfaces;
-using System.Linq;
-using System.Globalization;
 using ListGenerator.Shared.Enums;
 using ListGenerator.Shared.Constants;
+using ListGenerator.Shared.Helpers;
 
 namespace ListGenerator.Client.Services
 {
@@ -38,7 +37,7 @@ namespace ListGenerator.Client.Services
 
             if (searchDate != null)
             {
-                dateToString = searchDate.Value.ToString("s", CultureInfo.InvariantCulture);
+                dateToString = DateTimeHelper.ToInvariantDateAsString(searchDate.Value);
             }
 
             var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={sortingData.OrderByColumn}&OrderByDirection={sortingData.OrderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
