@@ -104,10 +104,4 @@ namespace ListGenerator.Client.Services
             return dtos;
         }
     }
-
-    public class SortingData
-    {
-        public string OrderByColumn { get; set; }
-        public SortingDirection? OrderByDirection { get; set; }
-    }
 }
