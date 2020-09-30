@@ -77,53 +77,7 @@ namespace ListGenerator.Server.Services
             }
             else
             {
-                query = SortByDescending(orderByColumn, query);
-            }
-
-            return query;
-        }
-
-        private IQueryable<ItemOverviewDto> SortByAscending(string column, IQueryable<ItemOverviewDto> query)
-        {
-            switch (column)
-            {
-                case "Name":
-                    query = query.OrderBy(x => x.Name);
-                    break;
-                case "ReplenishmentPeriod":
-                    query = query.OrderBy(x => x.ReplenishmentPeriod);
-                    break;
-                case "NextReplenishmentDate":
-                    query = query.OrderBy(x => x.NextReplenishmentDate);
-                    break;
-                case "LastReplenishmentQuantity":
-                    query = query.OrderBy(x => x.LastReplenishmentQuantity);
-                    break;
-                default:
-                    break;
-            }
-
-            return query;
-        }
-
-        private IQueryable<ItemOverviewDto> SortByDescending(string column, IQueryable<ItemOverviewDto> query)
-        {
-            switch (column)
-            {
-                case "Name":
-                    query = query.OrderByDescending(x => x.Name);
-                    break;
-                case "ReplenishmentPeriod":
-                    query = query.OrderByDescending(x => x.ReplenishmentPeriod);
-                    break;
-                case "NextReplenishmentDate":
-                    query = query.OrderByDescending(x => x.NextReplenishmentDate);
-                    break;
-                case "LastReplenishmentQuantity":
-                    query = query.OrderByDescending(x => x.LastReplenishmentQuantity);
-                    break;
-                default:
-                    break;
+                query = query.OrderByPropertyDescending(orderByColumn);
             }
 
             return query;
