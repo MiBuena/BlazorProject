@@ -48,7 +48,7 @@
 
                             <div class="form-group row">
                                 <label for="nextReplenishmentDate" class="col-sm-3">Next Replenishment Date: </label>
-                                <RadzenDatePicker @bind-Value="@ItemToUpdate.NextReplenishmentDate" DateFormat="@Constants.DateFormat" />
+                                <RadzenDatePicker @bind-Value="@ItemToUpdate.NextReplenishmentDate" DateFormat="@Constants.DisplayDateFormat" />
                                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToUpdate.NextReplenishmentDate)" />
                             </div>
 
