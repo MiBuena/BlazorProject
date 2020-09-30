@@ -11,7 +11,7 @@
     <span class="search-label">Search by text</span>
 
     <RadzenAutoComplete Data="@DisplayItemsNames" Placeholder="Search..."
-                        TextProperty="Name" Style="margin-bottom: 20px" 
+                        TextProperty="Name" class="search-input" 
                         @bind-Value="@SearchWord"
                         LoadData="@LoadAutoCompleteData" />
 
