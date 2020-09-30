@@ -6,7 +6,7 @@ namespace ListGenerator.Shared.Constants
 {
     public class Constants
     {
-        public const string DateFormat = "dd.MM.yyyy";
+        public const string DisplayDateFormat = "dd.MM.yyyy";
 
         public const string GridAscendingKeyword = "asc";
 
