@@ -7,9 +7,15 @@ namespace ListGenerator.Shared.Helpers
 {
     public class DateTimeHelper
     {
-        public static string ToInvariantDateAsString(DateTime date)
+        public static string ToInvariantDateAsString(DateTime? date)
         {
-            var dateAsString = date.ToString(Constants.Constants.DateTransferFormat, CultureInfo.InvariantCulture);
+            string dateAsString = null;
+
+            if (date.HasValue)
+            {
+                dateAsString = date.Value.ToString(Constants.Constants.DateTransferFormat, CultureInfo.InvariantCulture);
+            }
+
             return dateAsString;
         }
 

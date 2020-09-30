@@ -33,12 +33,7 @@ namespace ListGenerator.Client.Services
         {
             var sortingData = GetSortingData(orderBy);
 
-            string dateToString = null;
-
-            if (searchDate != null)
-            {
-                dateToString = DateTimeHelper.ToInvariantDateAsString(searchDate.Value);
-            }
+            var dateToString = DateTimeHelper.ToInvariantDateAsString(searchDate);    
 
             var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={sortingData.OrderByColumn}&OrderByDirection={sortingData.OrderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
 
