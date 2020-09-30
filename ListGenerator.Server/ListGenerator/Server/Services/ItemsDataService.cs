@@ -47,23 +47,34 @@ namespace ListGenerator.Server.Services
         {
             var query = GetBaseQuery(userId);
 
-            if (dto.SearchWord != null)
-            {
-                query = query.Where(x => x.Name.ToLower().Contains(dto.SearchWord.ToLower()));
-            }
+            query = FilterBySearchWord(dto.SearchWord, query);
 
-            if(dto.SearchDate != null)
+            query = FilterBySearchDate(dto.SearchDate, query);
+            
+            query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);      
+
+            return query;
+        }
+
+        private IQueryable<ItemOverviewDto> FilterBySearchDate(string searchDate, IQueryable<ItemOverviewDto> query)
+        {
+            if (searchDate != null)
             {
-                var parsedDate = DateTime.ParseExact(dto.SearchDate, "s",
+                var parsedDate = DateTime.ParseExact(searchDate, "s",
                               CultureInfo.InvariantCulture);
                 query = query
-                    .Where(x => x.LastReplenishmentDate == parsedDate 
+                    .Where(x => x.LastReplenishmentDate == parsedDate
                 || x.NextReplenishmentDate == parsedDate);
             }
 
-            if (dto.OrderByColumn != null && dto.OrderByDirection != null)
+            return query;
+        }
+
+        private IQueryable<ItemOverviewDto> FilterBySearchWord(string searchWord, IQueryable<ItemOverviewDto> query)
+        {
+            if (searchWord != null)
             {
-                query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);
+                query = query.Where(x => x.Name.ToLower().Contains(searchWord.ToLower()));
             }
 
             return query;
@@ -71,13 +82,16 @@ namespace ListGenerator.Server.Services
 
         private IQueryable<ItemOverviewDto> Sort(string orderByColumn, string orderByDirection, IQueryable<ItemOverviewDto> query)
         {
-            if (orderByDirection == "asc")
+            if (orderByColumn != null && orderByDirection != null)
             {
-                query = query.OrderByProperty(orderByColumn);
-            }
-            else
-            {
-                query = query.OrderByPropertyDescending(orderByColumn);
+                if (orderByDirection == "asc")
+                {
+                    query = query.OrderByProperty(orderByColumn);
+                }
+                else
+                {
+                    query = query.OrderByPropertyDescending(orderByColumn);
+                }
             }
 
             return query;
