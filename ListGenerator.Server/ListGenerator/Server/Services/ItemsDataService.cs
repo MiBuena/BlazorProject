@@ -8,6 +8,7 @@ using ListGenerator.Data.Interfaces;
 using ListGenerator.Data.Entities;
 using System.Linq.Expressions;
 using System.Globalization;
+using ListGenerator.Server.Extensions;
 
 namespace ListGenerator.Server.Services
 {
@@ -72,7 +73,7 @@ namespace ListGenerator.Server.Services
         {
             if (orderByDirection == "asc")
             {
-                query = SortByAscending(orderByColumn, query);
+                query = query.OrderByProperty(orderByColumn);
             }
             else
             {
