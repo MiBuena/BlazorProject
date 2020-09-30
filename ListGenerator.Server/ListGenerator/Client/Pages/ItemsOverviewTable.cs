@@ -29,9 +29,11 @@ namespace ListGenerator.Client.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
-        public IEnumerable<ItemOverviewViewModel> DisplayItems { get; set; }
+        public IEnumerable<ItemNameDto> ItemsNames { get; set; }
 
-        public IEnumerable<ItemOverviewViewModel> OriginalItems { get; set; }
+        public IEnumerable<ItemNameDto> DisplayItemsNames { get; set; }
+
+        public IEnumerable<ItemOverviewViewModel> DisplayItems { get; set; }
 
         protected AddItemDialog AddItemDialog { get; set; }
 
@@ -58,6 +60,8 @@ namespace ListGenerator.Client.Pages
 
             this.DisplayItems = items;
             this.Count = dto.TotalItemsCount;
+
+            this.ItemsNames = await this.ItemsService.GetAllItemsNames();
         }
 
         protected async void ClearFilters()
@@ -67,6 +71,11 @@ namespace ListGenerator.Client.Pages
 
             await Table.Reload();
             StateHasChanged();
+        }
+
+        protected void LoadAutoCompleteData(LoadDataArgs args)
+        {
+            this.DisplayItemsNames = this.ItemsNames.Where(x => x.Name.ToLower().Contains(args.Filter.ToLower()));
         }
 
         protected async void Search()

@@ -29,6 +29,12 @@ namespace ListGenerator.Client.Services
             _mapper = mapper;
         }
 
+        public async Task<IEnumerable<ItemNameDto>> GetAllItemsNames()
+        {
+            var names = await _apiClient.GetAsync<IEnumerable<ItemNameDto>>($"api/items/allitemsnames");
+            return names;
+        }
+
         public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
         {
             var sortingData = GetSortingData(orderBy);

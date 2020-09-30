@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace ListGenerator.Client.Services
 {
     public interface IItemService
-    {        
+    {
+        Task<IEnumerable<ItemNameDto>> GetAllItemsNames();
         Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate);
         
         Task<ItemDto> GetItem(int id);

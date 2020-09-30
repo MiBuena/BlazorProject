@@ -22,6 +22,13 @@ namespace ListGenerator.Server.Controllers
             _itemsDataService = itemsDataService;
         }
 
+        [HttpGet("allitemsnames")]
+        public IActionResult GetItemsNames()
+        {
+            var itemsNames = _itemsDataService.GetAllItemsNames(this.UserId);
+            return Ok(itemsNames);
+        }
+
         [HttpGet("overview/{dto.PageSize:int?}/{dto.SkipItems:int?}/{dto.OrderByColumn?}/{dto.OrderByDirection?}/{dto.SearchWord?}/{dto.SearchDate?}")]
         public IActionResult GetOverviewItems([FromQuery] FilterPatemetersDto dto)
         {

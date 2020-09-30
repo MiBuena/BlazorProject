@@ -25,6 +25,19 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
+        public IEnumerable<ItemNameDto> GetAllItemsNames(string userId)
+        {
+            var names = _itemsRepository.All()
+                .Where(x=>x.UserId == userId)
+                .Select(x => new ItemNameDto()
+                {
+                    Name = x.Name
+                })
+                .ToList();
+
+            return names;
+        }
+
         public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)
         {
             var query = GetOverviewItemsQuery(userId, dto);

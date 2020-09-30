@@ -9,7 +9,12 @@
 
 <div class="search-holder">
     <span class="search-label">Search by text</span>
-    <input class="search-input" type="search" placeholder="Search..." @bind-value="SearchWord">
+
+    <RadzenAutoComplete Data="@DisplayItemsNames" Placeholder="Search..."
+                        TextProperty="Name" Style="margin-bottom: 20px" 
+                        @bind-Value="@SearchWord"
+                        LoadData="@LoadAutoCompleteData" />
+
     <button class="basic-button" @onclick="@Search">
         <i class="material-icons">search</i>
     </button>
@@ -17,7 +22,7 @@
 </div>
 
 <div class="search-holder">
-    <span>Search by date</span> 
+    <span>Search by date</span>
     <RadzenDatePicker @bind-Value="SearchDate" DateFormat="d" Change="@(args => Search())" />
 </div>
 

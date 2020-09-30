@@ -5,6 +5,8 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IItemsDataService
     {
+        IEnumerable<ItemNameDto> GetAllItemsNames(string userId);
+
         ItemDto GetItem(int itemId);
 
         int AddItem(string userId, ItemDto itemDto);
