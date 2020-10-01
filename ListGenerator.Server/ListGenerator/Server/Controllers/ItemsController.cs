@@ -22,10 +22,10 @@ namespace ListGenerator.Server.Controllers
             _itemsDataService = itemsDataService;
         }
 
-        [HttpGet("allitemsnames")]
-        public IActionResult GetItemsNames()
+        [HttpGet("allitemsnames/{searchWord}")]
+        public IActionResult GetItemsNames(string searchWord)
         {
-            var itemsNames = _itemsDataService.GetAllItemsNames(this.UserId);
+            var itemsNames = _itemsDataService.GetAllItemsNames(searchWord, this.UserId);
             return Ok(itemsNames);
         }
 

@@ -29,9 +29,9 @@ namespace ListGenerator.Client.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ItemNameDto>> GetAllItemsNames()
+        public async Task<IEnumerable<ItemNameDto>> GetAllItemsNames(string searchWord)
         {
-            var names = await _apiClient.GetAsync<IEnumerable<ItemNameDto>>($"api/items/allitemsnames");
+            var names = await _apiClient.GetAsync<IEnumerable<ItemNameDto>>($"api/items/allitemsnames/{searchWord}");
             return names;
         }
 

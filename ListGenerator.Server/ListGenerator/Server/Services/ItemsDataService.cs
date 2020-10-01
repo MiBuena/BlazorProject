@@ -25,10 +25,11 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ItemNameDto> GetAllItemsNames(string userId)
+        public IEnumerable<ItemNameDto> GetAllItemsNames(string searchWord, string userId)
         {
             var names = _itemsRepository.All()
-                .Where(x=>x.UserId == userId)
+                .Where(x => x.UserId == userId
+                && x.Name.ToLower().Contains(searchWord.ToLower()))
                 .Select(x => new ItemNameDto()
                 {
                     Name = x.Name

@@ -60,8 +60,6 @@ namespace ListGenerator.Client.Pages
 
             this.DisplayItems = items;
             this.Count = dto.TotalItemsCount;
-
-            this.ItemsNames = await this.ItemsService.GetAllItemsNames();
         }
 
         protected async void ClearFilters()
@@ -73,9 +71,10 @@ namespace ListGenerator.Client.Pages
             StateHasChanged();
         }
 
-        protected void LoadAutoCompleteData(LoadDataArgs args)
+        protected async void LoadAutoCompleteData(LoadDataArgs args)
         {
-            this.DisplayItemsNames = this.ItemsNames.Where(x => x.Name.ToLower().Contains(args.Filter.ToLower()));
+            this.DisplayItemsNames = await ItemsService.GetAllItemsNames(args.Filter);
+            await InvokeAsync(StateHasChanged);
         }
 
         protected async void Search()
