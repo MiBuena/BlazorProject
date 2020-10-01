@@ -13,6 +13,8 @@ namespace ListGenerator.Server.AutoMapper
                 .ReverseMap();
 
             CreateMap<PurchaseItemDto, Purchase>();
+
+            CreateMap<Item, ItemNameDto>();
         }
     }
 }

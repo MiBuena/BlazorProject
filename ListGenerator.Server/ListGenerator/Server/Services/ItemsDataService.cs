@@ -27,14 +27,17 @@ namespace ListGenerator.Server.Services
 
         public IEnumerable<ItemNameDto> GetItemsNames(string searchWord, string userId)
         {
-            var names = _itemsRepository.All()
-                .Where(x => x.UserId == userId
-                && x.Name.ToLower().Contains(searchWord.ToLower()))
-                .Select(x => new ItemNameDto()
-                {
-                    Name = x.Name
-                })
-                .ToList();
+            var query = _itemsRepository.All()
+                .Where(x => x.UserId == userId);
+
+            var names = new List<ItemNameDto>();
+
+            if (!string.IsNullOrEmpty(searchWord))
+            {
+                query = query.Where(x => x.Name.ToLower().Contains(searchWord.ToLower()));
+            }
+
+            names = _mapper.ProjectTo<ItemNameDto>(query).ToList();
 
             return names;
         }
@@ -66,8 +69,8 @@ namespace ListGenerator.Server.Services
             query = FilterBySearchWord(dto.SearchWord, query);
 
             query = FilterBySearchDate(dto.SearchDate, query);
-            
-            query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);      
+
+            query = Sort(dto.OrderByColumn, dto.OrderByDirection, query);
 
             return query;
         }
