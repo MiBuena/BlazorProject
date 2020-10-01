@@ -73,7 +73,7 @@ namespace ListGenerator.Client.Pages
 
         protected async void LoadAutoCompleteData(LoadDataArgs args)
         {
-            this.DisplayItemsNames = await ItemsService.GetAllItemsNames(args.Filter);
+            this.DisplayItemsNames = await ItemsService.GetItemsNames(args.Filter);
             await InvokeAsync(StateHasChanged);
         }
 

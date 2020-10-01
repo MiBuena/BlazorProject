@@ -5,7 +5,7 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IItemsDataService
     {
-        IEnumerable<ItemNameDto> GetAllItemsNames(string searchWord, string userId);
+        IEnumerable<ItemNameDto> GetItemsNames(string searchWord, string userId);
 
         ItemDto GetItem(int itemId);
 

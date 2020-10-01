@@ -10,7 +10,7 @@ namespace ListGenerator.Client.Services
 {
     public interface IItemService
     {
-        Task<IEnumerable<ItemNameDto>> GetAllItemsNames(string searchWord);
+        Task<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord);
         Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate);
         
         Task<ItemDto> GetItem(int id);
