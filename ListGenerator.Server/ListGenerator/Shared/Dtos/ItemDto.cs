@@ -4,11 +4,9 @@ using System.Text;
 
 namespace ListGenerator.Shared.Dtos
 {
-    public class ItemDto
+    public class ItemDto : ItemNameDto
     {
         public int Id { get; set; }
-
-        public string Name { get; set; }
 
         public double ReplenishmentPeriod { get; set; }
 

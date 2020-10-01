@@ -29,8 +29,6 @@ namespace ListGenerator.Client.Pages
         [Inject]
         public IMapper Mapper { get; set; }
 
-        public IEnumerable<ItemNameDto> ItemsNames { get; set; }
-
         public IEnumerable<ItemNameDto> DisplayItemsNames { get; set; }
 
         public IEnumerable<ItemOverviewViewModel> DisplayItems { get; set; }
