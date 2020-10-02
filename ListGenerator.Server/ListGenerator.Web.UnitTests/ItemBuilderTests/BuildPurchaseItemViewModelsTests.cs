@@ -57,7 +57,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
         [Test]
-        public void Should_ReturnCollectionWith1Entry_WithSomePropertiesMappedFromInputItemDto_When_InputCollectionItemDtoIsNonUrgent()
+        public void Should_ReturnCollectionWith1Entry_WithSomePropertiesMappedFromInputDto_When_InputCollectionItemDtoIsNotUrgent()
         {
             //Arrange
             var mockDate = new DateTime(2020, 10, 01);
@@ -89,7 +89,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
         [Test]
-        public void Should_ReturnCollectionWith1Entry_WithCorrectRecommendedPurchaseQuantity_When_InputCollectionItemDtoIsNonUrgent()
+        public void Should_ReturnCollectionWith1Entry_WithCorrectRecommendedPurchaseQuantity_When_InputCollectionItemDtoIsNotUrgent()
         {
             //Arrange
             var mockDate = new DateTime(2020, 10, 01);
@@ -117,7 +117,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
         [Test]
-        public void Should_ReturnCollectionWith1Entry_WithCorrectReplenishmentDate_When_InputCollectionItemDtoIsNonUrgent()
+        public void Should_ReturnCollectionWith1Entry_WithCorrectReplenishmentDate_When_InputCollectionItemDtoIsNotUrgent()
         {
             //Arrange
             var mockDate = new DateTime(2020, 10, 01);
@@ -177,17 +177,17 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var mockDate = new DateTime(2020, 10, 01);
             _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
 
-            var nonUrgentItemDto = BuildNotUrgentItemDto();
-            var nonUrgentItemViewModel = BuildNonUrgentPurchaseItemViewModel();
+            var urgentItemDto = BuildUrgentItemDto();
+            var urgentItemViewModel = BuildUrgentPurchaseItemViewModel();
 
-            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(nonUrgentItemDto))
-                .Returns(nonUrgentItemViewModel);
+            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(urgentItemDto))
+                .Returns(urgentItemViewModel);
 
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
             var nonUrgentItemDtoCollection = new List<ItemDto>();
-            nonUrgentItemDtoCollection.Add(nonUrgentItemDto);
+            nonUrgentItemDtoCollection.Add(urgentItemDto);
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, nonUrgentItemDtoCollection);
@@ -197,7 +197,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             AssertAll(
                 () => result.FirstOrDefault().ItemId.Should().Be(1),
                 () => result.FirstOrDefault().Name.Should().Be("Bread"),
-                () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 04))
+                () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02))
             );
         }
 
@@ -304,6 +304,32 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
                 ItemId = 1,
                 Name = "Bread",
                 NextReplenishmentDate = new DateTime(2020, 10, 04),
+            };
+
+            return purchaseItem;
+        }
+
+
+        private ItemDto BuildUrgentItemDto()
+        {
+            var item = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 02),
+                ReplenishmentPeriod = 1
+            };
+
+            return item;
+        }
+
+        private PurchaseItemViewModel BuildUrgentPurchaseItemViewModel()
+        {
+            var purchaseItem = new PurchaseItemViewModel()
+            {
+                ItemId = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 02),
             };
 
             return purchaseItem;
