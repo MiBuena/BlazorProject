@@ -285,14 +285,14 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
         [Test]
-        public void Should_ReturnCollectionWith1Entry_WithEmptyReplenishmentSignalClass_When_ItemNextReplenishmentDateIsOnFirstShoppingDate()
+        public void Should_ReturnCollectionWith1Entry_WithEmptyReplenishmentSignalClass_When_ItemNextReplenishmentDateIsOnFirstReplenishmentDate()
         {
             //Arrange
             var mockDate = new DateTime(2020, 10, 01);
             _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
 
-            var itemDto = BuildItemDtoWithNextReplenishmentDateOnFirstShoppingDate();
-            var itemViewModel = BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstShoppingDate();
+            var itemDto = BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate();
+            var itemViewModel = BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate();
 
             _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto))
                 .Returns(itemViewModel);
@@ -336,7 +336,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             return purchaseItem;
         }
 
-        private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstShoppingDate()
+        private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate()
         {
             var item = new ItemDto()
             {
@@ -349,7 +349,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             return item;
         }
 
-        private PurchaseItemViewModel BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstShoppingDate()
+        private PurchaseItemViewModel BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate()
         {
             var purchaseItem = new PurchaseItemViewModel()
             {
