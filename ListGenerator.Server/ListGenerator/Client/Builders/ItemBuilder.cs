@@ -53,12 +53,11 @@ namespace ListGenerator.Client.Builders
             return replenishmentItems;
         }
 
-
         private double RecommendedPurchaseQuantity(double itemReplenishmentPeriod, DateTime nextReplenishmentDate, DateTime secondReplenishmentDate)
         {
-            var timeToBeCoveredWithSupplies = (secondReplenishmentDate - nextReplenishmentDate).Days;
+            var daysToBeCoveredWithSupplies = (secondReplenishmentDate - nextReplenishmentDate).Days;
 
-            var neededQuantity = Math.Ceiling(timeToBeCoveredWithSupplies / itemReplenishmentPeriod);
+            var neededQuantity = Math.Ceiling(daysToBeCoveredWithSupplies / itemReplenishmentPeriod);
 
             return neededQuantity;
         }

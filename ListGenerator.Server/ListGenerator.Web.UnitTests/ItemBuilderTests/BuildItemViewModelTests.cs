@@ -21,7 +21,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
         {
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
             _mapperMock = new Mock<IMapper>();
-            _itemBuilder = new ListGenerator.Client.Builders.ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
+            _itemBuilder = new ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
         }
 
         [Test]
