@@ -83,7 +83,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             AssertAll(
                 () => result.FirstOrDefault().ItemId.Should().Be(1),
                 () => result.FirstOrDefault().Name.Should().Be("Bread"),
-                () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 04))
+                () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 06))
             );
         }
 
@@ -112,7 +112,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
             //Assert
-            result.FirstOrDefault().Quantity.Should().Be("7");
+            result.FirstOrDefault().Quantity.Should().Be("5");
         }
 
 
@@ -289,7 +289,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             {
                 Id = 1,
                 Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 04),
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
                 ReplenishmentPeriod = 1
             };
 
@@ -302,7 +302,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             {
                 ItemId = 1,
                 Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 04),
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
             };
 
             return purchaseItem;
