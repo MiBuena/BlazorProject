@@ -8,6 +8,7 @@ using System;
 using ListGenerator.Shared.Dtos;
 using System.Collections.Generic;
 using ListGenerator.Client.ViewModels;
+using System.Linq;
 
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
@@ -52,6 +53,38 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
             //Assert
             result.Count.Should().Be(1);
+        }
+
+
+        [Test]
+        public void Should_ReturnCollectionWith1ItemViewModel_WithSomePropertiesMappedFromInputItemDto()
+        {
+            //Arrange
+            var mockDate = new DateTime(2020, 10, 01);
+            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+
+            var nonUrgentItemDto = BuildNotUrgentItemDto();
+            var nonUrgentItemViewModel = BuildNonUrgentPurchaseItemViewModel();
+
+            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(nonUrgentItemDto))
+                .Returns(nonUrgentItemViewModel);
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+            var nonUrgentItemDtoCollection = new List<ItemDto>();
+            nonUrgentItemDtoCollection.Add(nonUrgentItemDto);
+
+            //Act
+            var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, nonUrgentItemDtoCollection);
+
+
+            //Assert
+            AssertAll(
+                () => result.FirstOrDefault().ItemId.Should().Be(1),
+                () => result.FirstOrDefault().Name.Should().Be("Bread"),
+                () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 04))
+            );
         }
 
         private ItemDto BuildNotUrgentItemDto()
