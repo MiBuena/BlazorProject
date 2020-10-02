@@ -311,6 +311,33 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             result.FirstOrDefault().ReplenishmentSignalClass.Should().BeEmpty();
         }
 
+        [Test]
+        public void Should_CallMapperMapMethod_WithItemDto_Once_When_BuildMethodIsCalledWithANonEmptyInputCollection()
+        {
+            //Arrange
+            var mockDate = new DateTime(2020, 10, 01);
+            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+
+            var itemDto = BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate();
+            var itemViewModel = BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate();
+
+            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto))
+                .Returns(itemViewModel);
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+            var itemDtoCollection = new List<ItemDto>();
+            itemDtoCollection.Add(itemDto);
+
+            //Act
+            var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoCollection);
+
+
+            //Assert
+            _mapperMock.Verify(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto), Times.Once());
+        }
+
         private ItemDto BuildNotUrgentItemDto()
         {
             var item = new ItemDto()
