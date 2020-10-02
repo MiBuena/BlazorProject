@@ -283,6 +283,34 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             result.FirstOrDefault().ReplenishmentSignalClass.Should().Be("itemNeedsReplenishment");
         }
 
+
+        [Test]
+        public void Should_ReturnCollectionWith1Entry_WithEmptyReplenishmentSignalClass_When_ItemNextReplenishmentDateIsOnFirstShoppingDate()
+        {
+            //Arrange
+            var mockDate = new DateTime(2020, 10, 01);
+            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+
+            var itemDto = BuildItemDtoWithNextReplenishmentDateOnFirstShoppingDate();
+            var itemViewModel = BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstShoppingDate();
+
+            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto))
+                .Returns(itemViewModel);
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+            var itemDtoCollection = new List<ItemDto>();
+            itemDtoCollection.Add(itemDto);
+
+            //Act
+            var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoCollection);
+
+
+            //Assert
+            result.FirstOrDefault().ReplenishmentSignalClass.Should().BeEmpty();
+        }
+
         private ItemDto BuildNotUrgentItemDto()
         {
             var item = new ItemDto()
@@ -303,6 +331,31 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
                 ItemId = 1,
                 Name = "Bread",
                 NextReplenishmentDate = new DateTime(2020, 10, 06),
+            };
+
+            return purchaseItem;
+        }
+
+        private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstShoppingDate()
+        {
+            var item = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 04),
+                ReplenishmentPeriod = 1
+            };
+
+            return item;
+        }
+
+        private PurchaseItemViewModel BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstShoppingDate()
+        {
+            var purchaseItem = new PurchaseItemViewModel()
+            {
+                ItemId = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 04),
             };
 
             return purchaseItem;
