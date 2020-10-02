@@ -15,5 +15,7 @@ namespace ListGenerator.Shared.Constants
         public const string DateTransferFormat = "dd-MM-yyyy";
 
         public const int MaxDisplayQuantityToBuy = 100;
+
+        public const string ReplenishmentSignalClass = "itemNeedsReplenishment";
     }
 }

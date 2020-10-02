@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ListGenerator.Shared.Constants;
 
 namespace ListGenerator.Client.Builders
 {
@@ -40,8 +41,8 @@ namespace ListGenerator.Client.Builders
             {
                 item.ReplenishmentSignalClass =
                     item.NextReplenishmentDate < firstReplenishmentDate
-                    ? "itemNeedsReplenishment"
-                    : "";
+                    ? Constants.ReplenishmentSignalClass
+                    : string.Empty;
 
                 item.ReplenishmentDate = _dateTimeProvider.GetDateTimeNowDate();
 
