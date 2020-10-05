@@ -10,7 +10,7 @@ namespace ListGenerator.Client.Pages
     public partial class Spinner
     {
         [Inject]
-        private SpinnerService SpinnerService { get; set; }
+        private ISpinnerService SpinnerService { get; set; }
         
         protected bool IsVisible { get; set; }
 

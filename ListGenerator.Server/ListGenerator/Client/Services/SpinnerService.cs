@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ListGenerator.Client.Services
 {
-    public class SpinnerService
+    public class SpinnerService : ISpinnerService
     {
 		public event Action OnShow;
 		public event Action OnHide;

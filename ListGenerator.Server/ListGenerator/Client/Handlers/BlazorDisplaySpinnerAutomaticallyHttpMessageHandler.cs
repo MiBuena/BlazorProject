@@ -13,9 +13,9 @@ namespace ListGenerator.Client.Handlers
 {
     public class BlazorDisplaySpinnerAutomaticallyHttpMessageHandler : BaseAddressAuthorizationMessageHandler
     {
-        private readonly SpinnerService _spinnerService;
+        private readonly ISpinnerService _spinnerService;
 
-        public BlazorDisplaySpinnerAutomaticallyHttpMessageHandler(SpinnerService spinnerService, IAccessTokenProvider provider, NavigationManager manager) : base(provider, manager)
+        public BlazorDisplaySpinnerAutomaticallyHttpMessageHandler(ISpinnerService spinnerService, IAccessTokenProvider provider, NavigationManager manager) : base(provider, manager)
         {
             _spinnerService = spinnerService;
         }

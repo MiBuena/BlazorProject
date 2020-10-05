@@ -17,7 +17,7 @@ namespace ListGenerator.Web.UnitTests.SpinnerTests
         public void Should_HaveEmptyMarkUp_When_SpinnerIsShownAndThenHidden()
         {
             //Arrange
-            var mockSpinnerService = new Mock<SpinnerService>();
+            var mockSpinnerService = new Mock<ISpinnerService>();
             Services.AddSingleton(mockSpinnerService.Object);
 
             //Act

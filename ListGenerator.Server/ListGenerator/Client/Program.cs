@@ -35,7 +35,7 @@ namespace ListGenerator.Client
             builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
             builder.Services.AddTransient<IReplenishmentBuilder, ReplenishmentBuilder>();
 
-            builder.Services.AddScoped<SpinnerService>();
+            builder.Services.AddScoped<ISpinnerService, SpinnerService>();
             builder.Services.AddScoped<BlazorDisplaySpinnerAutomaticallyHttpMessageHandler>();
 
             builder.Services.AddAutoMapper(typeof(Program));
