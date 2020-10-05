@@ -29,7 +29,7 @@ namespace ListGenerator.Web.UnitTests.SpinnerTests
         }
 
         [Test]
-        public void Should_HaveDivWithSpinnerContainerClass_When_SpinnerIsShown()
+        public void Should_HaveDivWithSpinnerContainerClassWithElements_When_SpinnerIsShown()
         {
             //Arrange
             using var ctx = new Bunit.TestContext();
@@ -43,7 +43,7 @@ namespace ListGenerator.Web.UnitTests.SpinnerTests
 
             // Assert
             var renderedMarkup = cut.Find(".spinner-container");
-            Assert.IsNotNull(renderedMarkup);
+            Assert.IsTrue(renderedMarkup.ChildElementCount > 0);
         }
     }
 }
