@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ListGenerator.Web.UnitTests
 {
-    public class AssertAllTest
+    public abstract class AssertAllTest
     {
         protected void AssertAll(params Action[] rules)
         {

@@ -13,11 +13,13 @@ using System.Linq;
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
     [TestFixture]
-    public class BuildPurchaseItemViewModelsTests : BaseItemTests
+    public class BuildPurchaseItemViewModelsTests : AssertAllTest
     {
         private Mock<IDateTimeProvider> _dateTimeProviderMock;
         private Mock<IMapper> _mapperMock;
         private IItemBuilder _itemBuilder;
+        private ItemDto nonUrgentItemDto;
+        private PurchaseItemViewModel nonUrgentPurchaseItemViewModel;
 
 
         [SetUp]
@@ -26,6 +28,8 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             _dateTimeProviderMock = new Mock<IDateTimeProvider>();
             _mapperMock = new Mock<IMapper>();
             _itemBuilder = new ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
+            nonUrgentItemDto = BuildNotUrgentItemDto();
+            nonUrgentPurchaseItemViewModel = BuildNonUrgentPurchaseItemViewModel();
         }
 
         [Test]
@@ -321,6 +325,31 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
             //Assert
             _mapperMock.Verify(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto), Times.Once());
+        }
+
+        private ItemDto BuildNotUrgentItemDto()
+        {
+            var item = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1
+            };
+
+            return item;
+        }
+
+        private PurchaseItemViewModel BuildNonUrgentPurchaseItemViewModel()
+        {
+            var purchaseItem = new PurchaseItemViewModel()
+            {
+                ItemId = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+            };
+
+            return purchaseItem;
         }
 
         private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate()
