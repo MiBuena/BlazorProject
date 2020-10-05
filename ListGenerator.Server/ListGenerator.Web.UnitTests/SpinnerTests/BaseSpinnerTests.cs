@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ListGenerator.Web.UnitTests.SpinnerTests
 {
-    public abstract class BaseSpinnerTest : BUnitTestContext
+    public abstract class BaseSpinnerTests : BUnitTestContext
     {
         protected Mock<ISpinnerService> _mockSpinnerService;
 

@@ -17,37 +17,33 @@ namespace ListGenerator.Client.Pages
     public partial class ShoppingList
     {
         [Inject]
-        public IItemService ItemService { get; set; }
+        private IItemService ItemService { get; set; }
 
         [Inject]
-        public IReplenishmentService ReplenishmentService { get; set; }
+        private IReplenishmentService ReplenishmentService { get; set; }
 
         [Inject]
-        public IDateTimeProvider DateTimeProvider { get; set; }
+        private IDateTimeProvider DateTimeProvider { get; set; }
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        private NavigationManager NavigationManager { get; set; }
 
         [Inject]
-        public IMapper Mapper { get; set; }
+        private IItemBuilder ItemBuilder { get; set; }
 
         [Inject]
-        public IItemBuilder ItemBuilder { get; set; }
+        private IReplenishmentBuilder ReplenishmentBuilder { get; set; }
 
-        [Inject]
-        public IReplenishmentBuilder ReplenishmentBuilder { get; set; }
+        protected List<PurchaseItemViewModel> ReplenishmentItems { get; set; } = new List<PurchaseItemViewModel>();
 
-        public List<PurchaseItemViewModel> ReplenishmentItems { get; set; } = new List<PurchaseItemViewModel>();
+        protected DateTime FirstReplenishmentDate { get; set; }
 
-        public DateTime FirstReplenishmentDate { get; set; }
+        protected DateTime SecondReplenishmentDate { get; set; }
 
-        public DateTime SecondReplenishmentDate { get; set; }
+        private DayOfWeek UsualShoppingDay { get; set; }
 
-        public DayOfWeek UsualShoppingDay { get; set; }
+        protected DateTime DateTimeNow { get; set; }
 
-        public DateTime DateTimeNow { get; set; }
-
-        public string ErrorMessage { get; set; }
 
         protected async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
         {
