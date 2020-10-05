@@ -37,6 +37,8 @@ namespace ListGenerator.Client.Builders
         {       
             var replenishmentItems = itemsDtos.Select(x => _mapper.Map<ItemDto, PurchaseItemViewModel>(x)).ToList();
 
+            var dateTimeNowDate = _dateTimeProvider.GetDateTimeNowDate();
+
             foreach (var item in replenishmentItems)
             {
                 item.ReplenishmentSignalClass =
@@ -44,7 +46,7 @@ namespace ListGenerator.Client.Builders
                     ? Constants.ReplenishmentSignalClass
                     : string.Empty;
 
-                item.ReplenishmentDate = _dateTimeProvider.GetDateTimeNowDate();
+                item.ReplenishmentDate = dateTimeNowDate;
 
                 var itemDto = itemsDtos.FirstOrDefault(x => x.Id == item.ItemId);
 

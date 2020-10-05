@@ -11,7 +11,7 @@ using System.Text;
 namespace ListGenerator.Web.UnitTests.SpinnerTests
 {
     [TestFixture]
-    public class HideSpinnerTests : BUnitTestContext
+    public class HideSpinnerTests : BaseSpinnerTests
     {
         [Test]
         public void Should_HaveEmptyMarkUp_When_SpinnerIsShownAndThenHidden()

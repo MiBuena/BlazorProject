@@ -19,8 +19,4 @@
     <ProjectReference Include="..\ListGenerator\Server\ListGenerator.Server.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ShoppingListTests\" />
-  </ItemGroup>
-
 </Project>

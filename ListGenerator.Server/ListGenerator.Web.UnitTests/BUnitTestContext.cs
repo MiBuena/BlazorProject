@@ -8,7 +8,7 @@ namespace ListGenerator.Web.UnitTests
 {
     public abstract class BUnitTestContext : ITestContext, IDisposable
     {
-        private Bunit.TestContext _context;
+        public Bunit.TestContext _context;
 
         public ITestRenderer Renderer => _context?.Renderer ?? throw new InvalidOperationException("NUnit has not started executing tests yet");
 
