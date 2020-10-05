@@ -370,3 +370,12 @@ th {
 .search-holder {
     margin-bottom: 5px;
 }
+
+.spinner-container {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    z-index: 999;
+    top: 50%;
+    left: 50%;
+}

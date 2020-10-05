@@ -15,6 +15,8 @@ using ListGenerator.Client.Models;
 using ListGenerator.Client.Interfaces;
 using ListGenerator.Client.Builders;
 using AutoMapper;
+using ListGenerator.Client.Handlers;
+using Microsoft.AspNetCore.Components;
 
 namespace ListGenerator.Client
 {
@@ -25,10 +27,6 @@ namespace ListGenerator.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddHttpClient("ListGenerator.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
-
             builder.Services.AddTransient<IJsonHelper, JsonHelper>();
             builder.Services.AddTransient<IItemService, ItemService>();
             builder.Services.AddTransient<IReplenishmentService, ReplenishmentService>();
@@ -37,10 +35,23 @@ namespace ListGenerator.Client
             builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
             builder.Services.AddTransient<IReplenishmentBuilder, ReplenishmentBuilder>();
 
+            builder.Services.AddScoped<SpinnerService>();
+            builder.Services.AddScoped<BlazorDisplaySpinnerAutomaticallyHttpMessageHandler>();
+
             builder.Services.AddAutoMapper(typeof(Program));
 
             // Supply HttpClient instances that include access tokens when making requests to the server project
-            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ListGenerator.ServerAPI"));
+            builder.Services.AddScoped(s =>
+            {
+                var accessTokenHandler = s.GetRequiredService<BlazorDisplaySpinnerAutomaticallyHttpMessageHandler>();
+                accessTokenHandler.InnerHandler = new HttpClientHandler();
+                var uriHelper = s.GetRequiredService<NavigationManager>();
+                return new HttpClient(accessTokenHandler)
+                {
+                    BaseAddress = new Uri(uriHelper.BaseUri)
+                };
+            });
+
 
             builder.Services.AddApiAuthorization();
 
