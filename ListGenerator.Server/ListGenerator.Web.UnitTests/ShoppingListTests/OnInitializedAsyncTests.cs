@@ -1,4 +1,5 @@
-﻿using Bunit;
+﻿using AngleSharp.Dom;
+using Bunit;
 using ListGenerator.Client.Builders;
 using ListGenerator.Client.Pages;
 using ListGenerator.Client.Services;
@@ -194,6 +195,21 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             var shoppingListDate = cut.Find(".shopping-list-date").TextContent;
 
             Assert.AreEqual("04.10.2020", shoppingListDate);        
+        }
+
+        [Test]
+        public void Should_DisplayOneShoppingItemInTheTable_When_ShoppingListInitialized()
+        {
+            //Arrange
+            InitializeNonurgentShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var shoppingListItemsCount = cut.FindAll(".items-shopping-list-table tbody tr").Count;
+
+            Assert.AreEqual(1, shoppingListItemsCount);
         }
 
 
