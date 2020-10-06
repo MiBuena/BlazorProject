@@ -43,7 +43,7 @@ namespace ListGenerator.Web.UnitTests.Helpers
                 Id = 3,
                 Name = "Biscuits",
                 NextReplenishmentDate = new DateTime(2020, 10, 07),
-                ReplenishmentPeriod = 2
+                ReplenishmentPeriod = 5
             };
 
             var fourthItem = new ItemDto()
@@ -80,6 +80,9 @@ namespace ListGenerator.Web.UnitTests.Helpers
                 ItemId = 1,
                 Name = "Bread",
                 NextReplenishmentDate = new DateTime(2020, 10, 06),
+                Quantity = "5",
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                ReplenishmentSignalClass = string.Empty
             };
 
             var secondItem = new PurchaseItemViewModel()
@@ -87,6 +90,9 @@ namespace ListGenerator.Web.UnitTests.Helpers
                 ItemId = 2,
                 Name = "Cheese",
                 NextReplenishmentDate = new DateTime(2020, 10, 08),
+                Quantity = "2",
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                ReplenishmentSignalClass = string.Empty
             };
 
             var thirdItem = new PurchaseItemViewModel()
@@ -94,6 +100,9 @@ namespace ListGenerator.Web.UnitTests.Helpers
                 ItemId = 3,
                 Name = "Biscuits",
                 NextReplenishmentDate = new DateTime(2020, 10, 07),
+                Quantity = "1",
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                ReplenishmentSignalClass = string.Empty
             };
 
             var fourthItem = new PurchaseItemViewModel()
@@ -101,6 +110,9 @@ namespace ListGenerator.Web.UnitTests.Helpers
                 ItemId = 4,
                 Name = "Oats",
                 NextReplenishmentDate = new DateTime(2020, 10, 1),
+                Quantity = "2",
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                ReplenishmentSignalClass = "itemNeedsReplenishment"
             };
 
             var fifthItem = new PurchaseItemViewModel()
@@ -108,6 +120,9 @@ namespace ListGenerator.Web.UnitTests.Helpers
                 ItemId = 5,
                 Name = "Cake",
                 NextReplenishmentDate = new DateTime(2020, 10, 2),
+                Quantity = "2",
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                ReplenishmentSignalClass = "itemNeedsReplenishment"
             };
 
             collection.Add(firstItem);

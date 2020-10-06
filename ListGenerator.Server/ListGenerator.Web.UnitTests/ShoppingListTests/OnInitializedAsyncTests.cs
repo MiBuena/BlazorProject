@@ -13,6 +13,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ListGenerator.Web.UnitTests.ShoppingListTests
@@ -63,7 +64,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 
             // Assert
             var renderedMarkup = cut.Find(".normal-shopping-day-select");
-            
+
             renderedMarkup.MarkupMatches(
                 "<select class=\"app-input-control normal-shopping-day-select\"><!--!-->" + Environment.NewLine +
 "                <option value=\"Sunday\">Sunday</option><!--!-->" + Environment.NewLine +
@@ -182,11 +183,11 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         }
 
         [Test]
-        public void Should_DisplayOneShoppingItemInTheTable_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
+        public void Should_DisplayFiveShoppingItemsInTheShoppingList_When_FiveItemsNeedReplenishment()
         {
             //Arrange
             InitializeShoppingList();
-            
+
             //Act
             var cut = RenderComponent<ShoppingList>();
 
@@ -196,20 +197,55 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             Assert.AreEqual(5, shoppingListItemsCount);
         }
 
-        //[Test]
-        //public void Should_DisplayShoppingItemName_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
-        //{
-        //    //Arrange
-        //    InitializeNonUrgentShoppingList();
+        [Test]
+        public void Should_DisplayFirstShoppingItemNotChangeableDataCorrectly()
+        {
+            //Arrange
+            InitializeShoppingList();
 
-        //    //Act
-        //    var cut = RenderComponent<ShoppingList>();
+            //Act
+            var cut = RenderComponent<ShoppingList>();
 
-        //    // Assert
-        //    var shoppingItemName = cut.Find(".items-shopping-list-table tbody tr .replenishment-item-name").TextContent;
+            // Assert
+            var shoppingListRows = cut.FindAll(".items-shopping-list-table tbody tr");
 
-        //    shoppingItemName.MarkupMatches("Bread");
-        //}
+            var firstShoppingRow = shoppingListRows.First();
+            var firstItemName = firstShoppingRow.GetElementsByClassName("replenishment-item-name").First().TextContent;
+            var firstItemNextReplenishmentDate = firstShoppingRow.GetElementsByClassName("replenishment-item-next-replenishment-date").First().TextContent;
+            var firstItemQuantityToBuy = firstShoppingRow.GetElementsByClassName("replenishment-item-quantity-to-buy").First().TextContent;
+            var firstItemShoppingDateInput = firstShoppingRow.GetElementsByClassName("replenishment-item-shopping-date").First().Children.Filter("input").First().TextContent;
+
+            AssertAll(
+                () => firstItemName.MarkupMatches("Bread"),
+                () => firstItemNextReplenishmentDate.MarkupMatches("6.10.2020"),
+                () => firstItemQuantityToBuy.MarkupMatches("5"),
+                () => firstItemShoppingDateInput.MarkupMatches("1.10.2020")
+            );
+        }
+
+        [Test]
+        public void Should_DisplayFirstShoppingItemDataCorrectly()
+        {
+            //Arrange
+            InitializeShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+
+            var firstItemName = cut.FindAll(".replenishment-item-name").First().TextContent;
+            var firstItemNextReplenishmentDate = cut.FindAll(".replenishment-item-next-replenishment-date").First().TextContent;
+            var firstItemQuantityToBuy = cut.FindAll(".replenishment-item-quantity-to-buy option").First(x=>x.HasAttribute("selected")).TextContent;
+            var firstItemShoppingDate = cut.FindAll(".replenishment-item-shopping-date input").First().GetAttribute("value");
+
+            AssertAll(
+                () => firstItemName.MarkupMatches("Bread"),
+                () => firstItemNextReplenishmentDate.MarkupMatches("6.10.2020"),
+                () => firstItemQuantityToBuy.MarkupMatches("5"),
+                () => firstItemShoppingDate.MarkupMatches("2020-10-01")
+            );
+        }
 
         //[Test]
         //public void Should_DisplayShoppingItemNextReplenishmentDate_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
