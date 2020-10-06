@@ -55,6 +55,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void A()
         {
             var itemDtoList = ItemsTestHelper.BuildNonUrgentItemDtoCollection();
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
             _mockItemService.Setup(c => c.GetShoppingListItems(It.IsAny<DateTime>()))
                 .ReturnsAsync(itemDtoList);
@@ -73,7 +74,6 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             
             renderedMarkup.MarkupMatches(
                 "<select class=\"appInputControl normalShoppingDaySelect\"><!--!-->" + Environment.NewLine +
-"" + Environment.NewLine +
 "                <option value=\"Sunday\">Sunday</option><!--!-->" + Environment.NewLine +
 "                <option value=\"Monday\">Monday</option><!--!-->" + Environment.NewLine +
 "                <option value=\"Tuesday\">Tuesday</option><!--!-->" + Environment.NewLine +
