@@ -17,7 +17,7 @@ using System.Text;
 namespace ListGenerator.Web.UnitTests.ShoppingListTests
 {
     [TestFixture]
-    public class ShoppingListTest : BUnitTestContext
+    public class OnInitializedAsyncTests : BUnitTestContext
     {
         private Mock<IItemService> _mockItemService;
 
@@ -52,7 +52,29 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 
 
         [Test]
-        public void Should_DisplayDropdownWithDaysOfTheWeek()
+        public void Should_DisplayDropdownWithDaysOfTheWeek_When_ShoppingListInitialized()
+        {
+            InitializeNonurgentShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var renderedMarkup = cut.Find(".normal-shopping-day-select");
+            
+            renderedMarkup.MarkupMatches(
+                "<select class=\"app-input-control normal-shopping-day-select\"><!--!-->" + Environment.NewLine +
+"                <option value=\"Sunday\">Sunday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Monday\">Monday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Tuesday\">Tuesday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Wednesday\">Wednesday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Thursday\">Thursday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Friday\">Friday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Saturday\">Saturday</option><!--!-->" + Environment.NewLine +
+"        </select>");
+        }
+
+        private void InitializeNonurgentShoppingList()
         {
             var mockDate = new DateTime(2020, 10, 01);
             _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
@@ -70,23 +92,6 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 
             _mockItemBuilder.Setup(c => c.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoList))
              .Returns(purchaseItemsCollection);
-
-            //Act
-            var cut = RenderComponent<ShoppingList>();
-
-            // Assert
-            var renderedMarkup = cut.Find(".normalShoppingDaySelect");
-            
-            renderedMarkup.MarkupMatches(
-                "<select class=\"appInputControl normalShoppingDaySelect\"><!--!-->" + Environment.NewLine +
-"                <option value=\"Sunday\">Sunday</option><!--!-->" + Environment.NewLine +
-"                <option value=\"Monday\">Monday</option><!--!-->" + Environment.NewLine +
-"                <option value=\"Tuesday\">Tuesday</option><!--!-->" + Environment.NewLine +
-"                <option value=\"Wednesday\">Wednesday</option><!--!-->" + Environment.NewLine +
-"                <option value=\"Thursday\">Thursday</option><!--!-->" + Environment.NewLine +
-"                <option value=\"Friday\">Friday</option><!--!-->" + Environment.NewLine +
-"                <option value=\"Saturday\">Saturday</option><!--!-->" + Environment.NewLine +
-"        </select>");
         }
     }
 }

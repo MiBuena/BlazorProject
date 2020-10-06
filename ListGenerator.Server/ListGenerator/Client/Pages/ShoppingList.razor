@@ -13,7 +13,7 @@ else
         <div class="shopping-label">
             Normal shopping day
         </div>
-        <select class="appInputControl normalShoppingDaySelect" @onchange="RegenerateListFromDayOfWeek">
+        <select class="app-input-control normal-shopping-day-select" @onchange="RegenerateListFromDayOfWeek">
 
             @foreach (var value in Enum.GetValues(typeof(DayOfWeek)))
             {
@@ -32,11 +32,11 @@ else
                 var secondReplenishmentDate = this.SecondReplenishmentDate.ToString("yyyy-MM-dd");
             }
 
-            <input type="date" class="appInputControl" value=@firstReplenishmentDate @onchange=@ChangeFirstReplenishmentDateValue max="@this.SecondReplenishmentDate.ToString("yyyy-MM-dd")" />
+            <input type="date" class="app-input-control" value=@firstReplenishmentDate @onchange=@ChangeFirstReplenishmentDateValue max="@this.SecondReplenishmentDate.ToString("yyyy-MM-dd")" />
         </div>
         <div>
             <span class="shopping-label">Date after next shopping date</span>
-            <input type="date" class="appInputControl" value=@secondReplenishmentDate @onchange=@ChangeSecondReplenishmentDateValue min="@this.FirstReplenishmentDate.ToString("yyyy-MM-dd")" />
+            <input type="date" class="app-input-control" value=@secondReplenishmentDate @onchange=@ChangeSecondReplenishmentDateValue min="@this.FirstReplenishmentDate.ToString("yyyy-MM-dd")" />
         </div>
     </div>
 
@@ -75,7 +75,7 @@ else
                                     @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
                                 </td>
                                 <td>
-                                    <InputSelect class="appInputControl tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
+                                    <InputSelect class="app-input-control tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
 
                                         @for (int i = 1; i <= Constants.MaxDisplayQuantityToBuy; i++)
                                                 {
@@ -85,7 +85,7 @@ else
                                     </InputSelect>
                                 </td>
                                 <td>
-                                    <InputDate class="appInputControl" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
+                                    <InputDate class="app-input-control" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
                                 </td>
                                 <td>
                                     <RadzenButton Size="ButtonSize.Small" Click="@(x=> ReplenishItem(replenishmentItem.ItemId))">

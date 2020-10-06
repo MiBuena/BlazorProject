@@ -208,7 +208,7 @@ app {
     margin-top: 30px;
 }
 
-.appInputControl {
+.app-input-control {
     height: calc(1.5em + .75rem + 2px);
     padding: .375rem .75rem;
     font-size: 1rem;
@@ -235,7 +235,7 @@ app {
     margin-left: 70%;
 }
 
-.normalShoppingDaySelect {
+.normal-shopping-day-select {
     width: 135px;
 }
 
