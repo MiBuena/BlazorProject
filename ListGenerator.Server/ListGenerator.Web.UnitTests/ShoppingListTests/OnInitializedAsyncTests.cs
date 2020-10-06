@@ -91,6 +91,22 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         }
 
 
+        [Test]
+        public void Should_DisplayDateAfterNextShoppingDate_When_ShoppingListInitialized()
+        {
+            //Arrange
+            InitializeNonurgentShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var renderedMarkup = cut.Find(".second-shopping-date input");
+
+            renderedMarkup.MarkupMatches("<input type=\"date\" class=\"app-input-control\" value=\"2020-10-11\" min=\"2020-10-04\">");
+        }
+
+
 
         private void InitializeNonurgentShoppingList()
         {
