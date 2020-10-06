@@ -85,11 +85,40 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             var cut = RenderComponent<ShoppingList>();
 
             // Assert
-            var renderedMarkup = cut.Find(".first-shopping-date input");
+            var firstShoppingDateValue = cut.Find(".first-shopping-date input").GetAttribute("value");
 
-            renderedMarkup.MarkupMatches("<input type=\"date\" class=\"app-input-control\" value=\"2020-10-04\" max=\"2020-10-11\">");
+            Assert.AreEqual("2020-10-04", firstShoppingDateValue);
         }
 
+        [Test]
+        public void Should_DisplayNextShoppingDateInputWithMaxValueAtTheSecondShoppingDate_When_ShoppingListInitialized()
+        {
+            //Arrange
+            InitializeNonurgentShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var firstShoppingDateValue = cut.Find(".first-shopping-date input").GetAttribute("max");
+
+            Assert.AreEqual("2020-10-11", firstShoppingDateValue);
+        }
+
+        [Test]
+        public void Should_DisplayNextShoppingDateAsInputWithTypeDate_When_ShoppingListInitialized()
+        {
+            //Arrange
+            InitializeNonurgentShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var firstShoppingDateValue = cut.Find(".first-shopping-date input").GetAttribute("type");
+
+            Assert.AreEqual("date", firstShoppingDateValue);
+        }
 
         [Test]
         public void Should_DisplayDateAfterNextShoppingDate_When_ShoppingListInitialized()
@@ -105,6 +134,21 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 
             renderedMarkup.MarkupMatches("<input type=\"date\" class=\"app-input-control\" value=\"2020-10-11\" min=\"2020-10-04\">");
         }
+
+        //[Test]
+        //public void Should_DisplayShoppingListHeadline_When_ShoppingListInitialized()
+        //{
+        //    //Arrange
+        //    InitializeNonurgentShoppingList();
+
+        //    //Act
+        //    var cut = RenderComponent<ShoppingList>();
+
+        //    // Assert
+        //    var renderedMarkup = cut.Find(".shopping-list-headline");
+
+        //    renderedMarkup.MarkupMatches("<div class=\"shopping-list-headline\">Your shopping list for <span class=\"shopping-list-date\">04.10.2020</span> is:</div>");
+        //}
 
 
 
