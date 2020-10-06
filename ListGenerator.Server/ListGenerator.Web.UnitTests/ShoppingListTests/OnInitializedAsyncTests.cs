@@ -132,9 +132,9 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             var cut = RenderComponent<ShoppingList>();
 
             // Assert
-            var firstShoppingDateValue = cut.Find(".second-shopping-date input").GetAttribute("value");
+            var secondShoppingDateValue = cut.Find(".second-shopping-date input").GetAttribute("value");
 
-            Assert.AreEqual("2020-10-11", firstShoppingDateValue);
+            Assert.AreEqual("2020-10-11", secondShoppingDateValue);
         }
 
         [Test]
@@ -147,9 +147,9 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             var cut = RenderComponent<ShoppingList>();
 
             // Assert
-            var firstShoppingDateValue = cut.Find(".second-shopping-date input").GetAttribute("min");
+            var secondShoppingDateMin = cut.Find(".second-shopping-date input").GetAttribute("min");
 
-            Assert.AreEqual("2020-10-04", firstShoppingDateValue);
+            Assert.AreEqual("2020-10-04", secondShoppingDateMin);
         }
 
         [Test]
@@ -162,9 +162,9 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             var cut = RenderComponent<ShoppingList>();
 
             // Assert
-            var firstShoppingDateValue = cut.Find(".second-shopping-date input").GetAttribute("type");
+            var secondShoppingDateType = cut.Find(".second-shopping-date input").GetAttribute("type");
 
-            Assert.AreEqual("date", firstShoppingDateValue);
+            Assert.AreEqual("date", secondShoppingDateType);
         }
 
         [Test]
@@ -198,32 +198,6 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         }
 
         [Test]
-        public void Should_DisplayFirstShoppingItemNotChangeableDataCorrectly()
-        {
-            //Arrange
-            InitializeShoppingList();
-
-            //Act
-            var cut = RenderComponent<ShoppingList>();
-
-            // Assert
-            var shoppingListRows = cut.FindAll(".items-shopping-list-table tbody tr");
-
-            var firstShoppingRow = shoppingListRows.First();
-            var firstItemName = firstShoppingRow.GetElementsByClassName("replenishment-item-name").First().TextContent;
-            var firstItemNextReplenishmentDate = firstShoppingRow.GetElementsByClassName("replenishment-item-next-replenishment-date").First().TextContent;
-            var firstItemQuantityToBuy = firstShoppingRow.GetElementsByClassName("replenishment-item-quantity-to-buy").First().TextContent;
-            var firstItemShoppingDateInput = firstShoppingRow.GetElementsByClassName("replenishment-item-shopping-date").First().Children.Filter("input").First().TextContent;
-
-            AssertAll(
-                () => firstItemName.MarkupMatches("Bread"),
-                () => firstItemNextReplenishmentDate.MarkupMatches("6.10.2020"),
-                () => firstItemQuantityToBuy.MarkupMatches("5"),
-                () => firstItemShoppingDateInput.MarkupMatches("1.10.2020")
-            );
-        }
-
-        [Test]
         public void Should_DisplayFirstShoppingItemDataCorrectly()
         {
             //Arrange
@@ -233,7 +207,6 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             var cut = RenderComponent<ShoppingList>();
 
             // Assert
-
             var firstItemName = cut.FindAll(".replenishment-item-name").First().TextContent;
             var firstItemNextReplenishmentDate = cut.FindAll(".replenishment-item-next-replenishment-date").First().TextContent;
             var firstItemQuantityToBuy = cut.FindAll(".replenishment-item-quantity-to-buy option").First(x=>x.HasAttribute("selected")).TextContent;
@@ -247,22 +220,45 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             );
         }
 
-        //[Test]
-        //public void Should_DisplayShoppingItemNextReplenishmentDate_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
-        //{
-        //    //Arrange
-        //    InitializeNonUrgentShoppingList();
 
-        //    //Act
-        //    var cut = RenderComponent<ShoppingList>();
+        [Test]
+        public void Should_DisplayAllShoppingItemsShoppingDatesWithCorrectAttributes()
+        {
+            //Arrange
+            InitializeShoppingList();
 
-        //    // Assert
-        //    var shoppingItemName = cut.Find(".items-shopping-list-table tbody tr .replenishment-item-next-replenishment-date").TextContent;
+            //Act
+            var cut = RenderComponent<ShoppingList>();
 
-        //    shoppingItemName.MarkupMatches("6.10.2020");
-        //}
+            // Assert
+            var allShoppingDateInputs = cut.FindAll(".replenishment-item-shopping-date input");
 
-        private void InitializeNonUrgentShoppingList()
+            foreach (var input in allShoppingDateInputs)
+            {
+                var max = input.GetAttribute("max");
+                max.MarkupMatches("2020-10-01");
+
+                var type = input.GetAttribute("type");
+                type.MarkupMatches("date");
+            }
+        }
+
+            //[Test]
+            //public void Should_DisplayShoppingItemNextReplenishmentDate_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
+            //{
+            //    //Arrange
+            //    InitializeNonUrgentShoppingList();
+
+            //    //Act
+            //    var cut = RenderComponent<ShoppingList>();
+
+            //    // Assert
+            //    var shoppingItemName = cut.Find(".items-shopping-list-table tbody tr .replenishment-item-next-replenishment-date").TextContent;
+
+            //    shoppingItemName.MarkupMatches("6.10.2020");
+            //}
+
+            private void InitializeNonUrgentShoppingList()
         {
             var mockDate = new DateTime(2020, 10, 01);
             _mockDateTimeProvider.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
