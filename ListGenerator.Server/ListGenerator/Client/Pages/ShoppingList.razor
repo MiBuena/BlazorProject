@@ -68,13 +68,13 @@ else
 
                             <tr>
 
-                                <td class="@replenishmentItem.ReplenishmentSignalClass">
+                                <td class="@replenishmentItem.ReplenishmentSignalClass replenishment-item-name">
                                     @replenishmentItem.Name
                                 </td>
-                                <td class="@replenishmentItem.ReplenishmentSignalClass">
+                                <td class="@replenishmentItem.ReplenishmentSignalClass replenishment-item-next-replenishment-date">
                                     @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
                                 </td>
-                                <td>
+                                <td class="replenishment-item-quantity-to-buy">
                                     <InputSelect class="app-input-control tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
 
                                         @for (int i = 1; i <= Constants.MaxDisplayQuantityToBuy; i++)
@@ -84,7 +84,7 @@ else
 
                                     </InputSelect>
                                 </td>
-                                <td>
+                                <td class="replenishment-item-shopping-date">
                                     <InputDate class="app-input-control" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
                                 </td>
                                 <td>

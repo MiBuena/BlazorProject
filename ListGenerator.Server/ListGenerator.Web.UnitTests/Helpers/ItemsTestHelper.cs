@@ -20,10 +20,10 @@ namespace ListGenerator.Web.UnitTests.Helpers
 
         public static IEnumerable<ItemDto> BuildNonUrgentItemDtoCollection()
         {
-            var nonUrgentItemDto = BuildNotUrgentItemDto();
+            var itemDto = BuildNotUrgentItemDto();
 
             var itemDtoCollection = new List<ItemDto>();
-            itemDtoCollection.Add(nonUrgentItemDto);
+            itemDtoCollection.Add(itemDto);
 
             return itemDtoCollection;
         }
@@ -51,6 +51,51 @@ namespace ListGenerator.Web.UnitTests.Helpers
             };
 
             return item;
+        }
+
+        public static List<PurchaseItemViewModel> BuildUrgentPurchaseItemVMCollection()
+        {
+            var purchaseItemViewModel = BuildUrgentPurchaseItemViewModel();
+
+            var purchaseItemVMCollection = new List<PurchaseItemViewModel>();
+            purchaseItemVMCollection.Add(purchaseItemViewModel);
+
+            return purchaseItemVMCollection;
+        }
+
+        public static IEnumerable<ItemDto> BuildUrgentItemDtoCollection()
+        {
+            var itemDto = BuildUrgentItemDto();
+
+            var itemDtoCollection = new List<ItemDto>();
+            itemDtoCollection.Add(itemDto);
+
+            return itemDtoCollection;
+        }
+
+        public static ItemDto BuildUrgentItemDto()
+        {
+            var item = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 02),
+                ReplenishmentPeriod = 1
+            };
+
+            return item;
+        }
+
+        public static PurchaseItemViewModel BuildUrgentPurchaseItemViewModel()
+        {
+            var purchaseItem = new PurchaseItemViewModel()
+            {
+                ItemId = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 02),
+            };
+
+            return purchaseItem;
         }
     }
 }

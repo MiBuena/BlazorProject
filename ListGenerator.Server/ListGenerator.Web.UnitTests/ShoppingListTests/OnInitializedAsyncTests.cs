@@ -56,7 +56,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplayDropdownWithDaysOfTheWeek_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -80,7 +80,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplayNextShoppingDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -95,7 +95,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplayNextShoppingDateInputWithMaxValueAtTheSecondShoppingDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -110,7 +110,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplayNextShoppingDateAsInputWithTypeDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -125,7 +125,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplayDateAfterNextShoppingDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -141,7 +141,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplaySecondShoppingDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -156,7 +156,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplaySecondShoppingDateInputWithMinValueAtTheFirstShoppingDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -171,7 +171,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplaySecondShoppingDateAsInputWithTypeDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -186,7 +186,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         public void Should_DisplayShoppingListDate_When_ShoppingListInitialized()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -194,14 +194,14 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             // Assert
             var shoppingListDate = cut.Find(".shopping-list-date").TextContent;
 
-            Assert.AreEqual("04.10.2020", shoppingListDate);        
+            shoppingListDate.MarkupMatches("4.10.2020");
         }
 
         [Test]
-        public void Should_DisplayOneShoppingItemInTheTable_When_ShoppingListInitialized()
+        public void Should_DisplayOneShoppingItemInTheTable_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
         {
             //Arrange
-            InitializeNonurgentShoppingList();
+            InitializeNonUrgentShoppingList();
 
             //Act
             var cut = RenderComponent<ShoppingList>();
@@ -212,9 +212,22 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             Assert.AreEqual(1, shoppingListItemsCount);
         }
 
+        [Test]
+        public void Should_DisplayShoppingItemName_When_ThereIsOneNonUrgentItemThatNeedsReplenishment()
+        {
+            //Arrange
+            InitializeNonUrgentShoppingList();
 
+            //Act
+            var cut = RenderComponent<ShoppingList>();
 
-        private void InitializeNonurgentShoppingList()
+            // Assert
+            var shoppingItemName = cut.Find(".items-shopping-list-table tbody tr .replenishment-item-name").TextContent;
+
+            shoppingItemName.MarkupMatches("Bread");
+        }
+
+        private void InitializeNonUrgentShoppingList()
         {
             var mockDate = new DateTime(2020, 10, 01);
             _mockDateTimeProvider.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
@@ -229,6 +242,26 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 
 
             var purchaseItemsCollection = ItemsTestHelper.BuildNonUrgentPurchaseItemVMCollection();
+
+            _mockItemBuilder.Setup(c => c.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoList))
+             .Returns(purchaseItemsCollection);
+        }
+
+        private void InitializeUrgentShoppingList()
+        {
+            var mockDate = new DateTime(2020, 10, 01);
+            _mockDateTimeProvider.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+            var itemDtoList = ItemsTestHelper.BuildUrgentItemDtoCollection();
+
+            _mockItemService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
+                .ReturnsAsync(itemDtoList);
+
+
+            var purchaseItemsCollection = ItemsTestHelper.BuildUrgentPurchaseItemVMCollection();
 
             _mockItemBuilder.Setup(c => c.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoList))
              .Returns(purchaseItemsCollection);
