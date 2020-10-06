@@ -87,7 +87,7 @@ namespace ListGenerator.Client.Pages
 
         private DateTime GetNextShoppingDay(DayOfWeek usualShoppingDay)
         {
-            DateTime today = DateTime.Today;
+            DateTime today = DateTimeProvider.GetDateTimeNowDate();
             int daysUntilUsualShoppingDay = ((int)usualShoppingDay - (int)today.DayOfWeek + 7) % 7;
             DateTime nextShoppingDay = today.AddDays(daysUntilUsualShoppingDay);
 
