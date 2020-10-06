@@ -23,7 +23,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 
         private Mock<IReplenishmentService> _mockReplenishmentService;
 
-        private Mock<IDateTimeProvider> _dateTimeProviderMock;
+        private Mock<IDateTimeProvider> _mockDateTimeProvider;
 
         private Mock<NavigationManager> _mockNavigationManager;
 
@@ -37,14 +37,14 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         {
             _mockItemService = new Mock<IItemService>();
             _mockReplenishmentService = new Mock<IReplenishmentService>();
-            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
+            _mockDateTimeProvider = new Mock<IDateTimeProvider>();
             _mockNavigationManager = new Mock<NavigationManager>();
             _mockItemBuilder = new Mock<IItemBuilder>();
             _mockReplenishmentBuilder = new Mock<IReplenishmentBuilder>();
 
             Services.AddSingleton(_mockItemService.Object);
             Services.AddSingleton(_mockReplenishmentService.Object);
-            Services.AddSingleton(_dateTimeProviderMock.Object);
+            Services.AddSingleton(_mockDateTimeProvider.Object);
             Services.AddSingleton(_mockNavigationManager.Object);
             Services.AddSingleton(_mockItemBuilder.Object);
             Services.AddSingleton(_mockReplenishmentBuilder.Object);
@@ -54,6 +54,7 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
         [Test]
         public void Should_DisplayDropdownWithDaysOfTheWeek_When_ShoppingListInitialized()
         {
+            //Arrange
             InitializeNonurgentShoppingList();
 
             //Act
@@ -74,10 +75,27 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
 "        </select>");
         }
 
+        [Test]
+        public void Should_DisplayNextShoppingDate_When_ShoppingListInitialized()
+        {
+            //Arrange
+            InitializeNonurgentShoppingList();
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var renderedMarkup = cut.Find(".first-shopping-date input");
+
+            renderedMarkup.MarkupMatches("<input type=\"date\" class=\"app-input-control\" value=\"2020-10-04\" max=\"2020-10-11\">");
+        }
+
+
+
         private void InitializeNonurgentShoppingList()
         {
             var mockDate = new DateTime(2020, 10, 01);
-            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+            _mockDateTimeProvider.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
 
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
