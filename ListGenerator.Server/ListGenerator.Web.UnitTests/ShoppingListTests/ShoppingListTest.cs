@@ -1,7 +1,11 @@
-﻿using ListGenerator.Client.Builders;
+﻿using Bunit;
+using ListGenerator.Client.Builders;
 using ListGenerator.Client.Pages;
 using ListGenerator.Client.Services;
+using ListGenerator.Client.ViewModels;
+using ListGenerator.Shared.Dtos;
 using ListGenerator.Shared.Interfaces;
+using ListGenerator.Web.UnitTests.Helpers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -44,6 +48,40 @@ namespace ListGenerator.Web.UnitTests.ShoppingListTests
             Services.AddSingleton(_mockNavigationManager.Object);
             Services.AddSingleton(_mockItemBuilder.Object);
             Services.AddSingleton(_mockReplenishmentBuilder.Object);
+        }
+
+
+        [Test]
+        public void A()
+        {
+            var itemDtoList = ItemsTestHelper.BuildNonUrgentItemDtoCollection();
+
+            _mockItemService.Setup(c => c.GetShoppingListItems(It.IsAny<DateTime>()))
+                .ReturnsAsync(itemDtoList);
+
+
+            var purchaseItemsCollection = ItemsTestHelper.BuildNonUrgentPurchaseItemVMCollection();
+
+            _mockItemBuilder.Setup(c => c.BuildPurchaseItemViewModels(It.IsAny<DateTime>(), It.IsAny<DateTime>(), itemDtoList))
+             .Returns(purchaseItemsCollection);
+
+            //Act
+            var cut = RenderComponent<ShoppingList>();
+
+            // Assert
+            var renderedMarkup = cut.Find(".normalShoppingDaySelect");
+            
+            renderedMarkup.MarkupMatches(
+                "<select class=\"appInputControl normalShoppingDaySelect\"><!--!-->" + Environment.NewLine +
+"" + Environment.NewLine +
+"                <option value=\"Sunday\">Sunday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Monday\">Monday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Tuesday\">Tuesday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Wednesday\">Wednesday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Thursday\">Thursday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Friday\">Friday</option><!--!-->" + Environment.NewLine +
+"                <option value=\"Saturday\">Saturday</option><!--!-->" + Environment.NewLine +
+"        </select>");
         }
     }
 }

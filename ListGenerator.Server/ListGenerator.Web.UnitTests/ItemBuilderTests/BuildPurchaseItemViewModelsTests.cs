@@ -9,6 +9,7 @@ using ListGenerator.Shared.Dtos;
 using System.Collections.Generic;
 using ListGenerator.Client.ViewModels;
 using System.Linq;
+using ListGenerator.Web.UnitTests.Helpers;
 
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
@@ -29,7 +30,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             _mapperMock = new Mock<IMapper>();
             _itemBuilder = new ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
             nonUrgentItemDto = BuildNotUrgentItemDto();
-            nonUrgentPurchaseItemViewModel = BuildNonUrgentPurchaseItemViewModel();
+            nonUrgentPurchaseItemViewModel = ItemsTestHelper.BuildNonUrgentPurchaseItemViewModel();
         }
 
         [Test]
@@ -340,31 +341,6 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             return item;
         }
 
-        private PurchaseItemViewModel BuildNonUrgentPurchaseItemViewModel()
-        {
-            var purchaseItem = new PurchaseItemViewModel()
-            {
-                ItemId = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-            };
-
-            return purchaseItem;
-        }
-
-        private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate()
-        {
-            var item = new ItemDto()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 04),
-                ReplenishmentPeriod = 1
-            };
-
-            return item;
-        }
-
         private PurchaseItemViewModel BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate()
         {
             var purchaseItem = new PurchaseItemViewModel()
@@ -401,6 +377,19 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             };
 
             return purchaseItem;
+        }
+
+        private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate()
+        {
+            var item = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 04),
+                ReplenishmentPeriod = 1
+            };
+
+            return item;
         }
     }
 }
