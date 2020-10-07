@@ -34,15 +34,15 @@ namespace ListGenerator.Client.Pages
         [Inject]
         private IReplenishmentBuilder ReplenishmentBuilder { get; set; }
 
-        protected List<PurchaseItemViewModel> ReplenishmentItems { get; set; } = new List<PurchaseItemViewModel>();
+        private List<PurchaseItemViewModel> ReplenishmentItems { get; set; } = new List<PurchaseItemViewModel>();
 
-        protected DateTime FirstReplenishmentDate { get; set; }
+        private DateTime FirstReplenishmentDate { get; set; }
 
-        protected DateTime SecondReplenishmentDate { get; set; }
+        private DateTime SecondReplenishmentDate { get; set; }
 
         private DayOfWeek UsualShoppingDay { get; set; }
 
-        protected DateTime DateTimeNow { get; set; }
+        private DateTime DateTimeNow { get; set; }
 
 
         protected async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
