@@ -11,6 +11,9 @@ using System.Globalization;
 using ListGenerator.Server.Extensions;
 using ListGenerator.Shared.Enums;
 using ListGenerator.Shared.Helpers;
+using ListGenerator.Shared.Responses;
+using ListGenerator.Client.Builders;
+using ListGenerator.Server.Builders;
 
 namespace ListGenerator.Server.Services
 {
@@ -25,21 +28,30 @@ namespace ListGenerator.Server.Services
             _mapper = mapper;
         }
 
-        public IEnumerable<ItemNameDto> GetItemsNames(string searchWord, string userId)
+        public Response<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord, string userId)
         {
-            var query = _itemsRepository.All()
-                .Where(x => x.UserId == userId);
-
-            var names = new List<ItemNameDto>();
-
-            if (!string.IsNullOrEmpty(searchWord))
+            try
             {
-                query = query.Where(x => x.Name.ToLower().Contains(searchWord.ToLower()));
+                var query = _itemsRepository.All()
+                    .Where(x => x.UserId == userId);
+
+                var names = new List<ItemNameDto>();
+
+                if (!string.IsNullOrEmpty(searchWord))
+                {
+                    query = query.Where(x => x.Name.ToLower().Contains(searchWord.ToLower()));
+                }
+
+                names = _mapper.ProjectTo<ItemNameDto>(query).ToList();
+
+                var response = Builders.ResponseBuilder.Success<IEnumerable<ItemNameDto>>(names);
+                return response;
             }
-
-            names = _mapper.ProjectTo<ItemNameDto>(query).ToList();
-
-            return names;
+            catch(Exception ex)
+            {
+                var response = Builders.ResponseBuilder.Failure<IEnumerable<ItemNameDto>>();
+                return response;
+            }        
         }
 
         public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)

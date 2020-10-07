@@ -25,8 +25,14 @@ namespace ListGenerator.Server.Controllers
         [HttpGet("itemsnames/{searchWord?}")]
         public IActionResult GetItemsNames(string searchWord)
         {
-            var itemsNames = _itemsDataService.GetItemsNames(searchWord, this.UserId);
-            return Ok(itemsNames);
+            var response = _itemsDataService.GetItemsNames(searchWord, this.UserId);
+
+            if(!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpGet("overview/{dto.PageSize:int?}/{dto.SkipItems:int?}/{dto.OrderByColumn?}/{dto.OrderByDirection?}/{dto.SearchWord?}/{dto.SearchDate?}")]

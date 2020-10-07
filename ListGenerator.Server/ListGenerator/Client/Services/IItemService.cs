@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ListGenerator.Shared.Responses;
 
 namespace ListGenerator.Client.Services
 {
     public interface IItemService
     {
-        Task<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord);
+        Task<Response<IEnumerable<ItemNameDto>>> GetItemsNames(string searchWord);
         Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate);
         
         Task<ItemDto> GetItem(int id);

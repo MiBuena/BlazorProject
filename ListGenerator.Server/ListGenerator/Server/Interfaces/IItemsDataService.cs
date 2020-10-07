@@ -1,11 +1,12 @@
 ﻿using ListGenerator.Shared.Dtos;
+using ListGenerator.Shared.Responses;
 using System.Collections.Generic;
 
 namespace ListGenerator.Server.Interfaces
 {
     public interface IItemsDataService
     {
-        IEnumerable<ItemNameDto> GetItemsNames(string searchWord, string userId);
+        Response<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord, string userId);
 
         ItemDto GetItem(int itemId);
 

@@ -10,6 +10,7 @@ using ListGenerator.Shared.Interfaces;
 using ListGenerator.Shared.Enums;
 using ListGenerator.Shared.Constants;
 using ListGenerator.Shared.Helpers;
+using ListGenerator.Shared.Responses;
 
 namespace ListGenerator.Client.Services
 {
@@ -29,10 +30,10 @@ namespace ListGenerator.Client.Services
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord)
+        public async Task<Response<IEnumerable<ItemNameDto>>> GetItemsNames(string searchWord)
         {
-            var names = await _apiClient.GetAsync<IEnumerable<ItemNameDto>>($"api/items/itemsnames/{searchWord}");
-            return names;
+            var response = await _apiClient.GetAsync<Response<IEnumerable<ItemNameDto>>>($"api/items/itemsnames/{searchWord}");
+            return response;
         }
 
         public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
