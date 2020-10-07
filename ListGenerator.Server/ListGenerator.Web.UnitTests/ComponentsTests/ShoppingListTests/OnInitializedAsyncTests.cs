@@ -16,7 +16,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ListGenerator.Web.UnitTests.ShoppingListTests
+namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
 {
     [TestFixture]
     public class OnInitializedAsyncTests : BUnitTestContext

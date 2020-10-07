@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ListGenerator.Web.UnitTests.SpinnerTests
+namespace ListGenerator.Web.UnitTests.ComponentsTests.SpinnerTests
 {
     [TestFixture]
     public class HideSpinnerTests : BaseSpinnerTests
