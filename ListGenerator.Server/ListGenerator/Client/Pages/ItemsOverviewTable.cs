@@ -17,35 +17,35 @@ namespace ListGenerator.Client.Pages
     [Authorize]
     public partial class ItemsOverviewTable
     {
-        public string SearchWord { get; set; }
+        private string SearchWord { get; set; }
 
-        public DateTime? SearchDate { get; set; }
+        private DateTime? SearchDate { get; set; }
 
-        public int Count { get; set; }
-
-        [Inject]
-        public IItemService ItemsService { get; set; }
+        private int Count { get; set; }
 
         [Inject]
-        public IMapper Mapper { get; set; }
-
-        public IEnumerable<ItemNameDto> DisplayItemsNames { get; set; }
-
-        public IEnumerable<ItemOverviewViewModel> DisplayItems { get; set; }
-
-        protected AddItemDialog AddItemDialog { get; set; }
-
-        protected EditItemDialog EditItemDialog { get; set; }
-
-        protected DeleteItemDialog DeleteItemDialog { get; set; }
+        private IItemService ItemsService { get; set; }
 
         [Inject]
-        public NavigationManager NavigationManager { get; set; }
+        private IMapper Mapper { get; set; }
 
-        protected RadzenGrid<ItemOverviewViewModel> Table { get; set; }
+        private IEnumerable<ItemNameDto> DisplayItemsNames { get; set; }
+
+        private IEnumerable<ItemOverviewViewModel> DisplayItems { get; set; }
+
+        private AddItemDialog AddItemDialog { get; set; }
+
+        private EditItemDialog EditItemDialog { get; set; }
+
+        private DeleteItemDialog DeleteItemDialog { get; set; }
+
+        [Inject]
+        private NavigationManager NavigationManager { get; set; }
+
+        private RadzenGrid<ItemOverviewViewModel> Table { get; set; }
 
 
-        protected async Task LoadData(LoadDataArgs args)
+        private async Task LoadData(LoadDataArgs args)
         {
             await InitializeData(args.Top, args.Skip, args.OrderBy, this.SearchWord, this.SearchDate);
             await InvokeAsync(StateHasChanged);
@@ -60,7 +60,7 @@ namespace ListGenerator.Client.Pages
             this.Count = dto.TotalItemsCount;
         }
 
-        protected async void ClearFilters()
+        private async void ClearFilters()
         {
             this.SearchWord = null;
             this.SearchDate = null;
@@ -69,52 +69,52 @@ namespace ListGenerator.Client.Pages
             StateHasChanged();
         }
 
-        protected async void LoadAutoCompleteData(LoadDataArgs args)
+        private async void LoadAutoCompleteData(LoadDataArgs args)
         {
             this.DisplayItemsNames = await ItemsService.GetItemsNames(args.Filter);
             await InvokeAsync(StateHasChanged);
         }
 
-        protected async void Search()
+        private async void Search()
         {
             await Table.Reload();
             StateHasChanged();
         }
 
-        protected void QuickAddItem()
+        private void QuickAddItem()
         {
             AddItemDialog.Show();
         }
 
-        public async void AddItemDialog_OnDialogClose()
+        private async void AddItemDialog_OnDialogClose()
         {
             await Table.Reload();
             StateHasChanged();
         }
 
-        protected void QuickEditItem(int id)
+        private void QuickEditItem(int id)
         {
             EditItemDialog.Show(id);
         }
 
-        public async void EditItemDialog_OnDialogClose()
+        private async void EditItemDialog_OnDialogClose()
         {
             await Table.Reload();
             StateHasChanged();
         }
 
-        protected void DeleteItemQuestion(int id)
+        private void DeleteItemQuestion(int id)
         {
             DeleteItemDialog.Show(id);
         }
 
-        public async void DeleteItemDialog_OnDialogClose()
+        private async void DeleteItemDialog_OnDialogClose()
         {
             await Table.Reload();
             StateHasChanged();
         }
 
-        protected void NavigateToListGeneration()
+        private void NavigateToListGeneration()
         {
             NavigationManager.NavigateTo("/shoppinglist");
         }

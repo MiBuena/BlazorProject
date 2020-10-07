@@ -11,8 +11,8 @@ namespace ListGenerator.Client.Pages
     {
         [Inject]
         private ISpinnerService SpinnerService { get; set; }
-        
-        protected bool IsVisible { get; set; }
+
+        private bool IsVisible { get; set; }
 
         protected override void OnInitialized()
         {

@@ -45,13 +45,13 @@ namespace ListGenerator.Client.Pages
         private DateTime DateTimeNow { get; set; }
 
 
-        protected async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
+        private async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
         {
             this.FirstReplenishmentDate = DateTime.Parse(e.Value.ToString());
             await InitializeReplenishmentItemsCollection();
         }
 
-        protected async Task ChangeSecondReplenishmentDateValue(ChangeEventArgs e)
+        private async Task ChangeSecondReplenishmentDateValue(ChangeEventArgs e)
         {
             this.SecondReplenishmentDate = DateTime.Parse(e.Value.ToString());
             await InitializeReplenishmentItemsCollection();
@@ -71,13 +71,13 @@ namespace ListGenerator.Client.Pages
             this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 
-        protected async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
+        private async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
         {
             this.UsualShoppingDay = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), e.Value.ToString());
             await GenerateListFromDayOfWeek();
         }
 
-        protected async Task GenerateListFromDayOfWeek()
+        private async Task GenerateListFromDayOfWeek()
         {
             this.FirstReplenishmentDate = GetNextShoppingDay(UsualShoppingDay);
             this.SecondReplenishmentDate = this.FirstReplenishmentDate.AddDays(7);
@@ -94,7 +94,7 @@ namespace ListGenerator.Client.Pages
             return nextShoppingDay;
         }
 
-        protected async Task ReplenishItem(int itemId)
+        private async Task ReplenishItem(int itemId)
         {
             var viewModel = this.ReplenishmentItems.FirstOrDefault(x => x.ItemId == itemId);
             var replenishmentModel = ReplenishmentBuilder.BuildReplenishmentDto(this.FirstReplenishmentDate, this.SecondReplenishmentDate, viewModel);
@@ -105,7 +105,7 @@ namespace ListGenerator.Client.Pages
             this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 
-        protected async Task ReplenishAllItems()
+        private async Task ReplenishAllItems()
         {
             var replenishmentModel = ReplenishmentBuilder.BuildReplenishmentDto(this.FirstReplenishmentDate, this.SecondReplenishmentDate, this.ReplenishmentItems);
 
@@ -113,7 +113,7 @@ namespace ListGenerator.Client.Pages
             NavigateToAllItems();
         }
 
-        protected void NavigateToAllItems()
+        private void NavigateToAllItems()
         {
             NavigationManager.NavigateTo("/allitemstable");
         }
