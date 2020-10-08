@@ -25,10 +25,19 @@ namespace ListGenerator.Client.Components
 
         public bool ShowDialog { get; set; }
 
+        public string ErrorMessage { get; set; }
+
         public async void Show(int id)
         {
             var response = await this.ItemService.GetItem(id);
-            this.ItemToUpdate = Mapper.Map<ItemDto, ItemViewModel>(response.Data);
+
+            this.ErrorMessage = response.ErrorMessage;
+
+            if (response.IsSuccess)
+            {
+                this.ItemToUpdate = Mapper.Map<ItemDto, ItemViewModel>(response.Data);
+            }
+
             ShowDialog = true;
             StateHasChanged();
         }
