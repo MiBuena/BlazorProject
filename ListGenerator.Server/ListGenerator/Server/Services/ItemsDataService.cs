@@ -31,7 +31,7 @@ namespace ListGenerator.Server.Services
         public Response<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord, string userId)
         {
             try
-            {
+            {             
                 var query = _itemsRepository.All()
                     .Where(x => x.UserId == userId);
 

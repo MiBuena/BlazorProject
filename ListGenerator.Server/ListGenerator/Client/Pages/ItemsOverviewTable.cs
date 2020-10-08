@@ -124,12 +124,6 @@ namespace ListGenerator.Client.Pages
             Error.Show(errorMessage);
         }
 
-        private void ErrorComponent_OnDialogClose()
-        {
-            Error.Close();
-            StateHasChanged();
-        }
-
         private void NavigateToListGeneration()
         {
             NavigationManager.NavigateTo("/shoppinglist");
