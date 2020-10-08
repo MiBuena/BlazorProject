@@ -76,7 +76,7 @@ namespace ListGenerator.Client.Pages
         {
             var response = await ItemsService.GetItemsNames(args.Filter);
             ShowError(response.ErrorMessage);
-            this.DisplayItemsNames = new List<ItemNameDto>();
+            this.DisplayItemsNames = response.Data;
             await InvokeAsync(StateHasChanged);
         }
 

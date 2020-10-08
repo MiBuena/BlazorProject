@@ -49,7 +49,7 @@ namespace ListGenerator.Server.Services
             }
             catch(Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure<IEnumerable<ItemNameDto>>();
+                var response = Builders.ResponseBuilder.Failure<IEnumerable<ItemNameDto>>("An error occured while getting items names.");
                 return response;
             }        
         }
