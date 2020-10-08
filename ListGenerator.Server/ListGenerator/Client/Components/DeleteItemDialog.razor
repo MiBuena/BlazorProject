@@ -13,13 +13,17 @@
                     </div>
                     <div class="modal-body">
 
-                        Delete item @this.Item.Name ?
+                        <ErrorComponent ErrorMessage="@this.ErrorMessage"></ErrorComponent>
 
-                        <button @onclick="DeleteItem" class="btn btn-primary edit-btn">Delete</button>
-
+                        @if (this.Item != null)
+                        {
+                            <span>Delete item @this.Item.Name</span>
+                            <button @onclick="DeleteItem" class="btn btn-primary edit-btn">Delete</button>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </div>
 }
+

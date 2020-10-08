@@ -27,8 +27,8 @@ namespace ListGenerator.Client.Components
 
         public async void Show(int id)
         {
-            var dto = await this.ItemService.GetItem(id);
-            this.ItemToUpdate = Mapper.Map<ItemDto, ItemViewModel>(dto);
+            var response = await this.ItemService.GetItem(id);
+            this.ItemToUpdate = Mapper.Map<ItemDto, ItemViewModel>(response.Data);
             ShowDialog = true;
             StateHasChanged();
         }

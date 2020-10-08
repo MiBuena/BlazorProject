@@ -160,13 +160,22 @@ namespace ListGenerator.Server.Services
             return query;
         }
 
-        public ItemDto GetItem(int itemId)
+        public Response<ItemDto> GetItem(int itemId)
         {
-            var query = _itemsRepository.All().Where(x => x.Id == itemId);
+            try
+            {
+                var query = _itemsRepository.All().Where(x => x.Id == itemId);
 
-            var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
+                var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
 
-            return dto;
+                var response = Builders.ResponseBuilder.Success(dto);
+                return response;
+            }
+            catch(Exception ex)
+            {
+                var response = Builders.ResponseBuilder.Failure<ItemDto>("An error occured while getting item");
+                return response;
+            }
         }
 
         public int AddItem(string userId, ItemDto itemDto)

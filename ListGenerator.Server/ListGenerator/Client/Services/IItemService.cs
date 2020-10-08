@@ -14,7 +14,7 @@ namespace ListGenerator.Client.Services
         Task<Response<IEnumerable<ItemNameDto>>> GetItemsNames(string searchWord);
         Task<Response<ItemsOverviewPageDto>> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate);
         
-        Task<ItemDto> GetItem(int id);
+        Task<Response<ItemDto>> GetItem(int id);
         
         Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate);
 

@@ -8,7 +8,7 @@ namespace ListGenerator.Server.Interfaces
     {
         Response<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord, string userId);
 
-        ItemDto GetItem(int itemId);
+        Response<ItemDto> GetItem(int itemId);
 
         int AddItem(string userId, ItemDto itemDto);
 

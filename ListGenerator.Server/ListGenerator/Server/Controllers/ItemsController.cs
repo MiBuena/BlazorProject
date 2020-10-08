@@ -39,8 +39,8 @@ namespace ListGenerator.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult GetItemById(int id)
         {
-            var dto = _itemsDataService.GetItem(id);
-            return Ok(dto);
+            var response = _itemsDataService.GetItem(id);
+            return Ok(response);
         }
 
         [HttpGet("shoppinglist/{secondReplenishmentDate}")]

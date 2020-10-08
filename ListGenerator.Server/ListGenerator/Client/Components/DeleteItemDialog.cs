@@ -25,6 +25,8 @@ namespace ListGenerator.Client.Components
 
         public bool ShowDialog { get; set; }
 
+        private string ErrorMessage { get; set; }
+
         protected async Task DeleteItem()
         {
             await ItemService.DeleteItem(Item.Id);
@@ -36,8 +38,15 @@ namespace ListGenerator.Client.Components
 
         public async void Show(int id)
         {
-            var dto = await this.ItemService.GetItem(id);
-            this.Item = Mapper.Map<ItemDto, ItemViewModel>(dto);
+            var response = await this.ItemService.GetItem(id);
+
+            this.ErrorMessage = response.ErrorMessage;
+
+            if(response.IsSuccess)
+            {
+                this.Item = Mapper.Map<ItemDto, ItemViewModel>(response.Data);
+            }
+
             ShowDialog = true;
             StateHasChanged();
         }

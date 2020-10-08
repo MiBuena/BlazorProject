@@ -63,10 +63,10 @@ namespace ListGenerator.Client.Services
             return sortingData;
         }
 
-        public async Task<ItemDto> GetItem(int id)
+        public async Task<Response<ItemDto>> GetItem(int id)
         {
-            var dto = await _apiClient.GetAsync<ItemDto>($"api/items/{id}");
-            return dto;
+            var response = await _apiClient.GetAsync<Response<ItemDto>>($"api/items/{id}");
+            return response;
         }
 
         public async Task<ApiResponse> AddItem(ItemViewModel item)

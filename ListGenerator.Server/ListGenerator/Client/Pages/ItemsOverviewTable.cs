@@ -39,7 +39,7 @@ namespace ListGenerator.Client.Pages
 
         private DeleteItemDialog DeleteItemDialog { get; set; }
 
-        private ErrorComponent Error { get; set; }
+        private string ErrorMessage { get; set; }
 
 
         [Inject]
@@ -58,7 +58,7 @@ namespace ListGenerator.Client.Pages
         {
             var response = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy, searchWord, searchDate);
 
-            ShowError(response.ErrorMessage);
+            this.ErrorMessage = response.ErrorMessage;
 
             if (response.Data != null)
             {
@@ -79,7 +79,7 @@ namespace ListGenerator.Client.Pages
         private async void LoadAutoCompleteData(LoadDataArgs args)
         {
             var response = await ItemsService.GetItemsNames(args.Filter);
-            ShowError(response.ErrorMessage);
+            this.ErrorMessage = response.ErrorMessage;
             this.DisplayItemsNames = response.Data;
             await InvokeAsync(StateHasChanged);
         }
@@ -121,11 +121,6 @@ namespace ListGenerator.Client.Pages
         {
             await Table.Reload();
             StateHasChanged();
-        }
-
-        private void ShowError(string errorMessage)
-        {
-            Error.Show(errorMessage);
         }
 
         private void NavigateToListGeneration()

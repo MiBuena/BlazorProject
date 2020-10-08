@@ -7,7 +7,9 @@
     var columnSize = "160px";
 }
 
-<ErrorComponent @ref="Error"></ErrorComponent>
+<div class="error-holder">
+    <ErrorComponent ErrorMessage="@this.ErrorMessage"></ErrorComponent>
+</div>
 
 <div class="search-holder">
     <span class="search-label">Search by text</span>
