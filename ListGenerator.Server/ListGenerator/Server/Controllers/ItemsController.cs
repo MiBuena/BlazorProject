@@ -32,8 +32,8 @@ namespace ListGenerator.Server.Controllers
         [HttpGet("overview/{dto.PageSize:int?}/{dto.SkipItems:int?}/{dto.OrderByColumn?}/{dto.OrderByDirection?}/{dto.SearchWord?}/{dto.SearchDate?}")]
         public IActionResult GetOverviewItems([FromQuery] FilterPatemetersDto dto)
         {
-            var overviewDto = _itemsDataService.GetItemsOverviewPageModel(this.UserId, dto);
-            return Ok(overviewDto);
+            var response = _itemsDataService.GetItemsOverviewPageModel(this.UserId, dto);
+            return Ok(response);
         }
 
         [HttpGet("{id}")]

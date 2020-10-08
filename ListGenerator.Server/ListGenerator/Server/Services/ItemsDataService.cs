@@ -31,7 +31,7 @@ namespace ListGenerator.Server.Services
         public Response<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord, string userId)
         {
             try
-            {             
+            {
                 var query = _itemsRepository.All()
                     .Where(x => x.UserId == userId);
 
@@ -47,31 +47,40 @@ namespace ListGenerator.Server.Services
                 var response = Builders.ResponseBuilder.Success<IEnumerable<ItemNameDto>>(names);
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var response = Builders.ResponseBuilder.Failure<IEnumerable<ItemNameDto>>("An error occured while getting items names.");
                 return response;
-            }        
+            }
         }
 
-        public ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)
+        public Response<ItemsOverviewPageDto> GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto)
         {
-            var query = GetOverviewItemsQuery(userId, dto);
-
-            var dtos = query
-                .Skip(dto.SkipItems.Value)
-                .Take(dto.PageSize.Value)
-                .ToList();
-
-            var itemsCount = query.Count();
-
-            var pageDto = new ItemsOverviewPageDto()
+            try
             {
-                OverviewItems = dtos,
-                TotalItemsCount = itemsCount
-            };
+                var query = GetOverviewItemsQuery(userId, dto);
 
-            return pageDto;
+                var dtos = query
+                    .Skip(dto.SkipItems.Value)
+                    .Take(dto.PageSize.Value)
+                    .ToList();
+
+                var itemsCount = query.Count();
+
+                var pageDto = new ItemsOverviewPageDto()
+                {
+                    OverviewItems = dtos,
+                    TotalItemsCount = itemsCount
+                };
+
+                var response = Builders.ResponseBuilder.Success(pageDto);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                var response = Builders.ResponseBuilder.Failure<ItemsOverviewPageDto>("An error occured while getting items names.");
+                return response;
+            }
         }
 
         private IQueryable<ItemOverviewDto> GetOverviewItemsQuery(string userId, FilterPatemetersDto dto)

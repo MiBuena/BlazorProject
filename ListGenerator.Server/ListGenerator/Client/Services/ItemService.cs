@@ -36,15 +36,15 @@ namespace ListGenerator.Client.Services
             return response;
         }
 
-        public async Task<ItemsOverviewPageDto> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
+        public async Task<Response<ItemsOverviewPageDto>> GetItemsOverviewPageModel(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
         {
             var sortingData = GetSortingData(orderBy);
 
             var dateToString = DateTimeHelper.ToTransferDateAsString(searchDate);    
 
-            var dto = await _apiClient.GetAsync<ItemsOverviewPageDto>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={sortingData.OrderByColumn}&OrderByDirection={sortingData.OrderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
+            var response = await _apiClient.GetAsync<Response<ItemsOverviewPageDto>>($"api/items/overview/?PageSize={pageSize}&SkipItems={skipItems}&OrderByColumn={sortingData.OrderByColumn}&OrderByDirection={sortingData.OrderByDirection}&SearchWord={searchWord}&SearchDate={dateToString}");
 
-            return dto;
+            return response;
         }
 
         private SortingData GetSortingData(string orderBy)

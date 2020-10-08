@@ -17,7 +17,7 @@ namespace ListGenerator.Server.Interfaces
         void DeleteItem(int id);
 
         IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId);
-        
-        ItemsOverviewPageDto GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto);
+
+        Response<ItemsOverviewPageDto> GetItemsOverviewPageModel(string userId, FilterPatemetersDto dto);
     }
 }
