@@ -26,12 +26,6 @@ namespace ListGenerator.Server.Controllers
         public IActionResult GetItemsNames(string searchWord)
         {
             var response = _itemsDataService.GetItemsNames(searchWord, this.UserId);
-
-            if(!response.IsSuccess)
-            {
-                return BadRequest(response);
-            }
-
             return Ok(response);
         }
 

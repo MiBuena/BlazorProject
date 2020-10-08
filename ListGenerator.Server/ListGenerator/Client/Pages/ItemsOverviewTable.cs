@@ -39,6 +39,9 @@ namespace ListGenerator.Client.Pages
 
         private DeleteItemDialog DeleteItemDialog { get; set; }
 
+        private ErrorComponent Error { get; set; }
+
+
         [Inject]
         private NavigationManager NavigationManager { get; set; }
 
@@ -71,8 +74,9 @@ namespace ListGenerator.Client.Pages
 
         private async void LoadAutoCompleteData(LoadDataArgs args)
         {
-            var a = await ItemsService.GetItemsNames(args.Filter);
-            this.DisplayItemsNames = a.Data;
+            var response = await ItemsService.GetItemsNames(args.Filter);
+            ShowError(response.ErrorMessage);
+            this.DisplayItemsNames = new List<ItemNameDto>();
             await InvokeAsync(StateHasChanged);
         }
 
@@ -112,6 +116,17 @@ namespace ListGenerator.Client.Pages
         private async void DeleteItemDialog_OnDialogClose()
         {
             await Table.Reload();
+            StateHasChanged();
+        }
+
+        private void ShowError(string errorMessage)
+        {
+            Error.Show(errorMessage);
+        }
+
+        private void ErrorComponent_OnDialogClose()
+        {
+            Error.Close();
             StateHasChanged();
         }
 
