@@ -57,10 +57,14 @@ namespace ListGenerator.Client.Pages
         private async Task InitializeData(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
         {
             var response = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy, searchWord, searchDate);
-            var items = response.Data.OverviewItems.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
 
-            this.DisplayItems = items;
-            this.Count = response.Data.TotalItemsCount;
+            ShowError(response.ErrorMessage);
+
+            if (response.Data != null)
+            {
+                this.DisplayItems = response.Data.OverviewItems.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
+                this.Count = response.Data.TotalItemsCount;
+            }
         }
 
         private async void ClearFilters()
