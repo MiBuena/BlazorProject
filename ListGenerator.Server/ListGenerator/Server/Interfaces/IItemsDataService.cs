@@ -12,7 +12,7 @@ namespace ListGenerator.Server.Interfaces
 
         BaseResponse AddItem(string userId, ItemDto itemDto);
 
-        void UpdateItem(string userId, ItemDto itemDto);
+        BaseResponse UpdateItem(string userId, ItemDto itemDto);
 
         void DeleteItem(int id);
 

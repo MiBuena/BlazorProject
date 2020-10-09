@@ -55,10 +55,18 @@ namespace ListGenerator.Client.Components
 
         protected async Task HandleValidSubmit()
         {
-            await ItemService.UpdateItem(ItemToUpdate);
-            ShowDialog = false;
+            var response = await ItemService.UpdateItem(ItemToUpdate);
 
-            await CloseEventCallback.InvokeAsync(true);
+            if (!response.IsSuccess)
+            {
+                this.Error.Show(response.ErrorMessage);
+            }
+            else
+            {
+                ShowDialog = false;
+                await CloseEventCallback.InvokeAsync(true);
+            }
+
             StateHasChanged();
         }
     }

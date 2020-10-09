@@ -111,9 +111,14 @@ namespace ListGenerator.Server.Controllers
                 return NotFound();
             }
 
-            _itemsDataService.UpdateItem(this.UserId, itemDto);
+            var response = _itemsDataService.UpdateItem(this.UserId, itemDto);
 
-            return Ok();
+            if(!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpDelete("{id}")]

@@ -44,16 +44,16 @@ namespace ListGenerator.Client.Models
             return response;
         }
 
-        public async Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null)
+        public async Task<T> PutAsync<T>(string requestUri, string jsonContent, string errorMessage = null)
         {
             var stringContent =
               new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PutAsync(requestUri, stringContent);
+            var httpResponse = await _httpClient.PutAsync(requestUri, stringContent);
 
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
+            var response = _jsonHelper.Deserialize<T>(await httpResponse.Content.ReadAsStringAsync());
 
-            return apiReponse;
+            return response;
         }
 
         public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)

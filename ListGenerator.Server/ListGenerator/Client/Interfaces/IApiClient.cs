@@ -9,7 +9,7 @@ namespace ListGenerator.Client.Interfaces
 
         Task<T> PostAsync<T>(string requestUri, string jsonContent, string errorMessage = null);
 
-        Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null);
+        Task<T> PutAsync<T>(string requestUri, string jsonContent, string errorMessage = null);
 
         Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
     }

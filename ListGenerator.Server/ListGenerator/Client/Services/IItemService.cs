@@ -20,7 +20,7 @@ namespace ListGenerator.Client.Services
 
         Task<BaseResponse> AddItem(ItemViewModel item);
 
-        Task<ApiResponse> UpdateItem(ItemViewModel item);
+        Task<BaseResponse> UpdateItem(ItemViewModel item);
 
         Task<ApiResponse> DeleteItem(int item);     
     }
