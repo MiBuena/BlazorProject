@@ -75,7 +75,7 @@ namespace ListGenerator.Client.Services
 
             var itemJson = _jsonHelper.Serialize(itemDto);
 
-            var response = await _apiClient.PostAsync<BaseResponse>("api/items", itemJson, SaveItemErrorMessage);
+            var response = await _apiClient.PostAsync("api/items", itemJson);
 
             return response;
         }
@@ -86,7 +86,7 @@ namespace ListGenerator.Client.Services
 
             var itemJson = _jsonHelper.Serialize(itemDto);
 
-            var response = await _apiClient.PutAsync<BaseResponse>("api/items", itemJson, SaveItemErrorMessage);
+            var response = await _apiClient.PutAsync("api/items", itemJson);
 
             return response;
         }

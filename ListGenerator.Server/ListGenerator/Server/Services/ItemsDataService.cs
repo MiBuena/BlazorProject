@@ -200,30 +200,52 @@ namespace ListGenerator.Server.Services
             }
         }
 
-        public void UpdateItem(string userId, ItemDto itemDto)
+        public BaseResponse UpdateItem(string userId, ItemDto itemDto)
         {
-            var itemToUpdate = _itemsRepository.All().FirstOrDefault(x => x.Id == itemDto.Id);
-
-            if (itemToUpdate != null)
+            try
             {
-                itemToUpdate.Name = itemDto.Name;
-                itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
-                itemToUpdate.NextReplenishmentDate = itemDto.NextReplenishmentDate;
-                itemToUpdate.UserId = userId;
+                var itemToUpdate = _itemsRepository.All().FirstOrDefault(x => x.Id == itemDto.Id);
 
-                _itemsRepository.Update(itemToUpdate);
-                _itemsRepository.SaveChanges();
+                if (itemToUpdate != null)
+                {
+                    itemToUpdate.Name = itemDto.Name;
+                    itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
+                    itemToUpdate.NextReplenishmentDate = itemDto.NextReplenishmentDate;
+                    itemToUpdate.UserId = userId;
+
+                    _itemsRepository.Update(itemToUpdate);
+                    _itemsRepository.SaveChanges();
+                }
+
+                var response = Builders.ResponseBuilder.Success();
+                return response;
+            }
+            catch(Exception ex)
+            {
+                var response = Builders.ResponseBuilder.Failure("An error occurred while updating item");
+                return response;
             }
         }
 
-        public void DeleteItem(int id)
+        public BaseResponse DeleteItem(int id)
         {
-            var itemToDelete = _itemsRepository.All().FirstOrDefault(x => x.Id == id);
-
-            if (itemToDelete != null)
+            try
             {
-                _itemsRepository.Delete(itemToDelete);
-                _itemsRepository.SaveChanges();
+                var itemToDelete = _itemsRepository.All().FirstOrDefault(x => x.Id == id);
+
+                if (itemToDelete != null)
+                {
+                    _itemsRepository.Delete(itemToDelete);
+                    _itemsRepository.SaveChanges();
+                }
+
+                var response = Builders.ResponseBuilder.Success();
+                return response;
+            }
+            catch(Exception ex)
+            {
+                var response = Builders.ResponseBuilder.Failure("An error occurred while deleting item");
+                return response;
             }
         }
 

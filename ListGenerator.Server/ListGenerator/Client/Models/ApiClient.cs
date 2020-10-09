@@ -33,31 +33,31 @@ namespace ListGenerator.Client.Models
             return deserializedItems;
         }
 
-        public async Task<T> PostAsync<T>(string requestUri, string jsonContent, string errorMessage = null)
+        public async Task<BaseResponse> PostAsync(string requestUri, string jsonContent)
         {
             var stringContent =
               new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var httpResponse = await _httpClient.PostAsync(requestUri, stringContent);
 
-            var response = _jsonHelper.Deserialize<T>(await httpResponse.Content.ReadAsStringAsync());
+            var response = _jsonHelper.Deserialize<BaseResponse>(await httpResponse.Content.ReadAsStringAsync());
                 
             return response;
         }
 
-        public async Task<T> PutAsync<T>(string requestUri, string jsonContent, string errorMessage = null)
+        public async Task<BaseResponse> PutAsync(string requestUri, string jsonContent)
         {
             var stringContent =
               new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var httpResponse = await _httpClient.PutAsync(requestUri, stringContent);
 
-            var response = _jsonHelper.Deserialize<T>(await httpResponse.Content.ReadAsStringAsync());
+            var response = _jsonHelper.Deserialize<BaseResponse>(await httpResponse.Content.ReadAsStringAsync());
 
             return response;
         }
 
-        public async Task<BaseResponse> DeleteAsync(string requestUri, string errorMessage = null)
+        public async Task<BaseResponse> DeleteAsync(string requestUri)
         {
             var httpResponse = await _httpClient.DeleteAsync(requestUri);
 

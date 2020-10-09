@@ -8,10 +8,10 @@ namespace ListGenerator.Client.Interfaces
     {
         Task<T> GetAsync<T>(string requestUri);
 
-        Task<T> PostAsync<T>(string requestUri, string jsonContent, string errorMessage = null);
+        Task<BaseResponse> PostAsync(string requestUri, string jsonContent);
 
-        Task<T> PutAsync<T>(string requestUri, string jsonContent, string errorMessage = null);
+        Task<BaseResponse> PutAsync(string requestUri, string jsonContent);
 
-        Task<BaseResponse> DeleteAsync(string requestUri, string errorMessage = null);
+        Task<BaseResponse> DeleteAsync(string requestUri);
     }
 }
