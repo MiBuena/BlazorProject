@@ -30,10 +30,18 @@ namespace ListGenerator.Client.Components
 
         protected async Task DeleteItem()
         {
-            await ItemService.DeleteItem(Item.Id);
-            ShowDialog = false;
+            var response = await ItemService.DeleteItem(Item.Id);
 
-            await CloseEventCallback.InvokeAsync(true);
+            if(!response.IsSuccess)
+            {
+                this.Error.Show(response.ErrorMessage);
+            }
+            else
+            {
+                ShowDialog = false;
+                await CloseEventCallback.InvokeAsync(true);
+            }
+
             StateHasChanged();
         }
 

@@ -104,40 +104,38 @@ namespace ListGenerator.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var itemToUpdate = _itemsDataService.GetItem(itemDto.Id);
-
-            if (itemToUpdate == null)
+            var getItemResponse = _itemsDataService.GetItem(itemDto.Id);
+            if (!getItemResponse.IsSuccess || getItemResponse.Data == null)
             {
-                return NotFound();
+                return BadRequest(getItemResponse);
             }
 
-            var response = _itemsDataService.UpdateItem(this.UserId, itemDto);
-
-            if(!response.IsSuccess)
+            var updateResponse = _itemsDataService.UpdateItem(this.UserId, itemDto);
+            if(!updateResponse.IsSuccess)
             {
-                return BadRequest(response);
+                return BadRequest(updateResponse);
             }
 
-            return Ok(response);
+            return Ok(updateResponse);
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteItem(int id)
         {
-            if (id == 0)
+            var getItemResponse = _itemsDataService.GetItem(id);
+            if (!getItemResponse.IsSuccess || getItemResponse.Data == null)
             {
-                return BadRequest();
+                return BadRequest(getItemResponse);
             }
 
-            var itemToDelete = _itemsDataService.GetItem(id);
-            if (itemToDelete == null)
+            var deleteResponse = _itemsDataService.DeleteItem(id);
+
+            if(!deleteResponse.IsSuccess)
             {
-                return NotFound();
+                return BadRequest(deleteResponse);
             }
 
-            _itemsDataService.DeleteItem(id);
-
-            return Ok();
+            return Ok(deleteResponse);
         }
     }
 }

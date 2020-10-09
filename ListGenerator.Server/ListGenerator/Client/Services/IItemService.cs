@@ -22,6 +22,6 @@ namespace ListGenerator.Client.Services
 
         Task<BaseResponse> UpdateItem(ItemViewModel item);
 
-        Task<ApiResponse> DeleteItem(int item);     
+        Task<BaseResponse> DeleteItem(int item);     
     }
 }

@@ -2,6 +2,7 @@
 using ListGenerator.Client.Builders;
 using ListGenerator.Client.Interfaces;
 using ListGenerator.Shared.Interfaces;
+using ListGenerator.Shared.Responses;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,13 +57,13 @@ namespace ListGenerator.Client.Models
             return response;
         }
 
-        public async Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null)
+        public async Task<BaseResponse> DeleteAsync(string requestUri, string errorMessage = null)
         {
-            var response = await _httpClient.DeleteAsync(requestUri);
+            var httpResponse = await _httpClient.DeleteAsync(requestUri);
 
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
+            var response = _jsonHelper.Deserialize<BaseResponse>(await httpResponse.Content.ReadAsStringAsync());
 
-            return apiReponse;
+            return response;
         }
     }
 }

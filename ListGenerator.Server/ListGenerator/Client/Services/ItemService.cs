@@ -91,7 +91,7 @@ namespace ListGenerator.Client.Services
             return response;
         }
 
-        public async Task<ApiResponse> DeleteItem(int itemId)
+        public async Task<BaseResponse> DeleteItem(int itemId)
         {
             var response = await _apiClient.DeleteAsync($"api/items/{itemId}");
             return response;

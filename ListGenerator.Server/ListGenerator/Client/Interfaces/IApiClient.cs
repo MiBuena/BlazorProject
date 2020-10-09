@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Client.Models;
+using ListGenerator.Shared.Responses;
 using System.Threading.Tasks;
 
 namespace ListGenerator.Client.Interfaces
@@ -11,6 +12,6 @@ namespace ListGenerator.Client.Interfaces
 
         Task<T> PutAsync<T>(string requestUri, string jsonContent, string errorMessage = null);
 
-        Task<ApiResponse> DeleteAsync(string requestUri, string errorMessage = null);
+        Task<BaseResponse> DeleteAsync(string requestUri, string errorMessage = null);
     }
 }
