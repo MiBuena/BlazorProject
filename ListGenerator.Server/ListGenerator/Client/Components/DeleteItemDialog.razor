@@ -13,7 +13,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <ErrorComponent ErrorMessage="@this.ErrorMessage"></ErrorComponent>
+                        <ErrorComponent @ref="Error"></ErrorComponent>
 
                         @if (this.Item != null)
                         {

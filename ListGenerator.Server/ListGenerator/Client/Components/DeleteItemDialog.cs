@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 
 namespace ListGenerator.Client.Components
 {
@@ -25,7 +26,7 @@ namespace ListGenerator.Client.Components
 
         public bool ShowDialog { get; set; }
 
-        private string ErrorMessage { get; set; }
+        public ErrorComponent Error { get; set; }
 
         protected async Task DeleteItem()
         {
@@ -40,20 +41,25 @@ namespace ListGenerator.Client.Components
         {
             var response = await this.ItemService.GetItem(id);
 
-            this.ErrorMessage = response.ErrorMessage;
+            ShowDialog = true;
+            StateHasChanged();
 
-            if(response.IsSuccess)
+            if (response.IsSuccess)
             {
                 this.Item = Mapper.Map<ItemDto, ItemViewModel>(response.Data);
             }
+            else
+            {
+                this.Error.Show(response.ErrorMessage);
+            }
 
-            ShowDialog = true;
             StateHasChanged();
         }
 
         public void Close()
         {
             ShowDialog = false;
+            this.Item = null;
             StateHasChanged();
         }
     }
