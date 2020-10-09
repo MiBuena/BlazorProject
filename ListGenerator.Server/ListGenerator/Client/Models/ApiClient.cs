@@ -13,13 +13,11 @@ namespace ListGenerator.Client.Models
     {
         private readonly HttpClient _httpClient;
         private readonly IJsonHelper _jsonHelper;
-        private readonly IMapper _mapper;
 
-        public ApiClient(HttpClient httpClient, IJsonHelper jsonHelper, IMapper mapper)
+        public ApiClient(HttpClient httpClient, IJsonHelper jsonHelper)
         {
             _httpClient = httpClient;
             _jsonHelper = jsonHelper;
-            _mapper = mapper;
         }
 
         public async Task<T> GetAsync<T>(string requestUri)
@@ -40,7 +38,9 @@ namespace ListGenerator.Client.Models
 
             var httpResponse = await _httpClient.PostAsync(requestUri, stringContent);
 
-            var response = _jsonHelper.Deserialize<BaseResponse>(await httpResponse.Content.ReadAsStringAsync());
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            var response = _jsonHelper.Deserialize<BaseResponse>(content);
                 
             return response;
         }
@@ -52,7 +52,9 @@ namespace ListGenerator.Client.Models
 
             var httpResponse = await _httpClient.PutAsync(requestUri, stringContent);
 
-            var response = _jsonHelper.Deserialize<BaseResponse>(await httpResponse.Content.ReadAsStringAsync());
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            var response = _jsonHelper.Deserialize<BaseResponse>(content);
 
             return response;
         }
@@ -61,7 +63,9 @@ namespace ListGenerator.Client.Models
         {
             var httpResponse = await _httpClient.DeleteAsync(requestUri);
 
-            var response = _jsonHelper.Deserialize<BaseResponse>(await httpResponse.Content.ReadAsStringAsync());
+            var content = await httpResponse.Content.ReadAsStringAsync();
+
+            var response = _jsonHelper.Deserialize<BaseResponse>(content);
 
             return response;
         }
