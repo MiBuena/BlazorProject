@@ -49,15 +49,9 @@ namespace ListGenerator.Client.Pages
 
         private async Task LoadData(LoadDataArgs args)
         {
-            await InitializeData(args.Top, args.Skip, args.OrderBy, this.SearchWord, this.SearchDate);
-            await InvokeAsync(StateHasChanged);
-        }
-
-        private async Task InitializeData(int? pageSize, int? skipItems, string orderBy, string searchWord, DateTime? searchDate)
-        {
-            var response = await this.ItemsService.GetItemsOverviewPageModel(pageSize, skipItems, orderBy, searchWord, searchDate);
-
-            if(!response.IsSuccess)
+            var response = await this.ItemsService.GetItemsOverviewPageModel(args.Top, args.Skip, args.OrderBy, this.SearchWord, this.SearchDate);
+           
+            if (!response.IsSuccess)
             {
                 this.Error.Show(response.ErrorMessage);
             }
@@ -67,6 +61,8 @@ namespace ListGenerator.Client.Pages
                 this.DisplayItems = response.Data.OverviewItems.Select(x => Mapper.Map<ItemOverviewDto, ItemOverviewViewModel>(x));
                 this.Count = response.Data.TotalItemsCount;
             }
+
+            await InvokeAsync(StateHasChanged);
         }
 
         private async void ClearFilters()
