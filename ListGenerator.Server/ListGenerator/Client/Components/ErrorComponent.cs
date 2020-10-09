@@ -8,8 +8,13 @@ namespace ListGenerator.Client.Components
 {
     public partial class ErrorComponent
     {
-        [Parameter]
-        public string ErrorMessage { get; set; }
+        private string ErrorMessage { get; set; }
+
+        public void Show(string errorMessage)
+        {
+            ErrorMessage = errorMessage;
+            StateHasChanged();
+        }
 
         public void Close()
         {

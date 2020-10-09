@@ -212,7 +212,7 @@ namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
             var firstItemQuantityToBuy = cut.FindAll(".replenishment-item-quantity-to-buy option").First(x=>x.HasAttribute("selected")).TextContent;
             var firstItemShoppingDate = cut.FindAll(".replenishment-item-shopping-date input").First().GetAttribute("value");
 
-            AssertAll(
+            AssertHelper.AssertAll(
                 () => firstItemName.MarkupMatches("Bread"),
                 () => firstItemNextReplenishmentDate.MarkupMatches("6.10.2020"),
                 () => firstItemQuantityToBuy.MarkupMatches("5"),

@@ -32,16 +32,16 @@ namespace ListGenerator.Client.Models
             return deserializedItems;
         }
 
-        public async Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string errorMessage = null)
+        public async Task<T> PostAsync<T>(string requestUri, string jsonContent, string errorMessage = null)
         {
             var stringContent =
               new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync(requestUri, stringContent);
+            var httpResponse = await _httpClient.PostAsync(requestUri, stringContent);
 
-            var apiReponse = ResponseBuilder.BuildApiResponse(response.IsSuccessStatusCode, errorMessage);
-
-            return apiReponse;
+            var response = _jsonHelper.Deserialize<T>(await httpResponse.Content.ReadAsStringAsync());
+                
+            return response;
         }
 
         public async Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null)

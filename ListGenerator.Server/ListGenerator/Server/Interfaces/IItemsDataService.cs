@@ -10,7 +10,7 @@ namespace ListGenerator.Server.Interfaces
 
         Response<ItemDto> GetItem(int itemId);
 
-        int AddItem(string userId, ItemDto itemDto);
+        BaseResponse AddItem(string userId, ItemDto itemDto);
 
         void UpdateItem(string userId, ItemDto itemDto);
 

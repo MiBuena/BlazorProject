@@ -14,7 +14,7 @@ using ListGenerator.Web.UnitTests.Helpers;
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
     [TestFixture]
-    public class BuildPurchaseItemViewModelsTests : AssertAllTest
+    public class BuildPurchaseItemViewModelsTests
     {
         private Mock<IDateTimeProvider> _dateTimeProviderMock;
         private Mock<IMapper> _mapperMock;
@@ -79,7 +79,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
             //Assert
-            AssertAll(
+            AssertHelper.AssertAll(
                 () => result.FirstOrDefault().ItemId.Should().Be(1),
                 () => result.FirstOrDefault().Name.Should().Be("Bread"),
                 () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 06))
@@ -184,7 +184,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 
 
             //Assert
-            AssertAll(
+            AssertHelper.AssertAll(
                 () => result.FirstOrDefault().ItemId.Should().Be(1),
                 () => result.FirstOrDefault().Name.Should().Be("Bread"),
                 () => result.FirstOrDefault().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02))

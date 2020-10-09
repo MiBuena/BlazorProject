@@ -9,7 +9,7 @@ using System;
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
     [TestFixture]
-    public class BuildItemViewModelTests : AssertAllTest
+    public class BuildItemViewModelTests
     {
         private Mock<IDateTimeProvider> _dateTimeProviderMock;
         private Mock<IMapper> _mapperMock;
@@ -64,8 +64,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var result = _itemBuilder.BuildItemViewModel();
 
             //Assert
-
-            AssertAll(
+            AssertHelper.AssertAll(
                 () => result.Id.Should().Be(0),
                 () => result.Name.Should().BeNull()
                 );

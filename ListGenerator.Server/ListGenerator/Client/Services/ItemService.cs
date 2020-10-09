@@ -69,13 +69,13 @@ namespace ListGenerator.Client.Services
             return response;
         }
 
-        public async Task<ApiResponse> AddItem(ItemViewModel item)
+        public async Task<BaseResponse> AddItem(ItemViewModel item)
         {
             var itemDto = _mapper.Map<ItemViewModel, ItemDto>(item);
 
             var itemJson = _jsonHelper.Serialize(itemDto);
 
-            var response = await _apiClient.PostAsync("api/items", itemJson, SaveItemErrorMessage);
+            var response = await _apiClient.PostAsync<BaseResponse>("api/items", itemJson, SaveItemErrorMessage);
 
             return response;
         }

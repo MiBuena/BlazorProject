@@ -13,6 +13,8 @@
                     </div>
                     <div class="modal-body">
 
+                        <ErrorComponent @ref="Error"></ErrorComponent>
+
                         <EditForm Model="@ItemToAdd" OnValidSubmit="@HandleValidSubmit">
 
                             <DataAnnotationsValidator />
@@ -46,7 +48,7 @@
 
                             <div class="form-group row">
                                 <label for="nextReplenishmentDate" class="col-sm-3">Next Replenishment Date: </label>
-                                <RadzenDatePicker @bind-Value="@ItemToAdd.NextReplenishmentDate" DateFormat="@Constants.DisplayDateFormat"/>
+                                <RadzenDatePicker @bind-Value="@ItemToAdd.NextReplenishmentDate" DateFormat="@Constants.DisplayDateFormat" />
                                 <ValidationMessage class="offset-sm-3 col-sm-8" For="@(() => ItemToAdd.NextReplenishmentDate)" />
                             </div>
 

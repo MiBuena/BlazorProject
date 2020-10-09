@@ -30,5 +30,27 @@ namespace ListGenerator.Server.Builders
 
             return response;
         }
+
+        public static BaseResponse Success(string successMessage = null)    
+        {
+            var response = new BaseResponse()
+            {
+                IsSuccess = true,
+                SuccessMessage = successMessage
+            };
+
+            return response;
+        }
+
+        public static BaseResponse Failure(string errorMessage = null)
+        {
+            var response = new BaseResponse()
+            {
+                IsSuccess = false,
+                ErrorMessage = errorMessage,
+            };
+
+            return response;
+        }
     }
 }

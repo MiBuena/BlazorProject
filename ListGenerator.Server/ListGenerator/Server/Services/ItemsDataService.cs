@@ -178,17 +178,26 @@ namespace ListGenerator.Server.Services
             }
         }
 
-        public int AddItem(string userId, ItemDto itemDto)
+        public BaseResponse AddItem(string userId, ItemDto itemDto)
         {
-            var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
+            try
+            {
+                var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
 
-            itemEntity.UserId = userId;
+                itemEntity.UserId = userId;
 
-            _itemsRepository.Add(itemEntity);
+                _itemsRepository.Add(itemEntity);
 
-            _itemsRepository.SaveChanges();
+                _itemsRepository.SaveChanges();
 
-            return itemEntity.Id;
+                var response = Builders.ResponseBuilder.Success();
+                return response;
+            }
+            catch(Exception ex)
+            {
+                var response = Builders.ResponseBuilder.Failure("An error occurred while creating item");
+                return response;
+            }
         }
 
         public void UpdateItem(string userId, ItemDto itemDto)

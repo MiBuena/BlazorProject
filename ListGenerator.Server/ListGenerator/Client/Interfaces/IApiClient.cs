@@ -7,7 +7,7 @@ namespace ListGenerator.Client.Interfaces
     {
         Task<T> GetAsync<T>(string requestUri);
 
-        Task<ApiResponse> PostAsync(string requestUri, string jsonContent, string errorMessage = null);
+        Task<T> PostAsync<T>(string requestUri, string jsonContent, string errorMessage = null);
 
         Task<ApiResponse> PutAsync(string requestUri, string jsonContent, string errorMessage = null);
 

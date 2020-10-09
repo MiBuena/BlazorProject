@@ -26,6 +26,12 @@ namespace ListGenerator.Server.Controllers
         public IActionResult GetItemsNames(string searchWord)
         {
             var response = _itemsDataService.GetItemsNames(searchWord, this.UserId);
+
+            if(!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
             return Ok(response);
         }
 
@@ -33,6 +39,12 @@ namespace ListGenerator.Server.Controllers
         public IActionResult GetOverviewItems([FromQuery] FilterPatemetersDto dto)
         {
             var response = _itemsDataService.GetItemsOverviewPageModel(this.UserId, dto);
+
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
             return Ok(response);
         }
 
@@ -40,6 +52,12 @@ namespace ListGenerator.Server.Controllers
         public IActionResult GetItemById(int id)
         {
             var response = _itemsDataService.GetItem(id);
+
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
             return Ok(response);
         }
 
@@ -63,9 +81,14 @@ namespace ListGenerator.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var createdItemId = _itemsDataService.AddItem(this.UserId, itemDto);
+            var response = _itemsDataService.AddItem(this.UserId, itemDto);
 
-            return Created("items", createdItemId);
+            if(!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Created("items", response);
         }
 
         [HttpPut]

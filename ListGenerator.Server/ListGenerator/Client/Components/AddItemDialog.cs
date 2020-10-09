@@ -22,6 +22,9 @@ namespace ListGenerator.Client.Components
 
         public bool ShowDialog { get; set; }
 
+        public ErrorComponent Error { get; set; }
+
+
         public void Show()
         {
             ItemToAdd = ItemBuilder.BuildItemViewModel();
@@ -32,16 +35,25 @@ namespace ListGenerator.Client.Components
         public void Close()
         {
             ShowDialog = false;
+            this.Error.Close();
             StateHasChanged();
         }
 
         protected async Task HandleValidSubmit()
         {
-            await ItemService.AddItem(ItemToAdd);
-            ShowDialog = false;
+            var response = await ItemService.AddItem(ItemToAdd);
 
-            await CloseEventCallback.InvokeAsync(true);
-            StateHasChanged();
+            if (response.IsSuccess)
+            {
+                ShowDialog = false;
+                await CloseEventCallback.InvokeAsync(true);
+            }
+            else
+            {
+                this.Error.Show(response.ErrorMessage);
+            }
+
+            await InvokeAsync(StateHasChanged);
         }
     }
 }
