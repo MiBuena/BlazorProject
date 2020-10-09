@@ -171,7 +171,7 @@ namespace ListGenerator.Server.Services
                 var response = Builders.ResponseBuilder.Success(dto);
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var response = Builders.ResponseBuilder.Failure<ItemDto>("An error occured while getting item");
                 return response;
@@ -193,7 +193,7 @@ namespace ListGenerator.Server.Services
                 var response = Builders.ResponseBuilder.Success();
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var response = Builders.ResponseBuilder.Failure("An error occurred while creating item");
                 return response;

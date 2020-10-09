@@ -14,7 +14,7 @@
                     </div>
                     <div class="modal-body">
 
-                        <ErrorComponent ErrorMessage="@this.ErrorMessage"></ErrorComponent>
+                        <ErrorComponent @ref="Error"></ErrorComponent>
 
                         @if (this.ItemToUpdate != null)
                         {
@@ -34,16 +34,16 @@
                                     <InputSelect id="country" class="form-control col-sm-2" @bind-Value="@ItemToUpdate.ReplenishmentPeriodString">
 
                                         @for (int i = 1; i <= 90; i++)
-                                        {
+                                                {
                                             @if (i == 1)
-                                            {
+                                                    {
                                                 <option value="@i" selected="selected">@i</option>
-                                            }
-                                            else
-                                            {
+                                                    }
+                                                    else
+                                                    {
                                                 <option value="@i">@i</option>
-                                            }
-                                        }
+                                                    }
+                                                }
 
                                     </InputSelect>
                                     <span class="periodMeasure">day(s)</span>
@@ -59,7 +59,7 @@
 
                             </EditForm>
                         }
-                    
+
                     </div>
                 </div>
             </div>
