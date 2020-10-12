@@ -317,7 +317,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnResponseWithNoEntries_When_ThereAreNoItemsInRepository()
+        public void Should_ReturnSuccessResponseWithNoEntries_When_ThereAreNoItemsInRepository()
         {
             //Arrange
             var allItems = new List<Item>().AsQueryable();
