@@ -37,7 +37,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnOneEntry_When_OneItemNameOfThisUserContainsSearchWord()
+        public void Should_ReturnSuccessResponseWithOneEntry_When_OneItemNameOfThisUserContainsSearchWord()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -73,11 +73,15 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var result = _itemsDataService.GetItemsNames("d", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
             //Assert
-            result.Data.Count().Should().Be(1);
+            AssertHelper.AssertAll(
+                () => result.Data.Count().Should().Be(1),
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull()
+                );
         }
 
         [Test]
-        public void Should_ReturnCorrectItemName_When_OneItemNameOfThisUserContainSearchWord()
+        public void Should_ReturnResponseWithCorrectItemName_When_OneItemNameOfThisUserContainSearchWord()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -117,7 +121,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnTwoEntries_When_TwoItemsNamesOfThisUserContainSearchWord()
+        public void Should_ReturnSuccessResponseWithTwoEntries_When_TwoItemsNamesOfThisUserContainSearchWord()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -166,12 +170,16 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var result = _itemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
             //Assert
-            result.Data.Count().Should().Be(2);
+            AssertHelper.AssertAll(
+                () => result.Data.Count().Should().Be(2),
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull()
+                );
         }
 
 
         [Test]
-        public void Should_ReturnCorrectItemsNames_When_TwoItemsNamesOfThisUserContainSearchWord()
+        public void Should_ReturnResponseWithCorrectItemsNames_When_TwoItemsNamesOfThisUserContainSearchWord()
         {
             var allItems = ItemsTestHelper.BuildItemsCollection();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
@@ -225,7 +233,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnOneEntry_When_OneItemNameOfThisUserContainsSearchWord_SearchShouldBeCaseInsensitive()
+        public void Should_ReturnSuccessResponseWithOneEntry_When_OneItemNameOfThisUserContainsSearchWord_SearchShouldBeCaseInsensitive()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -261,12 +269,15 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var result = _itemsDataService.GetItemsNames("R", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
             //Assert
-            result.Data.Count().Should().Be(1);
+            AssertHelper.AssertAll(
+                () => result.Data.Count().Should().Be(1),
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull()
+            );
         }
 
-
         [Test]
-        public void Should_ReturnCorrectItemName_When_OneItemNameOfThisUserContainSearchWord_SearchShouldBeCaseInsensitive()
+        public void Should_ReturnResponseWithCorrectItemName_When_OneItemNameOfThisUserContainSearchWord_SearchShouldBeCaseInsensitive()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -306,7 +317,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnNoEntries_When_ThereAreNoItemsInRepository()
+        public void Should_ReturnResponseWithNoEntries_When_ThereAreNoItemsInRepository()
         {
             //Arrange
             var allItems = new List<Item>().AsQueryable();
@@ -325,7 +336,11 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var result = _itemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
             //Assert
-            result.Data.Count().Should().Be(0);
+            AssertHelper.AssertAll(
+                () => result.Data.Count().Should().Be(0),
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull()
+                );
         }
 
         [Test]
@@ -454,7 +469,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnAllEntriesOfThisUser_When_SearchWordIsEmptyString()
+        public void Should_ReturnResponseWithAllItemsOfThisUser_When_SearchWordIsEmptyString()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -517,7 +532,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var result = _itemsDataService.GetItemsNames(string.Empty, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
             //Assert
-            result.Data.Count().Should().Be(3);
+            AssertHelper.AssertAll(
+                () => result.Data.Count().Should().Be(3),
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull());
         }
     }
 }
