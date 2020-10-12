@@ -117,87 +117,6 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
-        public void Should_ReturnOneEntry_When_OneItemNameOfThisUserContainsSearchWord_SearchShouldBeCaseInsensitive()
-        {
-            //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
-            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
-
-            var filteredItem = new Item()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
-            var filteredItems = new List<Item>() { filteredItem };
-
-
-            var filteredItemNameDto = new ItemNameDto()
-            {
-                Name = "Bread",
-            };
-
-            var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
-
-            _mapperMock
-                .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
-
-            //Act
-            var result = _itemsDataService.GetItemsNames("R", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
-
-            //Assert
-            result.Data.Count().Should().Be(1);
-        }
-
-
-        [Test]
-        public void Should_ReturnCorrectItemName_When_OneItemNameOfThisUserContainSearchWord_SearchShouldBeCaseInsensitive()
-        {
-            //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
-            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
-
-            var filteredItem = new Item()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
-            var filteredItems = new List<Item>() { filteredItem };
-
-
-            var filteredItemNameDto = new ItemNameDto()
-            {
-                Name = "Bread",
-            };
-
-            var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
-
-            _mapperMock
-                .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable>(),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
-
-            //Act
-            var result = _itemsDataService.GetItemsNames("Re", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
-
-            //Assert
-            result.Data.First().Name.Should().Be("Bread");
-        }
-
-        [Test]
         public void Should_ReturnTwoEntries_When_TwoItemsNamesOfThisUserContainSearchWord()
         {
             //Arrange
@@ -302,6 +221,110 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             //Assert
             result.Data.First().Name.Should().Be("Bread");
             result.Data.Skip(1).First().Name.Should().Be("Biscuits");
+        }
+
+        [Test]
+        public void Should_ReturnOneEntry_When_OneItemNameOfThisUserContainsSearchWord_SearchShouldBeCaseInsensitive()
+        {
+            //Arrange
+            var allItems = ItemsTestHelper.BuildItemsCollection();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItem = new Item()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var filteredItems = new List<Item>() { filteredItem };
+
+
+            var filteredItemNameDto = new ItemNameDto()
+            {
+                Name = "Bread",
+            };
+
+            var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable<Item>>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("R", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            result.Data.Count().Should().Be(1);
+        }
+
+
+        [Test]
+        public void Should_ReturnCorrectItemName_When_OneItemNameOfThisUserContainSearchWord_SearchShouldBeCaseInsensitive()
+        {
+            //Arrange
+            var allItems = ItemsTestHelper.BuildItemsCollection();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItem = new Item()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var filteredItems = new List<Item>() { filteredItem };
+
+
+            var filteredItemNameDto = new ItemNameDto()
+            {
+                Name = "Bread",
+            };
+
+            var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("Re", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            result.Data.First().Name.Should().Be("Bread");
+        }
+
+        [Test]
+        public void Should_ReturnNoEntries_When_ThereAreNoItemsInRepository()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItemNameDtos = new List<ItemNameDto>();
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable<Item>>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            result.Data.Count().Should().Be(0);
         }
     }
 }
