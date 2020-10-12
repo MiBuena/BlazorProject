@@ -219,8 +219,9 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var result = _itemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
             //Assert
-            result.Data.First().Name.Should().Be("Bread");
-            result.Data.Skip(1).First().Name.Should().Be("Biscuits");
+            AssertHelper.AssertAll(
+            () => result.Data.First().Name.Should().Be("Bread"),
+            () => result.Data.Skip(1).First().Name.Should().Be("Biscuits"));
         }
 
         [Test]
@@ -450,6 +451,73 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => result.ErrorMessage.Should().Be("An error occured while getting items names."),
                 () => result.Data.Should().BeNull()
             );
+        }
+
+        [Test]
+        public void Should_ReturnAllEntriesOfThisUser_When_SearchWordIsEmptyString()
+        {
+            //Arrange
+            var allItems = ItemsTestHelper.BuildItemsCollection();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var firstFilteredItem = new Item()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var secondFilteredItem = new Item()
+            {
+                Id = 2,
+                Name = "Cheese",
+                NextReplenishmentDate = new DateTime(2020, 10, 08),
+                ReplenishmentPeriod = 2,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var thirdFilteredItem = new Item()
+            {
+                Id = 3,
+                Name = "Biscuits",
+                NextReplenishmentDate = new DateTime(2020, 10, 07),
+                ReplenishmentPeriod = 5,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var filteredItems = new List<Item>() { firstFilteredItem, secondFilteredItem, thirdFilteredItem };
+
+            var firstFilteredItemNameDto = new ItemNameDto()
+            {
+                Name = "Bread",
+            };
+
+            var secondFilteredItemNameDto = new ItemNameDto()
+            {
+                Name = "Cheese",
+            };
+
+            var thirdFilteredItemNameDto = new ItemNameDto()
+            {
+                Name = "Biscuits",
+            };
+
+            var filteredItemNameDtos = new List<ItemNameDto>() { firstFilteredItemNameDto, secondFilteredItemNameDto, thirdFilteredItemNameDto };
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable<Item>>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames(string.Empty, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            result.Data.Count().Should().Be(3);
         }
     }
 }
