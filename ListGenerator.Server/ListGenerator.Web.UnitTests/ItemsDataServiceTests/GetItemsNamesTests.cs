@@ -368,5 +368,28 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => result.Data.Should().BeNull()
             );
         }
+
+        public void Should_ReturnErrorResponse_When_SearchWordIsNull()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            _mapperMock.Setup(c => c.ProjectTo(
+                It.IsAny<IQueryable<Item>>(),
+                It.IsAny<object>(),
+                It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                .Throws(new Exception());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames(null, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occured while getting items names."),
+                () => result.Data.Should().BeNull()
+            );
+        }
     }
 }

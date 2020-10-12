@@ -14,6 +14,7 @@ using ListGenerator.Shared.Helpers;
 using ListGenerator.Shared.Responses;
 using ListGenerator.Client.Builders;
 using ListGenerator.Server.Builders;
+using ListGenerator.Shared.Extensions;
 
 namespace ListGenerator.Server.Services
 {
@@ -32,6 +33,9 @@ namespace ListGenerator.Server.Services
         {
             try
             {
+                searchWord.ThrowIfArgumentIsNull();
+                userId.ThrowIfArgumentIsNullOrEmpty();
+
                 var query = _itemsRepository.All()
                     .Where(x => x.UserId == userId);
 
