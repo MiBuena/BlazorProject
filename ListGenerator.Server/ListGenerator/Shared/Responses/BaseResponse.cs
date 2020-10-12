@@ -9,7 +9,5 @@ namespace ListGenerator.Shared.Responses
         public bool IsSuccess { get; set; }
 
         public string ErrorMessage { get; set; }
-
-        public string SuccessMessage { get; set; }
     }
 }

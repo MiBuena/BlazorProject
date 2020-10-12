@@ -8,13 +8,12 @@ namespace ListGenerator.Server.Builders
 {
     public static class ResponseBuilder
     {
-        public static Response<T>Success<T>(T data = null, string successMessage = null) where T : class
+        public static Response<T>Success<T>(T data = null) where T : class
         {
             var response = new Response<T>()
             {
                 IsSuccess = true,
                 Data = data,
-                SuccessMessage = successMessage
             };
 
             return response;
@@ -31,12 +30,11 @@ namespace ListGenerator.Server.Builders
             return response;
         }
 
-        public static BaseResponse Success(string successMessage = null)    
+        public static BaseResponse Success()    
         {
             var response = new BaseResponse()
             {
                 IsSuccess = true,
-                SuccessMessage = successMessage
             };
 
             return response;
