@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using ListGenerator.Client.Interfaces;
 using ListGenerator.Client.Models;
 using ListGenerator.Client.Services;
+using ListGenerator.Shared.Responses;
 
 namespace ListGenerator.Client.Services
 {
@@ -19,11 +20,11 @@ namespace ListGenerator.Client.Services
             _jsonHelper = jsonHelper;
         }
 
-        public async Task<ApiResponse> ReplenishItems(ReplenishmentDto replenishmentModel)
+        public async Task<BaseResponse> ReplenishItems(ReplenishmentDto replenishmentModel)
         {
             var replenishmentJson = _jsonHelper.Serialize(replenishmentModel);
 
-            var response = await _apiClient.PostAsync("api/replenishment/replenish", replenishmentJson, null);
+            var response = await _apiClient.PostAsync("api/replenishment/replenish", replenishmentJson);
 
             return response;
         }
