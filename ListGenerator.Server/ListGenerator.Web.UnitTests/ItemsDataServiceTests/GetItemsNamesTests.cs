@@ -373,31 +373,14 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnErrorResponse_When_SearchWordIsNull()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = new Item()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
-            var filteredItems = new List<Item>() { filteredItem };
-
-
-            var filteredItemNameDto = new ItemNameDto()
-            {
-                Name = "Bread",
-            };
-
-            var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
+            var filteredItemNameDtos = new List<ItemNameDto>();
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable>(),
+                    It.IsAny<IQueryable<Item>>(),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -405,6 +388,61 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             //Act
             var result = _itemsDataService.GetItemsNames(null, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occured while getting items names."),
+                () => result.Data.Should().BeNull()
+            );
+        }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_UserIdIsNull()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItemNameDtos = new List<ItemNameDto>();
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable<Item>>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("B", null);
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occured while getting items names."),
+                () => result.Data.Should().BeNull()
+            );
+        }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_UserIdIsEmpty()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItemNameDtos = new List<ItemNameDto>();
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable<Item>>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("B", string.Empty);
 
             //Assert
             AssertHelper.AssertAll(
