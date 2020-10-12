@@ -1,7 +1,9 @@
 ﻿using ListGenerator.Client.ViewModels;
+using ListGenerator.Data.Entities;
 using ListGenerator.Shared.Dtos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ListGenerator.Web.UnitTests.Helpers
@@ -16,6 +18,64 @@ namespace ListGenerator.Web.UnitTests.Helpers
             purchaseItemVMCollection.Add(purchaseItemViewModel);
 
             return purchaseItemVMCollection;
+        }
+
+        public static IQueryable<Item> BuildItemsCollection()
+        {
+            var collection = new List<Item>();
+
+            var firstItem = new Item()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var secondItem = new Item()
+            {
+                Id = 2,
+                Name = "Cheese",
+                NextReplenishmentDate = new DateTime(2020, 10, 08),
+                ReplenishmentPeriod = 2,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var thirdItem = new Item()
+            {
+                Id = 3,
+                Name = "Biscuits",
+                NextReplenishmentDate = new DateTime(2020, 10, 07),
+                ReplenishmentPeriod = 5,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var fourthItem = new Item()
+            {
+                Id = 4,
+                Name = "Oats",
+                NextReplenishmentDate = new DateTime(2020, 10, 1),
+                ReplenishmentPeriod = 7,
+                UserId = "925912b0-c59c-4e1b-971a-06e8abab7848"
+            };
+
+            var fifthItem = new Item()
+            {
+                Id = 5,
+                Name = "Cake",
+                NextReplenishmentDate = new DateTime(2020, 10, 2),
+                ReplenishmentPeriod = 5,
+                UserId = "925912b0-c59c-4e1b-971a-06e8abab7848"
+            };
+
+            collection.Add(firstItem);
+            collection.Add(secondItem);
+            collection.Add(thirdItem);
+            collection.Add(fourthItem);
+            collection.Add(fifthItem);
+
+            return collection.AsQueryable();
         }
 
         public static IEnumerable<ItemDto> BuildItemsDtosCollection()
