@@ -369,17 +369,39 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             );
         }
 
+        [Test]
         public void Should_ReturnErrorResponse_When_SearchWordIsNull()
         {
             //Arrange
-            var allItems = new List<Item>().AsQueryable();
+            var allItems = ItemsTestHelper.BuildItemsCollection();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            _mapperMock.Setup(c => c.ProjectTo(
-                It.IsAny<IQueryable<Item>>(),
-                It.IsAny<object>(),
-                It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-                .Throws(new Exception());
+            var filteredItem = new Item()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var filteredItems = new List<Item>() { filteredItem };
+
+
+            var filteredItemNameDto = new ItemNameDto()
+            {
+                Name = "Bread",
+            };
+
+            var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
 
             //Act
             var result = _itemsDataService.GetItemsNames(null, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
