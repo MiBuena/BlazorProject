@@ -326,5 +326,23 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             //Assert
             result.Data.Count().Should().Be(0);
         }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_AnExceptionOccursInRepositoryAllMethod()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            _itemsRepositoryMock.Setup(x => x.All()).Throws(new Exception());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occured while getting items names."),
+                () => result.Data.Should().BeNull()
+            );
+        }
     }
 }
