@@ -44,12 +44,12 @@ namespace ListGenerator.Server.Services
 
                 names = _mapper.ProjectTo<ItemNameDto>(query).ToList();
 
-                var response = Builders.ResponseBuilder.Success<IEnumerable<ItemNameDto>>(names);
+                var response = ResponseBuilder.Success<IEnumerable<ItemNameDto>>(names);
                 return response;
             }
             catch (Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure<IEnumerable<ItemNameDto>>("An error occured while getting items names.");
+                var response = ResponseBuilder.Failure<IEnumerable<ItemNameDto>>("An error occured while getting items names.");
                 return response;
             }
         }
@@ -73,12 +73,12 @@ namespace ListGenerator.Server.Services
                     TotalItemsCount = itemsCount
                 };
 
-                var response = Builders.ResponseBuilder.Success(pageDto);
+                var response = ResponseBuilder.Success(pageDto);
                 return response;
             }
             catch (Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure<ItemsOverviewPageDto>("An error occured while getting items names.");
+                var response = ResponseBuilder.Failure<ItemsOverviewPageDto>("An error occured while getting items names.");
                 return response;
             }
         }
@@ -168,12 +168,12 @@ namespace ListGenerator.Server.Services
 
                 var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
 
-                var response = Builders.ResponseBuilder.Success(dto);
+                var response = ResponseBuilder.Success(dto);
                 return response;
             }
             catch (Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure<ItemDto>("An error occured while getting item");
+                var response = ResponseBuilder.Failure<ItemDto>("An error occured while getting item");
                 return response;
             }
         }
@@ -190,12 +190,12 @@ namespace ListGenerator.Server.Services
 
                 _itemsRepository.SaveChanges();
 
-                var response = Builders.ResponseBuilder.Success();
+                var response = ResponseBuilder.Success();
                 return response;
             }
             catch (Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure("An error occurred while creating item");
+                var response = ResponseBuilder.Failure("An error occurred while creating item");
                 return response;
             }
         }
@@ -217,12 +217,12 @@ namespace ListGenerator.Server.Services
                     _itemsRepository.SaveChanges();
                 }
 
-                var response = Builders.ResponseBuilder.Success();
+                var response = ResponseBuilder.Success();
                 return response;
             }
             catch(Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure("An error occurred while updating item");
+                var response = ResponseBuilder.Failure("An error occurred while updating item");
                 return response;
             }
         }
@@ -239,12 +239,12 @@ namespace ListGenerator.Server.Services
                     _itemsRepository.SaveChanges();
                 }
 
-                var response = Builders.ResponseBuilder.Success();
+                var response = ResponseBuilder.Success();
                 return response;
             }
             catch(Exception ex)
             {
-                var response = Builders.ResponseBuilder.Failure("An error occurred while deleting item");
+                var response = ResponseBuilder.Failure("An error occurred while deleting item");
                 return response;
             }
         }
