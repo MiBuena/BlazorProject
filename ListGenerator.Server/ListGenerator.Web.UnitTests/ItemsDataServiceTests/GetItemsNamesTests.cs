@@ -13,6 +13,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -64,8 +65,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             filteredItemNameDtos.Add(filteredItemNameDto);
 
             _mapperMock
-                .Setup(c => c.ProjectTo<ItemNameDto>(
-                    It.IsAny<IQueryable>(),
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable<Item>>(),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -107,7 +108,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             filteredItemNameDtos.Add(filteredItemNameDto);
 
             _mapperMock
-                .Setup(c => c.ProjectTo<ItemNameDto>(
+                .Setup(c => c.ProjectTo(
                     It.IsAny<IQueryable>(),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
