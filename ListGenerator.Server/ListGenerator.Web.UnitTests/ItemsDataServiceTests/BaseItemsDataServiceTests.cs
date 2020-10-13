@@ -123,6 +123,19 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return firstItem;
         }
 
+        protected Item BuildFirstItemWithoutId()
+        {
+            var firstItem = new Item()
+            {
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            return firstItem;
+        }
+
         protected ItemNameDto BuildFirstItemNameDto()
         {
             var firstItemNameDto = new ItemNameDto()
@@ -151,6 +164,31 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             };
 
             return secondItemNameDto;
+        }
+
+        protected ItemDto BuildFirstItemDto()
+        {
+            var firstItemDto = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1
+            };
+
+            return firstItemDto;
+        }
+
+        protected ItemDto BuildFirstItemDtoWithoutId()
+        {
+            var firstItemDto = new ItemDto()
+            {
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1
+            };
+
+            return firstItemDto;
         }
 
         protected ItemDto BuildSecondItemDto()
