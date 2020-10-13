@@ -3,7 +3,7 @@ using System;
 
 namespace ListGenerator.Shared.Extensions
 {
-    public static class ArgumentsCheckingExtensions
+    public static class NullCheckingExtensions
     {
         public static void ThrowIfNull(this string value)
         {
