@@ -126,5 +126,38 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 );
         }
 
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_ItemWithThisIdDoesNotExist()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItem = BuildSecondItem();
+            var filteredItems = new List<Item>() { filteredItem };
+
+            var filteredItemDto = BuildSecondItemDto();
+            var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
+
+            MapperMock
+                .Setup(c => c.ProjectTo(
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemDto, object>>[]>()))
+             .Returns(filteredItemDtos.AsQueryable());
+
+
+            //Act
+            var result = ItemsDataService.GetItem(20, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.Data.Should().BeNull(),
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("Current user does not have item with id 20")
+                );
+        }
     }
 }
