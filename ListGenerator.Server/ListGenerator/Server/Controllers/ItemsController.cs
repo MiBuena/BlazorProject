@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Linq;
+using ListGenerator.Data.DB.Migrations;
 
 namespace ListGenerator.Server.Controllers
 {
@@ -51,7 +52,7 @@ namespace ListGenerator.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult GetItemById(int id)
         {
-            var response = _itemsDataService.GetItem(id);
+            var response = _itemsDataService.GetItem(id, UserId);
 
             if (!response.IsSuccess)
             {
@@ -104,7 +105,7 @@ namespace ListGenerator.Server.Controllers
                 return BadRequest(ModelState);
             }
 
-            var getItemResponse = _itemsDataService.GetItem(itemDto.Id);
+            var getItemResponse = _itemsDataService.GetItem(itemDto.Id, UserId);
             if (!getItemResponse.IsSuccess || getItemResponse.Data == null)
             {
                 return BadRequest(getItemResponse);
@@ -122,7 +123,7 @@ namespace ListGenerator.Server.Controllers
         [HttpDelete("{id}")]
         public IActionResult DeleteItem(int id)
         {
-            var getItemResponse = _itemsDataService.GetItem(id);
+            var getItemResponse = _itemsDataService.GetItem(id, UserId);
             if (!getItemResponse.IsSuccess || getItemResponse.Data == null)
             {
                 return BadRequest(getItemResponse);

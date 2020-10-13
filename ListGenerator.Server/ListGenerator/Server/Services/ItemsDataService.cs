@@ -164,11 +164,11 @@ namespace ListGenerator.Server.Services
             return query;
         }
 
-        public Response<ItemDto> GetItem(int itemId)
+        public Response<ItemDto> GetItem(int itemId, string userId)
         {
             try
             {
-                var query = _itemsRepository.All().Where(x => x.Id == itemId);
+                var query = _itemsRepository.All().Where(x => x.Id == itemId && x.UserId == userId);
 
                 var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
 
