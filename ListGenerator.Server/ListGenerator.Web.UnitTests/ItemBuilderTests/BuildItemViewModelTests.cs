@@ -2,6 +2,7 @@
 using FluentAssertions;
 using ListGenerator.Client.Builders;
 using ListGenerator.Shared.Interfaces;
+using ListGenerator.Web.UnitTests.Helpers;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -9,33 +10,25 @@ using System;
 namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
     [TestFixture]
-    public class BuildItemViewModelTests
+    public class BuildItemViewModelTests : BaseItemBuilderTests
     {
-        private Mock<IDateTimeProvider> _dateTimeProviderMock;
-        private Mock<IMapper> _mapperMock;
-        private IItemBuilder _itemBuilder;
-
-
         [SetUp]
-        public void Init()
+        public override void Init()
         {
-            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
-            _mapperMock = new Mock<IMapper>();
-            _itemBuilder = new ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
+            base.Init();
         }
 
         [Test]
         public void Should_HaveNextReplenishmentDate_SetOnlyAsDate()
         {
             //Arrange
-            var mockDate = new DateTime(2020, 09, 01);
-            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+            ItemsTestHelper.InitializeDateTimeProviderMock(_dateTimeProviderMock);
 
             //Act
             var result = _itemBuilder.BuildItemViewModel();
 
             //Assert
-            result.NextReplenishmentDate.Should().BeSameDateAs(mockDate);
+            result.NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 01));
         }
 
 
@@ -43,8 +36,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
         public void Should_HaveReplenishmentPeriod_SetToIntDefaultValueAsString()
         {
             //Arrange
-            var mockDate = new DateTime(2020, 09, 01);
-            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+            ItemsTestHelper.InitializeDateTimeProviderMock(_dateTimeProviderMock);
 
             //Act
             var result = _itemBuilder.BuildItemViewModel();
@@ -57,8 +49,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
         public void Should_HaveAllOtherPropertiesExceptForNextReplenishmentDateAndReplenishmentPeriod_SetToTheirDefaultValues()
         {
             //Arrange
-            var mockDate = new DateTime(2020, 09, 01);
-            _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+            ItemsTestHelper.InitializeDateTimeProviderMock(_dateTimeProviderMock);
 
             //Act
             var result = _itemBuilder.BuildItemViewModel();

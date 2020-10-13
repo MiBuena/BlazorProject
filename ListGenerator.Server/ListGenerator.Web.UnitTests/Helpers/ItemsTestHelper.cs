@@ -1,6 +1,8 @@
 ﻿using ListGenerator.Client.ViewModels;
 using ListGenerator.Data.Entities;
 using ListGenerator.Shared.Dtos;
+using ListGenerator.Shared.Interfaces;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,12 @@ namespace ListGenerator.Web.UnitTests.Helpers
 {
     public static class ItemsTestHelper
     {
+        public static void InitializeDateTimeProviderMock(Mock<IDateTimeProvider> dateTimeProviderMock)
+        {
+            var mockDate = new DateTime(2020, 10, 01);
+            dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+        }
+
         public static List<PurchaseItemViewModel> BuildNonUrgentPurchaseItemVMCollection()
         {
             var purchaseItemViewModel = BuildNonUrgentPurchaseItemViewModel();
