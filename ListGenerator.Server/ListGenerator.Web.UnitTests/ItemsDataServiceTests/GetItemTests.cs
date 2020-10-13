@@ -82,7 +82,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
 
         [Test]
-        public void Should_ReturnResponseWithCorrectItemProperties_When_CurrentUserHasItemWithThisId()
+        public void Should_ReturnResponseWithCorrectItem_When_CurrentUserHasItemWithThisId()
         {
             //Arrange
             var allItems = ItemsTestHelper.BuildItemsCollection();
@@ -130,5 +130,55 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => result.Data.ReplenishmentPeriod.Should().Be(2)
                 );
         }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_CurrentUserDoesNotHaveItemWithThisId()
+        {
+            //Arrange
+            var allItems = ItemsTestHelper.BuildItemsCollection();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItem = new Item()
+            {
+                Id = 2,
+                Name = "Cheese",
+                NextReplenishmentDate = new DateTime(2020, 10, 08),
+                ReplenishmentPeriod = 2,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var filteredItems = new List<Item>() { filteredItem };
+
+
+            var filteredItemDto = new ItemDto()
+            {
+                Id = 2,
+                Name = "Cheese",
+                NextReplenishmentDate = new DateTime(2020, 10, 08),
+                ReplenishmentPeriod = 2,
+            };
+
+            var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemDto, object>>[]>()))
+             .Returns(filteredItemDtos.AsQueryable());
+
+
+            //Act
+            var result = _itemsDataService.GetItem(2, "925912b0-c59c-4e1b-971a-06e8abab7848");
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.Data.Should().BeNull(),
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("Current user does not have item with id 2")
+                );
+        }
+
     }
 }

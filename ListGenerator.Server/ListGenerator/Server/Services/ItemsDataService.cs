@@ -15,6 +15,7 @@ using ListGenerator.Shared.Responses;
 using ListGenerator.Client.Builders;
 using ListGenerator.Server.Builders;
 using ListGenerator.Shared.Extensions;
+using ListGenerator.Shared.CustomExceptions;
 
 namespace ListGenerator.Server.Services
 {
@@ -33,8 +34,8 @@ namespace ListGenerator.Server.Services
         {
             try
             {
-                searchWord.ThrowIfArgumentIsNull();
-                userId.ThrowIfArgumentIsNullOrEmpty();
+                searchWord.ThrowIfNull();
+                userId.ThrowIfNullOrEmpty();
 
                 var query = _itemsRepository.All()
                     .Where(x => x.UserId == userId);
@@ -172,7 +173,14 @@ namespace ListGenerator.Server.Services
 
                 var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
 
+                dto.ThrowIfNull($"Current user does not have item with id {itemId}");
+
                 var response = ResponseBuilder.Success(dto);
+                return response;
+            }
+            catch(ShowErrorMessageException ex)
+            {
+                var response = ResponseBuilder.Failure<ItemDto>(ex.Message);
                 return response;
             }
             catch (Exception ex)
