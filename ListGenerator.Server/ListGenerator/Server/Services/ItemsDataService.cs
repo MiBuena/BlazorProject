@@ -195,11 +195,9 @@ namespace ListGenerator.Server.Services
             try
             {
                 var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
-
                 itemEntity.UserId = userId;
 
                 _itemsRepository.Add(itemEntity);
-
                 _itemsRepository.SaveChanges();
 
                 var response = ResponseBuilder.Success();

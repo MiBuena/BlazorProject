@@ -14,8 +14,8 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
         [SetUp]
         public virtual void Init()
         {
-            DateTimeProviderMock = new Mock<IDateTimeProvider>();
-            MapperMock = new Mock<IMapper>();
+            DateTimeProviderMock = new Mock<IDateTimeProvider>(MockBehavior.Strict);
+            MapperMock = new Mock<IMapper>(MockBehavior.Strict);
             ItemBuilder = new ItemBuilder(DateTimeProviderMock.Object, MapperMock.Object);
         }
 

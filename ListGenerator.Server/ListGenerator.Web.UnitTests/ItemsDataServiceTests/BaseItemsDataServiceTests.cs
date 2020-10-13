@@ -21,8 +21,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         [SetUp]
         protected virtual void Init()
         {
-            ItemsRepositoryMock = new Mock<IRepository<Item>>();
-            MapperMock = new Mock<IMapper>();
+            ItemsRepositoryMock = new Mock<IRepository<Item>>(MockBehavior.Strict);
+            MapperMock = new Mock<IMapper>(MockBehavior.Strict);
             ItemsDataService = new ItemsDataService(ItemsRepositoryMock.Object, MapperMock.Object);
         }
 

@@ -100,11 +100,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = BuildSecondItem();
-            var filteredItems = new List<Item>() { filteredItem };
-
-            var filteredItemDto = BuildSecondItemDto();
-            var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
+            var filteredItems = new List<Item>();
+            var filteredItemDtos = new List<ItemDto>();
 
             MapperMock
                 .Setup(c => c.ProjectTo(
@@ -133,11 +130,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = BuildSecondItem();
-            var filteredItems = new List<Item>() { filteredItem };
-
-            var filteredItemDto = BuildSecondItemDto();
-            var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
+            var filteredItems = new List<Item>();
+            var filteredItemDtos = new List<ItemDto>();
 
             MapperMock
                 .Setup(c => c.ProjectTo(
