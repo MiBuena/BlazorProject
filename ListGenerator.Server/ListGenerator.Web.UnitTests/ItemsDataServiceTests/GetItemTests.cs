@@ -32,26 +32,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = new Item()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
+            var filteredItem = BuildSecondItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-
-            var filteredItemDto = new ItemDto()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-            };
-
+            var filteredItemDto = BuildSecondItemDto();
             var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
 
             MapperMock
@@ -82,26 +66,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = new Item()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
+            var filteredItem = BuildSecondItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-
-            var filteredItemDto = new ItemDto()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-            };
-
+            var filteredItemDto = BuildSecondItemDto();
             var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
 
             MapperMock
@@ -132,26 +100,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = new Item()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
+            var filteredItem = BuildSecondItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-
-            var filteredItemDto = new ItemDto()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-            };
-
+            var filteredItemDto = BuildSecondItemDto();
             var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
 
             MapperMock

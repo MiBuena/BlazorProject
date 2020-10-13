@@ -152,5 +152,18 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             return secondItemNameDto;
         }
+
+        protected ItemDto BuildSecondItemDto()
+        {
+            var secondItemDto = new ItemDto()
+            {
+                Id = 2,
+                Name = "Cheese",
+                NextReplenishmentDate = new DateTime(2020, 10, 08),
+                ReplenishmentPeriod = 2
+            };
+
+            return secondItemDto;
+        }
     }
 }
