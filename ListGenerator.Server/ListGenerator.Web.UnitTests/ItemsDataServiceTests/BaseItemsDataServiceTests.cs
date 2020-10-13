@@ -46,7 +46,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
              .Returns(filteredItemNameDtos.AsQueryable());
         }
 
-        public IQueryable<Item> BuildItemsCollection()
+        protected IQueryable<Item> BuildItemsCollection()
         {
             var collection = new List<Item>();
 
@@ -81,7 +81,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return collection.AsQueryable();
         }
 
-        public Item BuildThirdItem()
+        protected Item BuildThirdItem()
         {
             var thirdItem = new Item()
             {
@@ -95,7 +95,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return thirdItem;
         }
 
-        public Item BuildSecondItem()
+        protected Item BuildSecondItem()
         {
             var secondItem = new Item()
             {
@@ -109,7 +109,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return secondItem;
         }
 
-        public Item BuildFirstItem()
+        protected Item BuildFirstItem()
         {
             var firstItem = new Item()
             {
@@ -123,7 +123,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return firstItem;
         }
 
-        public ItemNameDto BuildFirstItemNameDto()
+        protected ItemNameDto BuildFirstItemNameDto()
         {
             var firstItemNameDto = new ItemNameDto()
             {
@@ -133,7 +133,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return firstItemNameDto;
         }
 
-        public ItemNameDto BuildSecondItemNameDto()
+        protected ItemNameDto BuildSecondItemNameDto()
         {
             var secondItemNameDto = new ItemNameDto()
             {
@@ -143,7 +143,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return secondItemNameDto;
         }
 
-        public ItemNameDto BuildThirdItemNameDto()
+        protected ItemNameDto BuildThirdItemNameDto()
         {
             var secondItemNameDto = new ItemNameDto()
             {
