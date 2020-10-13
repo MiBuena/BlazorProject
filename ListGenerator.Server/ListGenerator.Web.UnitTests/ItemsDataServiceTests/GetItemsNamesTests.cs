@@ -313,18 +313,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnSuccessResponseWithNoEntries_When_ThereAreNoItemsInRepository()
         {
             //Arrange
-            var allItems = new List<Item>().AsQueryable();
-            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
-
-            var filteredItems = new List<Item>();
-            var filteredItemNameDtos = new List<ItemNameDto>();
-
-            MapperMock
-                .Setup(c => c.ProjectTo(
-                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
+            InitializeMocksWithEmptyCollection();
 
             //Act
             var result = ItemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
@@ -395,18 +384,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnErrorResponse_When_SearchWordIsNull()
         {
             //Arrange
-            var allItems = new List<Item>().AsQueryable();
-            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
-
-            var filteredItems = new List<Item>();
-            var filteredItemNameDtos = new List<ItemNameDto>();
-
-            MapperMock
-                .Setup(c => c.ProjectTo(
-                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
+            InitializeMocksWithEmptyCollection();
 
 
             //Act
@@ -424,19 +402,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnErrorResponse_When_UserIdIsNull()
         {
             //Arrange
-            var allItems = new List<Item>().AsQueryable();
-            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
-
-            var filteredItems = new List<Item>();
-            var filteredItemNameDtos = new List<ItemNameDto>();
-
-            MapperMock
-                .Setup(c => c.ProjectTo(
-                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
-
+            InitializeMocksWithEmptyCollection();
 
             //Act
             var result = ItemsDataService.GetItemsNames("B", null);
@@ -453,18 +419,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnErrorResponse_When_UserIdIsEmpty()
         {
             //Arrange
-            var allItems = new List<Item>().AsQueryable();
-            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
-
-            var filteredItems = new List<Item>();
-            var filteredItemNameDtos = new List<ItemNameDto>();
-
-            MapperMock
-                .Setup(c => c.ProjectTo(
-                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
+            InitializeMocksWithEmptyCollection();
 
             //Act
             var result = ItemsDataService.GetItemsNames("B", string.Empty);
@@ -482,18 +437,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnSuccessResponseWithNoEntries_When_UserIdDoesNotExist()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
-            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+            InitializeMocksWithEmptyCollection();
 
-            var filteredItems = new List<Item>();
-            var filteredItemNameDtos = new List<ItemNameDto>();
-
-            MapperMock
-                .Setup(c => c.ProjectTo(
-                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
             var result = ItemsDataService.GetItemsNames("Re", "1111");
