@@ -11,17 +11,16 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
 {
     public class BaseItemBuilderTests
     {
-        protected Mock<IDateTimeProvider> _dateTimeProviderMock;
-        protected Mock<IMapper> _mapperMock;
-        protected IItemBuilder _itemBuilder;
-
-
         [SetUp]
         public virtual void Init()
         {
-            _dateTimeProviderMock = new Mock<IDateTimeProvider>();
-            _mapperMock = new Mock<IMapper>();
-            _itemBuilder = new ItemBuilder(_dateTimeProviderMock.Object, _mapperMock.Object);
+            DateTimeProviderMock = new Mock<IDateTimeProvider>();
+            MapperMock = new Mock<IMapper>();
+            ItemBuilder = new ItemBuilder(DateTimeProviderMock.Object, MapperMock.Object);
         }
+
+        protected Mock<IDateTimeProvider> DateTimeProviderMock { get; private set; }
+        protected Mock<IMapper> MapperMock { get; private set; }
+        protected IItemBuilder ItemBuilder { get; private set; }
     }
 }
