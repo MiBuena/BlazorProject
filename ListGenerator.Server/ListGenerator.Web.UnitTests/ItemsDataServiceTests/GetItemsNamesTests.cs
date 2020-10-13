@@ -352,6 +352,16 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Throws(new Exception());
 
+            var filteredItems = new List<Item>();
+            var filteredItemNameDtos = new List<ItemNameDto>();
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
             //Act
             var result = _itemsDataService.GetItemsNames("B", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
@@ -370,8 +380,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
+            var filteredItems = new List<Item>();
+
             _mapperMock.Setup(c => c.ProjectTo(
-                It.IsAny<IQueryable<Item>>(),
+                It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                 It.IsAny<object>(),
                 It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
                 .Throws(new Exception());
@@ -394,11 +406,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
+            var filteredItems = new List<Item>();
             var filteredItemNameDtos = new List<ItemNameDto>();
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -422,11 +435,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
+            var filteredItems = new List<Item>();
             var filteredItemNameDtos = new List<ItemNameDto>();
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -450,11 +464,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
+            var filteredItems = new List<Item>();
             var filteredItemNameDtos = new List<ItemNameDto>();
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
