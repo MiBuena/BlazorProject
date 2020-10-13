@@ -224,5 +224,35 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => result.ErrorMessage.Should().Be("An error occured while getting item")
                 );
         }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_NoItemsExist()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItems = new List<Item>();
+            var filteredItemDtos = new List<ItemDto>();
+
+            MapperMock
+                .Setup(c => c.ProjectTo(
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemDto, object>>[]>()))
+             .Returns(filteredItemDtos.AsQueryable());
+
+
+            //Act
+            var result = ItemsDataService.GetItem(2, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.Data.Should().BeNull(),
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("Current user does not have item with id 2")
+                );
+        }
     }
 }
