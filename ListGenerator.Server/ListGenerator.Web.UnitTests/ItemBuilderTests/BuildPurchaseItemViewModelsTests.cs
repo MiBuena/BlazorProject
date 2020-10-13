@@ -271,17 +271,17 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var mockDate = new DateTime(2020, 10, 01);
             _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
 
-            var itemDto = BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate();
-            var itemViewModel = BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate();
+            var itemDtoWithNextReplenishmentDateOnFirstReplenishmentDate = ItemsTestHelper.BuildItemDto(new DateTime(2020, 10, 04));
+            var purchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate = ItemsTestHelper.BuildPurchaseItemViewModel(new DateTime(2020, 10, 04));
 
-            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto))
-                .Returns(itemViewModel);
+            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDtoWithNextReplenishmentDateOnFirstReplenishmentDate))
+                .Returns(purchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate);
 
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
             var itemDtoCollection = new List<ItemDto>();
-            itemDtoCollection.Add(itemDto);
+            itemDtoCollection.Add(itemDtoWithNextReplenishmentDateOnFirstReplenishmentDate);
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoCollection);
@@ -298,88 +298,24 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var mockDate = new DateTime(2020, 10, 01);
             _dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
 
-            var itemDto = BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate();
-            var itemViewModel = BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate();
+            var nonUrgentItemDto = ItemsTestHelper.BuildItemDto(new DateTime(2020, 10, 06));
+            var nonUrgentPurchaseItemViewModel = ItemsTestHelper.BuildPurchaseItemViewModel(new DateTime(2020, 10, 06));
 
-            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto))
-                .Returns(itemViewModel);
+            _mapperMock.Setup(c => c.Map<ItemDto, PurchaseItemViewModel>(nonUrgentItemDto))
+                .Returns(nonUrgentPurchaseItemViewModel);
 
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
             var itemDtoCollection = new List<ItemDto>();
-            itemDtoCollection.Add(itemDto);
+            itemDtoCollection.Add(nonUrgentItemDto);
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoCollection);
 
 
             //Assert
-            _mapperMock.Verify(c => c.Map<ItemDto, PurchaseItemViewModel>(itemDto), Times.Once());
-        }
-
-        private ItemDto BuildNotUrgentItemDto()
-        {
-            var item = new ItemDto()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1
-            };
-
-            return item;
-        }
-
-        private PurchaseItemViewModel BuildPurchaseItemViewModelWithNextReplenishmentDateOnFirstReplenishmentDate()
-        {
-            var purchaseItem = new PurchaseItemViewModel()
-            {
-                ItemId = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 04),
-            };
-
-            return purchaseItem;
-        }
-
-
-        private ItemDto BuildUrgentItemDto()
-        {
-            var item = new ItemDto()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 02),
-                ReplenishmentPeriod = 1
-            };
-
-            return item;
-        }
-
-        private PurchaseItemViewModel BuildUrgentPurchaseItemViewModel()
-        {
-            var purchaseItem = new PurchaseItemViewModel()
-            {
-                ItemId = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 02),
-            };
-
-            return purchaseItem;
-        }
-
-        private ItemDto BuildItemDtoWithNextReplenishmentDateOnFirstReplenishmentDate()
-        {
-            var item = new ItemDto()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 04),
-                ReplenishmentPeriod = 1
-            };
-
-            return item;
+            _mapperMock.Verify(c => c.Map<ItemDto, PurchaseItemViewModel>(nonUrgentItemDto), Times.Once());
         }
     }
 }
