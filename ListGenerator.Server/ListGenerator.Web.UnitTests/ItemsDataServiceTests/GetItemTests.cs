@@ -17,26 +17,20 @@ using System.Text;
 namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 {
     [TestFixture]
-    public class GetItemTests
+    public class GetItemTests : BaseItemsDataServiceTests
     {
-        private Mock<IRepository<Item>> _itemsRepositoryMock;
-        private Mock<IMapper> _mapperMock;
-        private IItemsDataService _itemsDataService;
-
         [SetUp]
-        public void Init()
+        protected override void Init()
         {
-            _itemsRepositoryMock = new Mock<IRepository<Item>>();
-            _mapperMock = new Mock<IMapper>();
-            _itemsDataService = new ItemsDataService(_itemsRepositoryMock.Object, _mapperMock.Object);
+            base.Init();
         }
 
         [Test]
         public void Should_ReturnSuccessResponseWithItem_When_CurrentUserHasItemWithThisId()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
-            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
             var filteredItem = new Item()
             {
@@ -60,7 +54,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
 
-            _mapperMock
+            MapperMock
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
@@ -69,7 +63,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
 
             //Act
-            var result = _itemsDataService.GetItem(2, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+            var result = ItemsDataService.GetItem(2, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
 
             //Assert
@@ -85,8 +79,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnResponseWithCorrectItem_When_CurrentUserHasItemWithThisId()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
-            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
             var filteredItem = new Item()
             {
@@ -110,7 +104,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
 
-            _mapperMock
+            MapperMock
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
@@ -119,7 +113,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
 
             //Act
-            var result = _itemsDataService.GetItem(2, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+            var result = ItemsDataService.GetItem(2, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
 
 
             //Assert
@@ -135,8 +129,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnErrorResponse_When_CurrentUserDoesNotHaveItemWithThisId()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
-            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
             var filteredItem = new Item()
             {
@@ -160,7 +154,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             var filteredItemDtos = new List<ItemDto>() { filteredItemDto };
 
-            _mapperMock
+            MapperMock
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
@@ -169,7 +163,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
 
             //Act
-            var result = _itemsDataService.GetItem(2, "925912b0-c59c-4e1b-971a-06e8abab7848");
+            var result = ItemsDataService.GetItem(2, "925912b0-c59c-4e1b-971a-06e8abab7848");
 
 
             //Assert

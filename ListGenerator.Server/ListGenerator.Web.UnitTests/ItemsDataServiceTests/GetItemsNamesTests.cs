@@ -33,13 +33,13 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnSuccessResponseWithOneEntry_When_OneItemNameOfThisUserContainsSearchWord()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = ItemsTestHelper.BuildFirstItem();
+            var filteredItem = BuildFirstItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-            var filteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
+            var filteredItemNameDto = BuildFirstItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
 
             MapperMock
@@ -64,13 +64,13 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnResponseWithCorrectItemName_When_OneItemNameOfThisUserContainSearchWord()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = ItemsTestHelper.BuildFirstItem();
+            var filteredItem = BuildFirstItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-            var filteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
+            var filteredItemNameDto = BuildFirstItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
 
             MapperMock
@@ -91,15 +91,15 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnSuccessResponseWithTwoEntries_When_TwoItemsNamesOfThisUserContainSearchWord()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var firstFilteredItem = ItemsTestHelper.BuildFirstItem();
-            var secondFilteredItem = ItemsTestHelper.BuildThirdItem();
+            var firstFilteredItem = BuildFirstItem();
+            var secondFilteredItem = BuildThirdItem();
             var filteredItems = new List<Item>() { firstFilteredItem, secondFilteredItem };
 
-            var firstFilteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
-            var secondFilteredItemNameDto = ItemsTestHelper.BuildThirdItemNameDto();
+            var firstFilteredItemNameDto = BuildFirstItemNameDto();
+            var secondFilteredItemNameDto = BuildThirdItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { firstFilteredItemNameDto, secondFilteredItemNameDto };
 
             MapperMock
@@ -124,15 +124,15 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         [Test]
         public void Should_ReturnResponseWithCorrectItemsNames_When_TwoItemsNamesOfThisUserContainSearchWord()
         {
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var firstFilteredItem = ItemsTestHelper.BuildFirstItem();
-            var secondFilteredItem = ItemsTestHelper.BuildThirdItem();
+            var firstFilteredItem = BuildFirstItem();
+            var secondFilteredItem = BuildThirdItem();
             var filteredItems = new List<Item>() { firstFilteredItem, secondFilteredItem };
 
-            var firstFilteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
-            var secondFilteredItemNameDto = ItemsTestHelper.BuildThirdItemNameDto();
+            var firstFilteredItemNameDto = BuildFirstItemNameDto();
+            var secondFilteredItemNameDto = BuildThirdItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { firstFilteredItemNameDto, secondFilteredItemNameDto };
 
             MapperMock
@@ -155,13 +155,13 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnSuccessResponseWithOneEntry_When_OneItemNameOfThisUserContainsSearchWord_SearchShouldBeCaseInsensitive()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = ItemsTestHelper.BuildFirstItem();
+            var filteredItem = BuildFirstItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-            var filteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
+            var filteredItemNameDto = BuildFirstItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
 
             MapperMock
@@ -186,13 +186,13 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnResponseWithCorrectItemName_When_OneItemNameOfThisUserContainSearchWord_SearchShouldBeCaseInsensitive()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = ItemsTestHelper.BuildFirstItem();
+            var filteredItem = BuildFirstItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-            var filteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
+            var filteredItemNameDto = BuildFirstItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
 
             MapperMock
@@ -356,17 +356,17 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnSuccessResponseWithAllItemsNamesOfThisUser_When_SearchWordIsEmptyString()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var firstFilteredItem = ItemsTestHelper.BuildFirstItem();
-            var secondFilteredItem = ItemsTestHelper.BuildSecondItem();
-            var thirdFilteredItem = ItemsTestHelper.BuildThirdItem();
+            var firstFilteredItem = BuildFirstItem();
+            var secondFilteredItem = BuildSecondItem();
+            var thirdFilteredItem = BuildThirdItem();
             var filteredItems = new List<Item>() { firstFilteredItem, secondFilteredItem, thirdFilteredItem };
 
-            var firstFilteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
-            var secondFilteredItemNameDto = ItemsTestHelper.BuildSecondItemNameDto();
-            var thirdFilteredItemNameDto = ItemsTestHelper.BuildThirdItemNameDto();
+            var firstFilteredItemNameDto = BuildFirstItemNameDto();
+            var secondFilteredItemNameDto = BuildSecondItemNameDto();
+            var thirdFilteredItemNameDto = BuildThirdItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { firstFilteredItemNameDto, secondFilteredItemNameDto, thirdFilteredItemNameDto };
 
             MapperMock
@@ -390,17 +390,17 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         public void Should_ReturnResponseWithCorrectItemsNamesOfAllItemsOfThisUser_When_SearchWordIsEmptyString()
         {
             //Arrange
-            var allItems = ItemsTestHelper.BuildItemsCollection();
+            var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var firstFilteredItem = ItemsTestHelper.BuildFirstItem();
-            var secondFilteredItem = ItemsTestHelper.BuildSecondItem();
-            var thirdFilteredItem = ItemsTestHelper.BuildThirdItem();
+            var firstFilteredItem = BuildFirstItem();
+            var secondFilteredItem = BuildSecondItem();
+            var thirdFilteredItem = BuildThirdItem();
             var filteredItems = new List<Item>() { firstFilteredItem, secondFilteredItem, thirdFilteredItem };
 
-            var firstFilteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
-            var secondFilteredItemNameDto = ItemsTestHelper.BuildSecondItemNameDto();
-            var thirdFilteredItemNameDto = ItemsTestHelper.BuildThirdItemNameDto();
+            var firstFilteredItemNameDto = BuildFirstItemNameDto();
+            var secondFilteredItemNameDto = BuildSecondItemNameDto();
+            var thirdFilteredItemNameDto = BuildThirdItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { firstFilteredItemNameDto, secondFilteredItemNameDto, thirdFilteredItemNameDto };
 
             MapperMock
