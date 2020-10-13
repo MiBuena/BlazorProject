@@ -18,6 +18,36 @@ namespace ListGenerator.Web.UnitTests.Helpers
             dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
         }
 
+        public static void InitializeDateTimeProviderMock(Mock<IDateTimeProvider> dateTimeProviderMock, DateTime mockDate)
+        {
+            dateTimeProviderMock.Setup(x => x.GetDateTimeNowDate()).Returns(mockDate);
+        }
+
+        public static ItemDto BuildItemDto(DateTime nextReplenishmentDate)
+        {
+            var itemDto = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentPeriod = 1
+            };
+
+            return itemDto;
+        }
+
+        public static PurchaseItemViewModel BuildPurchaseItemViewModel(DateTime nextReplenishmentDate)
+        {
+            var purchaseItemViewModel = new PurchaseItemViewModel()
+            {
+                ItemId = 1,
+                Name = "Bread",
+                NextReplenishmentDate = nextReplenishmentDate,
+            };
+
+            return purchaseItemViewModel;
+        }
+
         public static List<PurchaseItemViewModel> BuildNonUrgentPurchaseItemVMCollection()
         {
             var purchaseItemViewModel = BuildNonUrgentPurchaseItemViewModel();
