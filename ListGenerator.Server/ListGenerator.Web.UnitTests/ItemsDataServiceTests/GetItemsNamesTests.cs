@@ -468,6 +468,35 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             );
         }
 
+
+        [Test]
+        public void Should_ReturnSuccessResponseWithNoEntries_When_UserIdDoesNotExist()
+        {
+            //Arrange
+            var allItems = ItemsTestHelper.BuildItemsCollection();
+            _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filteredItemNameDtos = new List<ItemNameDto>();
+
+            _mapperMock
+                .Setup(c => c.ProjectTo(
+                    It.IsAny<IQueryable>(),
+                    It.IsAny<object>(),
+                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+             .Returns(filteredItemNameDtos.AsQueryable());
+
+            //Act
+            var result = _itemsDataService.GetItemsNames("Re", "1111");
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull(),
+                () => result.Data.Count().Should().Be(0)
+            ) ;
+        }
+
         [Test]
         public void Should_ReturnSuccessResponseWithAllItemsNamesOfThisUser_When_SearchWordIsEmptyString()
         {
