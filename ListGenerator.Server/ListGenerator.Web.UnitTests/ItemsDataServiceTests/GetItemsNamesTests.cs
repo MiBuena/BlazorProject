@@ -24,7 +24,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
     public class GetItemsNamesTests : BaseItemsDataServiceTests
     {
         [SetUp]
-        public override void Init()
+        protected override void Init()
         {
             base.Init();
         }
