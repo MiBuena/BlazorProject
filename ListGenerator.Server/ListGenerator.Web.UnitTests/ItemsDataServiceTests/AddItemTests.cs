@@ -84,7 +84,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Returns(item);
 
             var sequence = new MockSequence();
-            ItemsRepositoryMock.InSequence(sequence).Setup(x => x.Add(It.IsAny<Item>()));
+            ItemsRepositoryMock.InSequence(sequence).Setup(x => x.Add(item));
             ItemsRepositoryMock.InSequence(sequence).Setup(x => x.SaveChanges());
 
             //Act
