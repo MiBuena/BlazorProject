@@ -67,23 +67,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = ItemsTestHelper.BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filteredItem = new Item()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
+            var filteredItem = ItemsTestHelper.BuildFirstItem();
             var filteredItems = new List<Item>() { filteredItem };
 
-
-            var filteredItemNameDto = new ItemNameDto()
-            {
-                Name = "Bread",
-            };
-
+            var filteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { filteredItemNameDto };
 
             MapperMock
@@ -107,36 +94,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = ItemsTestHelper.BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var firstFilteredItem = new Item()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
-            var secondFilteredItem = new Item()
-            {
-                Id = 3,
-                Name = "Biscuits",
-                NextReplenishmentDate = new DateTime(2020, 10, 07),
-                ReplenishmentPeriod = 5,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
+            var firstFilteredItem = ItemsTestHelper.BuildFirstItem();
+            var secondFilteredItem = ItemsTestHelper.BuildThirdItem();
             var filteredItems = new List<Item>() { firstFilteredItem, secondFilteredItem };
 
-            var firstFilteredItemNameDto = new ItemNameDto()
-            {
-                Name = "Bread",
-            };
-
-            var secondFilteredItemNameDto = new ItemNameDto()
-            {
-                Name = "Biscuits",
-            };
-
+            var firstFilteredItemNameDto = ItemsTestHelper.BuildFirstItemNameDto();
+            var secondFilteredItemNameDto = ItemsTestHelper.BuildThirdItemNameDto();
             var filteredItemNameDtos = new List<ItemNameDto>() { firstFilteredItemNameDto, secondFilteredItemNameDto };
 
             MapperMock

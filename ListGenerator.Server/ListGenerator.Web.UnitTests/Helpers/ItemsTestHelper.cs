@@ -176,6 +176,26 @@ namespace ListGenerator.Web.UnitTests.Helpers
             return firstItemNameDto;
         }
 
+        public static ItemNameDto BuildSecondItemNameDto()
+        {
+            var secondItemNameDto = new ItemNameDto()
+            {
+                Name = "Cheese",
+            };
+
+            return secondItemNameDto;
+        }
+
+        public static ItemNameDto BuildThirdItemNameDto()
+        {
+            var secondItemNameDto = new ItemNameDto()
+            {
+                Name = "Biscuits",
+            };
+
+            return secondItemNameDto;
+        }
+
         public static IEnumerable<ItemDto> BuildItemsDtosCollection()
         {
             var collection = new List<ItemDto>();
