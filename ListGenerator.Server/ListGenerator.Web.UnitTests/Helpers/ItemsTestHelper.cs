@@ -93,32 +93,9 @@ namespace ListGenerator.Web.UnitTests.Helpers
         {
             var collection = new List<Item>();
 
-            var firstItem = new Item()
-            {
-                Id = 1,
-                Name = "Bread",
-                NextReplenishmentDate = new DateTime(2020, 10, 06),
-                ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
-            var secondItem = new Item()
-            {
-                Id = 2,
-                Name = "Cheese",
-                NextReplenishmentDate = new DateTime(2020, 10, 08),
-                ReplenishmentPeriod = 2,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
-
-            var thirdItem = new Item()
-            {
-                Id = 3,
-                Name = "Biscuits",
-                NextReplenishmentDate = new DateTime(2020, 10, 07),
-                ReplenishmentPeriod = 5,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
-            };
+            var firstItem = BuildFirstItem();
+            var secondItem = BuildSecondItem();
+            var thirdItem = BuildThirdItem();
 
             var fourthItem = new Item()
             {
@@ -145,6 +122,58 @@ namespace ListGenerator.Web.UnitTests.Helpers
             collection.Add(fifthItem);
 
             return collection.AsQueryable();
+        }
+
+        public static Item BuildThirdItem()
+        {
+            var thirdItem = new Item()
+            {
+                Id = 3,
+                Name = "Biscuits",
+                NextReplenishmentDate = new DateTime(2020, 10, 07),
+                ReplenishmentPeriod = 5,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            return thirdItem;
+        }
+
+        public static Item BuildSecondItem()
+        {
+            var secondItem = new Item()
+            {
+                Id = 2,
+                Name = "Cheese",
+                NextReplenishmentDate = new DateTime(2020, 10, 08),
+                ReplenishmentPeriod = 2,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            return secondItem;
+        }
+
+        public static Item BuildFirstItem()
+        {
+            var firstItem = new Item()
+            {
+                Id = 1,
+                Name = "Bread",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            return firstItem;
+        }
+
+        public static ItemNameDto BuildFirstItemNameDto()
+        {
+            var firstItemNameDto = new ItemNameDto()
+            {
+                Name = "Bread",
+            };
+
+            return firstItemNameDto;
         }
 
         public static IEnumerable<ItemDto> BuildItemsDtosCollection()
