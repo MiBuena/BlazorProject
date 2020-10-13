@@ -11,6 +11,7 @@ using ListGenerator.Web.UnitTests.Helpers;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
@@ -64,7 +65,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -108,10 +109,10 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
+                .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
             var result = _itemsDataService.GetItemsNames("d", "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
@@ -161,7 +162,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -218,7 +219,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -260,7 +261,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -304,7 +305,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -323,11 +324,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = new List<Item>().AsQueryable();
             _itemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
+            var filteredItems = new List<Item>();
             var filteredItemNameDtos = new List<ItemNameDto>();
 
             _mapperMock
                 .Setup(c => c.ProjectTo(
-                    It.IsAny<IQueryable<Item>>(),
+                    It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     It.IsAny<object>(),
                     It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
              .Returns(filteredItemNameDtos.AsQueryable());
@@ -494,7 +496,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => result.IsSuccess.Should().BeTrue(),
                 () => result.ErrorMessage.Should().BeNull(),
                 () => result.Data.Count().Should().Be(0)
-            ) ;
+            );
         }
 
         [Test]
