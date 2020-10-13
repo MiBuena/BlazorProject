@@ -169,8 +169,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
-            var urgentItemDtoCollection = new List<ItemDto>();
-            urgentItemDtoCollection.Add(urgentItemDto);
+            var urgentItemDtoCollection = new List<ItemDto>() { urgentItemDto };
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, urgentItemDtoCollection);
@@ -199,8 +198,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
-            var urgentItemDtoCollection = new List<ItemDto>();
-            urgentItemDtoCollection.Add(urgentItemDto);
+            var urgentItemDtoCollection = new List<ItemDto>() { urgentItemDto };
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, urgentItemDtoCollection);
@@ -226,8 +224,8 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
-            var urgentItemDtoCollection = new List<ItemDto>();
-            urgentItemDtoCollection.Add(urgentItemDto);
+            var urgentItemDtoCollection = new List<ItemDto>() { urgentItemDto };
+
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, urgentItemDtoCollection);
@@ -252,8 +250,8 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
-            var urgentItemDtoCollection = new List<ItemDto>();
-            urgentItemDtoCollection.Add(urgentItemDto);
+            var urgentItemDtoCollection = new List<ItemDto>() { urgentItemDto };
+
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, urgentItemDtoCollection);
@@ -280,8 +278,7 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
-            var itemDtoCollection = new List<ItemDto>();
-            itemDtoCollection.Add(itemDtoWithNextReplenishmentDateOnFirstReplenishmentDate);
+            var itemDtoCollection = new List<ItemDto>() { itemDtoWithNextReplenishmentDateOnFirstReplenishmentDate };
 
             //Act
             var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoCollection);
@@ -307,11 +304,11 @@ namespace ListGenerator.Web.UnitTests.ItemBuilderTests
             var firstReplenishmentDate = new DateTime(2020, 10, 04);
             var secondReplenishmentDate = new DateTime(2020, 10, 11);
 
-            var itemDtoCollection = new List<ItemDto>();
-            itemDtoCollection.Add(nonUrgentItemDto);
+            var nonUrgentItemDtoCollection = new List<ItemDto>() { nonUrgentItemDto };
+
 
             //Act
-            var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, itemDtoCollection);
+            var result = _itemBuilder.BuildPurchaseItemViewModels(firstReplenishmentDate, secondReplenishmentDate, nonUrgentItemDtoCollection);
 
 
             //Assert
