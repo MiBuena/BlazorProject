@@ -21,7 +21,7 @@ namespace ListGenerator.Shared.Extensions
             }
         }
 
-        public static void ThrowIfNull<T>(this T value, string errorMessage) where T : class
+        public static void ThrowIfNullWithShowMessage<T>(this T value, string errorMessage) where T : class
         {
             if(value == null)
             {

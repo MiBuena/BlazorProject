@@ -35,6 +35,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             ItemsRepositoryMock.Setup(c => c.Add(It.IsAny<Item>()))
                     .Callback<Item>((obj) => saveObject = obj);
 
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
 
             //Act
             var result = ItemsDataService.AddItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", itemDto);
@@ -50,6 +52,34 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
+        public void Should_ReturnASuccessResponse_When_InputParametersAreValid()
+        {
+            //Arrange
+            var itemDto = BuildFirstItemDtoWithoutId();
+            var item = BuildFirstItemWithoutId();
+
+            MapperMock.Setup(c => c.Map<ItemDto, Item>(itemDto))
+                .Returns(item);
+
+            var saveObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Add(It.IsAny<Item>()))
+                    .Callback<Item>((obj) => saveObject = obj);
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+
+            //Act
+            var result = ItemsDataService.AddItem(null, itemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occurred while creating item")
+                );
+        }
+
+        [Test]
         public void Should_AddItemOnce_When_InputParametersAreValid()
         {
             //Arrange
@@ -62,6 +92,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var saveObject = new Item();
             ItemsRepositoryMock.Setup(c => c.Add(It.IsAny<Item>()))
                     .Callback<Item>((obj) => saveObject = obj);
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
 
 
             //Act
@@ -83,6 +115,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             MapperMock.Setup(c => c.Map<ItemDto, Item>(itemDto))
                 .Returns(item);
 
+
             var sequence = new MockSequence();
             ItemsRepositoryMock.InSequence(sequence).Setup(x => x.Add(item));
             ItemsRepositoryMock.InSequence(sequence).Setup(x => x.SaveChanges());
@@ -94,6 +127,34 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             AssertHelper.AssertAll(
                 () => result.IsSuccess.Should().BeTrue(),
                 () => result.ErrorMessage.Should().BeNull()
+                );
+        }
+
+        [Test]
+        public void Should_ReturnAnErrorResponse_When_UserIdIsNull()
+        {
+            //Arrange
+            var itemDto = BuildFirstItemDtoWithoutId();
+            var item = BuildFirstItemWithoutId();
+
+            MapperMock.Setup(c => c.Map<ItemDto, Item>(itemDto))
+                .Returns(item);
+
+            var saveObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Add(It.IsAny<Item>()))
+                    .Callback<Item>((obj) => saveObject = obj);
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+
+            //Act
+            var result = ItemsDataService.AddItem(null, itemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occurred while creating item")
                 );
         }
     }

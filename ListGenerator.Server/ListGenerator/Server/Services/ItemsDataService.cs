@@ -173,7 +173,7 @@ namespace ListGenerator.Server.Services
 
                 var dto = _mapper.ProjectTo<ItemDto>(query).FirstOrDefault();
 
-                dto.ThrowIfNull($"Current user does not have item with id {itemId}");
+                dto.ThrowIfNullWithShowMessage($"Current user does not have item with id {itemId}");
 
                 var response = ResponseBuilder.Success(dto);
                 return response;
@@ -194,6 +194,8 @@ namespace ListGenerator.Server.Services
         {
             try
             {
+                userId.ThrowIfNull();
+
                 var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
                 itemEntity.UserId = userId;
 
