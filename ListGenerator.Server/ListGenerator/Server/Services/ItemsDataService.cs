@@ -217,6 +217,9 @@ namespace ListGenerator.Server.Services
         {
             try
             {
+                userId.ThrowIfNullOrEmpty();
+                itemDto.ThrowIfNull();
+
                 var itemToUpdate = _itemsRepository.All()
                     .FirstOrDefault(x => x.Id == itemDto.Id && x.UserId == userId);
 
