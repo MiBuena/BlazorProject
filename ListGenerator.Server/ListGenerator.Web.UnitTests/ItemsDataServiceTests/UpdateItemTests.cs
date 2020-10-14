@@ -85,5 +85,48 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => result.ErrorMessage.Should().BeNull()
                 );
         }
+
+        [Test]
+        public void Should_CallRepositorySaveChangesAfterUpdateMethod_When_InputParametersAreValid()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var saveObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()))
+                    .Callback<Item>((obj) => saveObject = obj);
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            var sequence = new MockSequence();
+
+            ItemsRepositoryMock
+                .InSequence(sequence)
+                .Setup(x => x.Update(It.Is<Item>(x => x.Id == updatedItemDto.Id
+            && x.Name == updatedItemDto.Name
+            && x.NextReplenishmentDate == updatedItemDto.NextReplenishmentDate
+            && x.ReplenishmentPeriod == updatedItemDto.ReplenishmentPeriod)));
+
+            ItemsRepositoryMock.InSequence(sequence).Setup(x => x.SaveChanges());
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull()
+                );
+        }
     }
 }
