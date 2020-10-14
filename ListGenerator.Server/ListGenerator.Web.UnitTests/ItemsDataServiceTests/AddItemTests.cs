@@ -69,13 +69,14 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
 
             //Act
-            var result = ItemsDataService.AddItem(null, itemDto);
+            var result = ItemsDataService.AddItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", itemDto);
+
 
 
             //Assert
             AssertHelper.AssertAll(
-                () => result.IsSuccess.Should().BeFalse(),
-                () => result.ErrorMessage.Should().Be("An error occurred while creating item")
+                () => result.IsSuccess.Should().BeTrue(),
+                () => result.ErrorMessage.Should().BeNull()
                 );
         }
 
@@ -149,6 +150,62 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             //Act
             var result = ItemsDataService.AddItem(null, itemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occurred while creating item")
+                );
+        }
+
+        [Test]
+        public void Should_ReturnAnErrorResponse_When_UserIdIsEmptyString()
+        {
+            //Arrange
+            var itemDto = BuildFirstItemDtoWithoutId();
+            var item = BuildFirstItemWithoutId();
+
+            MapperMock.Setup(c => c.Map<ItemDto, Item>(itemDto))
+                .Returns(item);
+
+            var saveObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Add(It.IsAny<Item>()))
+                    .Callback<Item>((obj) => saveObject = obj);
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+
+            //Act
+            var result = ItemsDataService.AddItem(string.Empty, itemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => result.IsSuccess.Should().BeFalse(),
+                () => result.ErrorMessage.Should().Be("An error occurred while creating item")
+                );
+        }
+
+        [Test]
+        public void Should_ReturnAnErrorResponse_When_ItemDtoIsNull()
+        {
+            //Arrange
+            var itemDto = BuildFirstItemDtoWithoutId();
+            var item = BuildFirstItemWithoutId();
+
+            MapperMock.Setup(c => c.Map<ItemDto, Item>(itemDto))
+                .Returns(item);
+
+            var saveObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Add(It.IsAny<Item>()))
+                    .Callback<Item>((obj) => saveObject = obj);
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+
+            //Act
+            var result = ItemsDataService.AddItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", null);
 
 
             //Assert

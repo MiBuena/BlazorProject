@@ -28,5 +28,13 @@ namespace ListGenerator.Shared.Extensions
                 throw new ShowErrorMessageException(errorMessage);
             }
         }
+
+        public static void ThrowIfNull<T>(this T value) where T : class
+        {
+            if (value == null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
+        }
     }
 }

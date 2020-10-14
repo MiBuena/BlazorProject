@@ -194,7 +194,8 @@ namespace ListGenerator.Server.Services
         {
             try
             {
-                userId.ThrowIfNull();
+                userId.ThrowIfNullOrEmpty();
+                itemDto.ThrowIfNull();
 
                 var itemEntity = _mapper.Map<ItemDto, Item>(itemDto);
                 itemEntity.UserId = userId;
