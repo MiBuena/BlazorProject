@@ -69,7 +69,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
 
             //Assert
-            ItemsRepositoryMock.Verify(c => c.Add(It.IsAny<Item>()), Times.Once());
+            ItemsRepositoryMock.Verify(c => c.Add(item), Times.Once());
         }
 
 
