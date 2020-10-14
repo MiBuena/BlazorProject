@@ -178,7 +178,7 @@ namespace ListGenerator.Server.Services
                 var response = ResponseBuilder.Success(dto);
                 return response;
             }
-            catch(ShowErrorMessageException ex)
+            catch (ShowErrorMessageException ex)
             {
                 var response = ResponseBuilder.Failure<ItemDto>(ex.Message);
                 return response;
@@ -223,21 +223,26 @@ namespace ListGenerator.Server.Services
                 var itemToUpdate = _itemsRepository.All()
                     .FirstOrDefault(x => x.Id == itemDto.Id && x.UserId == userId);
 
-                if (itemToUpdate != null)
-                {
-                    itemToUpdate.Name = itemDto.Name;
-                    itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
-                    itemToUpdate.NextReplenishmentDate = itemDto.NextReplenishmentDate;
-                    itemToUpdate.UserId = userId;
+                itemToUpdate.ThrowIfNullWithShowMessage($"Current user does not have item with id {itemDto.Id}");
 
-                    _itemsRepository.Update(itemToUpdate);
-                    _itemsRepository.SaveChanges();
-                }
+                itemToUpdate.Name = itemDto.Name;
+                itemToUpdate.ReplenishmentPeriod = itemDto.ReplenishmentPeriod;
+                itemToUpdate.NextReplenishmentDate = itemDto.NextReplenishmentDate;
+                itemToUpdate.UserId = userId;
+
+                _itemsRepository.Update(itemToUpdate);
+                _itemsRepository.SaveChanges();
+
 
                 var response = ResponseBuilder.Success();
                 return response;
             }
-            catch(Exception ex)
+            catch (ShowErrorMessageException ex)
+            {
+                var response = ResponseBuilder.Failure<ItemDto>(ex.Message);
+                return response;
+            }
+            catch (Exception ex)
             {
                 var response = ResponseBuilder.Failure("An error occurred while updating item");
                 return response;
@@ -259,7 +264,7 @@ namespace ListGenerator.Server.Services
                 var response = ResponseBuilder.Success();
                 return response;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 var response = ResponseBuilder.Failure("An error occurred while deleting item");
                 return response;

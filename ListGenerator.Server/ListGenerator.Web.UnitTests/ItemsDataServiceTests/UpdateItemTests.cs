@@ -292,5 +292,127 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
                 );
         }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_ItemWithThisIdDoesNotExist()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()));
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 10,
+                Name = "Bread updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => result.IsSuccess.Should().BeFalse(),
+                 () => result.ErrorMessage.Should().Be("Current user does not have item with id 10")
+                 );
+        }
+
+        [Test]
+        public void Should_NotUpdateAnyItemInTheDb_When_ItemWithThisIdDoesNotExist()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()));
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 10,
+                Name = "Bread updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => ItemsRepositoryMock.Verify(x => x.All(), Times.Once()),
+                () => ItemsRepositoryMock.Verify(x => x.Update(It.IsAny<Item>()), Times.Never()),
+                () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
+                );
+        }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_AnotherUserHasThisItem()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()));
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 5,
+                Name = "Cake updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => result.IsSuccess.Should().BeFalse(),
+                 () => result.ErrorMessage.Should().Be("Current user does not have item with id 5")
+                 );
+        }
+
+
+        [Test]
+        public void Should_NotUpdateAnyItemInTheDb_When_AnotherUserHasThisItem()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()));
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 5,
+                Name = "Cake updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => ItemsRepositoryMock.Verify(x => x.All(), Times.Once()),
+                () => ItemsRepositoryMock.Verify(x => x.Update(It.IsAny<Item>()), Times.Never()),
+                () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
+                );
+        }
     }
 }
