@@ -60,7 +60,7 @@ namespace ListGenerator.Web.UnitTests.Helpers
 
         public static bool HaveTheSameElements(IEnumerable<Item> firstCollection, IEnumerable<Item> secondCollection)
         {
-            if(firstCollection.Count() != secondCollection.Count())
+            if (firstCollection.Count() != secondCollection.Count())
             {
                 return false;
             }
@@ -69,16 +69,16 @@ namespace ListGenerator.Web.UnitTests.Helpers
             var b = secondCollection.ToList();
 
             bool areEqual = true;
- 
+
             for (int i = 0; i < a.Count; i++)
             {
                 var p = a[i];
                 var l = b[i];
 
-                if(p.Id != l.Id 
-                    || p.Name != l.Name 
-                    || p.NextReplenishmentDate != l.NextReplenishmentDate 
-                    || p.ReplenishmentPeriod != l.ReplenishmentPeriod 
+                if (p.Id != l.Id
+                    || p.Name != l.Name
+                    || p.NextReplenishmentDate != l.NextReplenishmentDate
+                    || p.ReplenishmentPeriod != l.ReplenishmentPeriod
                     || p.UserId != l.UserId)
                 {
                     areEqual = false;
@@ -87,6 +87,17 @@ namespace ListGenerator.Web.UnitTests.Helpers
             }
 
             return areEqual;
+        }
+
+        public static bool HaveTheSameProperties(string userId, ItemDto itemDto, Item item)
+        {
+            var haveTheSameProperties = item.Id == itemDto.Id
+            && item.Name == itemDto.Name
+            && item.NextReplenishmentDate == itemDto.NextReplenishmentDate
+            && item.ReplenishmentPeriod == itemDto.ReplenishmentPeriod
+            && item.UserId == userId;
+
+            return haveTheSameProperties;
         }
 
         public static IEnumerable<ItemDto> BuildItemsDtosCollection()

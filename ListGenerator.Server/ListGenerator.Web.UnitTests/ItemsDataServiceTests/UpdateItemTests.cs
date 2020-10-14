@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using ListGenerator.Data.Entities;
 using ListGenerator.Shared.Dtos;
+using ListGenerator.Web.UnitTests.Helpers;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -60,12 +61,6 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var saveObject = new Item();
-            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()))
-                    .Callback<Item>((obj) => saveObject = obj);
-
-            ItemsRepositoryMock.Setup(c => c.SaveChanges());
-
             var updatedItemDto = new ItemDto()
             {
                 Id = 1,
@@ -73,6 +68,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 NextReplenishmentDate = new DateTime(2020, 10, 10),
                 ReplenishmentPeriod = 4
             };
+
+            ItemsRepositoryMock
+                .Setup(c => c.Update(It.Is<Item>(x => 
+                x.HasTheSameProperties("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto))));
+
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
 
 
             //Act
@@ -93,12 +94,6 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var saveObject = new Item();
-            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()))
-                    .Callback<Item>((obj) => saveObject = obj);
-
-            ItemsRepositoryMock.Setup(c => c.SaveChanges());
-
             var updatedItemDto = new ItemDto()
             {
                 Id = 1,
@@ -112,10 +107,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             ItemsRepositoryMock
                 .InSequence(sequence)
-                .Setup(x => x.Update(It.Is<Item>(x => x.Id == updatedItemDto.Id
-            && x.Name == updatedItemDto.Name
-            && x.NextReplenishmentDate == updatedItemDto.NextReplenishmentDate
-            && x.ReplenishmentPeriod == updatedItemDto.ReplenishmentPeriod)));
+                .Setup(c => c.Update(It.Is<Item>(x =>
+                x.HasTheSameProperties("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto))));
 
             ItemsRepositoryMock.InSequence(sequence).Setup(x => x.SaveChanges());
 
@@ -207,14 +200,6 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                     .Callback<Item>((obj) => saveObject = obj);
 
             ItemsRepositoryMock.Setup(c => c.SaveChanges());
-
-            var updatedItemDto = new ItemDto()
-            {
-                Id = 1,
-                Name = "Bread updated",
-                NextReplenishmentDate = new DateTime(2020, 10, 10),
-                ReplenishmentPeriod = 4
-            };
 
 
             //Act
