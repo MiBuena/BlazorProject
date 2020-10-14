@@ -255,15 +255,20 @@ namespace ListGenerator.Server.Services
             {
                 userId.ThrowIfNullOrEmpty();
 
-                var itemToDelete = _itemsRepository.All().FirstOrDefault(x => x.Id == id);
+                var itemToDelete = _itemsRepository.All()
+                    .FirstOrDefault(x => x.Id == id && x.UserId == userId);
 
-                if (itemToDelete != null)
-                {
-                    _itemsRepository.Delete(itemToDelete);
-                    _itemsRepository.SaveChanges();
-                }
+                itemToDelete.ThrowIfNullWithShowMessage($"Current user does not have item with id {id}");
+
+                _itemsRepository.Delete(itemToDelete);
+                _itemsRepository.SaveChanges();
 
                 var response = ResponseBuilder.Success();
+                return response;
+            }
+            catch (ShowErrorMessageException ex)
+            {
+                var response = ResponseBuilder.Failure<ItemDto>(ex.Message);
                 return response;
             }
             catch (Exception ex)
