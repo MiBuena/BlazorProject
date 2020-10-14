@@ -14,7 +14,7 @@ namespace ListGenerator.Server.Interfaces
 
         BaseResponse UpdateItem(string userId, ItemDto itemDto);
 
-        BaseResponse DeleteItem(int id);
+        BaseResponse DeleteItem(int id, string userId);
 
         IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId);
 

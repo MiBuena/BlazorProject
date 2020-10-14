@@ -249,10 +249,12 @@ namespace ListGenerator.Server.Services
             }
         }
 
-        public BaseResponse DeleteItem(int id)
+        public BaseResponse DeleteItem(int id, string userId)
         {
             try
             {
+                userId.ThrowIfNullOrEmpty();
+
                 var itemToDelete = _itemsRepository.All().FirstOrDefault(x => x.Id == id);
 
                 if (itemToDelete != null)

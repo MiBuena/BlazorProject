@@ -129,7 +129,7 @@ namespace ListGenerator.Server.Controllers
                 return BadRequest(getItemResponse);
             }
 
-            var deleteResponse = _itemsDataService.DeleteItem(id);
+            var deleteResponse = _itemsDataService.DeleteItem(id, UserId);
 
             if(!deleteResponse.IsSuccess)
             {
