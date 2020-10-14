@@ -41,9 +41,9 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             MapperMock
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
-                    It.IsAny<object>(),
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
-             .Returns(filteredItemNameDtos.AsQueryable());
+                    null,
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
+                .Returns(filteredItemNameDtos.AsQueryable());
         }
 
         protected IQueryable<Item> BuildItemsCollection()
