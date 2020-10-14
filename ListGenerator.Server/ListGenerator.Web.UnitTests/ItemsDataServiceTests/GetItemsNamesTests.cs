@@ -46,7 +46,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -77,7 +77,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
                 .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -106,7 +106,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -139,7 +139,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -168,7 +168,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -199,7 +199,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -240,7 +240,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -266,7 +266,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             MapperMock.Setup(c => c.ProjectTo(
                 It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                 null,
-                It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
                 .Throws(new Exception());
 
             //Act
@@ -373,7 +373,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
@@ -407,7 +407,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Setup(c => c.ProjectTo(
                     It.Is<IQueryable<Item>>(x => ItemsTestHelper.HaveTheSameElements(filteredItems, x)),
                     null,
-                    It.IsAny<Expression<Func<ItemNameDto, object>>[]>()))
+                    It.Is<Expression<Func<ItemNameDto, object>>[]>(x => x.Length == 0)))
              .Returns(filteredItemNameDtos.AsQueryable());
 
             //Act
