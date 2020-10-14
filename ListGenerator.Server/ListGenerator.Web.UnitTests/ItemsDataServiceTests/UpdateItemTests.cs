@@ -414,5 +414,97 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
                 );
         }
+
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_RepositoryAllThrowsAnException()
+        {
+            //Arrange
+            ItemsRepositoryMock.Setup(x => x.All()).Throws(new Exception());
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()));
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => result.IsSuccess.Should().BeFalse(),
+                 () => result.ErrorMessage.Should().Be("An error occurred while updating item")
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_RepositoryUpdateThrowsAnException()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>())).Throws(new Exception());
+            ItemsRepositoryMock.Setup(c => c.SaveChanges());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => result.IsSuccess.Should().BeFalse(),
+                 () => result.ErrorMessage.Should().Be("An error occurred while updating item")
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_RepositorySaveChangesThrowsAnException()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            ItemsRepositoryMock.Setup(c => c.Update(It.IsAny<Item>()));
+            ItemsRepositoryMock.Setup(c => c.SaveChanges()).Throws(new Exception());
+
+            var updatedItemDto = new ItemDto()
+            {
+                Id = 1,
+                Name = "Bread updated",
+                NextReplenishmentDate = new DateTime(2020, 10, 10),
+                ReplenishmentPeriod = 4
+            };
+
+
+            //Act
+            var result = ItemsDataService.UpdateItem("ab70793b-cec8-4eba-99f3-cbad0b1649d0", updatedItemDto);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => result.IsSuccess.Should().BeFalse(),
+                 () => result.ErrorMessage.Should().Be("An error occurred while updating item")
+                 );
+        }
     }
 }
