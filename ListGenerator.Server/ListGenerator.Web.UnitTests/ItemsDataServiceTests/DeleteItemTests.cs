@@ -118,6 +118,31 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
+        public void Should_NotDeleteAnyItem_When_CurrentUserDoesNotHaveItemWithThisId()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var deleteObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Delete(It.IsAny<Item>()))
+                        .Callback<Item>((obj) => deleteObject = obj);
+
+            ItemsRepositoryMock.Setup(x => x.SaveChanges());
+
+
+            //Act
+            var response = ItemsDataService.DeleteItem(5, "ab70793b-cec8-4eba-99f3-cbad0b1649d0");
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                  () => ItemsRepositoryMock.Verify(x => x.Delete(It.IsAny<Item>()), Times.Never()),
+                  () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
+                  );
+        }
+
+        [Test]
         public void Should_ReturnErrorResponse_When_UserIdIsEmpty()
         {
             //Arrange
@@ -140,6 +165,32 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => response.IsSuccess.Should().BeFalse(),
                 () => response.ErrorMessage.Should().Be("An error occurred while deleting item")
                 );
+        }
+
+
+        [Test]
+        public void Should_NotDeleteAnyItem_When_UserIdIsEmpty()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var deleteObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Delete(It.IsAny<Item>()))
+                        .Callback<Item>((obj) => deleteObject = obj);
+
+            ItemsRepositoryMock.Setup(x => x.SaveChanges());
+
+
+            //Act
+            var response = ItemsDataService.DeleteItem(1, string.Empty);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                  () => ItemsRepositoryMock.Verify(x => x.Delete(It.IsAny<Item>()), Times.Never()),
+                  () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
+                  );
         }
 
         [Test]
@@ -166,5 +217,31 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 () => response.ErrorMessage.Should().Be("An error occurred while deleting item")
                 );
         }
+
+        [Test]
+        public void Should_NotDeleteAnyItem_When_UserIdIsNull()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var deleteObject = new Item();
+            ItemsRepositoryMock.Setup(c => c.Delete(It.IsAny<Item>()))
+                        .Callback<Item>((obj) => deleteObject = obj);
+
+            ItemsRepositoryMock.Setup(x => x.SaveChanges());
+
+
+            //Act
+            var response = ItemsDataService.DeleteItem(1, null);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                  () => ItemsRepositoryMock.Verify(x => x.Delete(It.IsAny<Item>()), Times.Never()),
+                  () => ItemsRepositoryMock.Verify(x => x.SaveChanges(), Times.Never())
+                  );
+        }
+
     }
 }
