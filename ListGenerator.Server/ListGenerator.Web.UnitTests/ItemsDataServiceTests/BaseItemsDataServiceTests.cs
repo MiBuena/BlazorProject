@@ -46,6 +46,17 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Returns(filteredItemNameDtos.AsQueryable());
         }
 
+        protected FilterPatemetersDto BuildParametersDtoWithPageSize()
+        {
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 0
+            };
+
+            return filterParameters;
+        }
+
         protected IQueryable<Item> BuildItemsCollection()
         {
             var collection = new List<Item>();
@@ -83,16 +94,32 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
         protected Item BuildThirdItem()
         {
+            var purchases = BuildThirdItemPurchases();
+
             var thirdItem = new Item()
             {
                 Id = 3,
                 Name = "Biscuits",
                 NextReplenishmentDate = new DateTime(2020, 10, 07),
                 ReplenishmentPeriod = 5,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+                Purchases = purchases
             };
 
             return thirdItem;
+        }
+
+        private ICollection<Purchase> BuildThirdItemPurchases()
+        {
+            var firstPurchase = new Purchase()
+            {
+                ReplenishmentDate = new DateTime(2020, 10, 02),
+                Quantity = 1,
+                ItemId = 3
+            };
+
+            var list = new List<Purchase>() { firstPurchase };
+            return list;
         }
 
         protected Item BuildSecondItem()
@@ -111,16 +138,39 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
         protected Item BuildFirstItem()
         {
+            var firstItemPurchases = BuildFirstItemPurchases();
+
             var firstItem = new Item()
             {
                 Id = 1,
                 Name = "Bread",
                 NextReplenishmentDate = new DateTime(2020, 10, 06),
                 ReplenishmentPeriod = 1,
-                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+                Purchases = firstItemPurchases
             };
 
             return firstItem;
+        }
+
+        private ICollection<Purchase> BuildFirstItemPurchases()
+        {
+            var firstPurchase = new Purchase()
+            {
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                Quantity = 2,
+                ItemId = 1
+            };
+
+            var secondPurchase = new Purchase()
+            {
+                ReplenishmentDate = new DateTime(2020, 10, 03),
+                Quantity = 3,
+                ItemId = 1
+            };
+
+            var list = new List<Purchase>() { firstPurchase, secondPurchase };
+            return list;
         }
 
         protected Item BuildFirstItemWithoutId()
