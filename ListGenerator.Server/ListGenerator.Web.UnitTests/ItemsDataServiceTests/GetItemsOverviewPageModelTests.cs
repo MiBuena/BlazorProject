@@ -406,7 +406,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
             var filterParameters = BuildParametersDto();
-            filterParameters.SearchWord = "uit";
+            filterParameters.SearchWord = "UIT";
 
 
 
@@ -450,7 +450,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.First().Name.Should().Be("Cheese"),
                  () => response.Data.OverviewItems.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
                  () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(2)
-                 //() => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull()
+                 //() => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull(),
                  //() => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull()
                  );
         }
@@ -705,6 +705,38 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.IsSuccess.Should().BeFalse(),
                  () => response.ErrorMessage.Should().Be("An error occured while getting items names"),
                  () => response.Data.Should().BeNull()
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnSuccessResponse_When_UserDoesNotHaveItems()
+        {
+            //Arrange
+            var allItems = new List<Item>().AsQueryable();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 0,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeTrue(),
+                 () => response.ErrorMessage.Should().BeNull(),
+                 () => response.Data.TotalItemsCount.Should().Be(0),
+                 () => response.Data.OverviewItems.Count().Should().Be(0)
                  );
         }
     }
