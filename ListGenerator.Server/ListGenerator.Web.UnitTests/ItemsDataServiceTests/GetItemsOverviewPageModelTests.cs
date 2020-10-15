@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using ListGenerator.Shared.Dtos;
+using ListGenerator.Shared.Enums;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -48,6 +49,24 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  //() => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeNull()
                  //() => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().BeNull()
                  );
+        }
+
+
+        [Test]
+        public void Should_ReturnCorrectTotalItemsCount_When_FirstPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto();
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            response.Data.TotalItemsCount.Should().Be(3);
         }
 
 
@@ -117,6 +136,23 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  );
         }
 
+        [Test]
+        public void Should_ReturnCorrectTotalItemsCount_When_SecondPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto(2);
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            response.Data.TotalItemsCount.Should().Be(3);
+        }
+
 
         [Test]
         public void Should_ReturnResponseWithAllUserItems_When_PageSizeBiggerThanUserItemsCount()
@@ -166,7 +202,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             var allItems = BuildItemsCollection();
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
-            var filterParameters = BuildParametersDto(2, 5);
+            var filterParameters = BuildParametersDto(0, 5);
 
             //Act
             var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
@@ -176,6 +212,119 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             AssertHelper.AssertAll(
                  () => response.IsSuccess.Should().BeTrue(),
                  () => response.ErrorMessage.Should().BeNull()
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnCorrectTotalItemsCount_When_PageSizeBiggerThanUserItemsCount()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto(0, 5);
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            response.Data.TotalItemsCount.Should().Be(3);
+        }
+
+        [Test]
+        public void Should_ReturnSuccessResponse_When_OrderByNextReplenishmentDateAscending()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto(0, 5);
+            filterParameters.OrderByColumn = "NextReplenishmentDate";
+            filterParameters.OrderByDirection = SortingDirection.Ascending;
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeTrue(),
+                 () => response.ErrorMessage.Should().BeNull()
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnResponseWithItemsInCorrectOrder_When_OrderByNextReplenishmentDateAscending()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto(0, 5);
+            filterParameters.OrderByColumn = "NextReplenishmentDate";
+            filterParameters.OrderByDirection = SortingDirection.Ascending;
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.FirstOrDefault().Id.Should().Be(1),
+                 () => response.Data.OverviewItems.Skip(1).FirstOrDefault().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.Skip(2).FirstOrDefault().Id.Should().Be(2)
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnSuccessResponse_When_OrderByNextReplenishmentDateDescending()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto(0, 5);
+            filterParameters.OrderByColumn = "NextReplenishmentDate";
+            filterParameters.OrderByDirection = SortingDirection.Descending;
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeTrue(),
+                 () => response.ErrorMessage.Should().BeNull()
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnResponseWithItemsInCorrectOrder_When_OrderByNextReplenishmentDateDescending()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto(0, 5);
+            filterParameters.OrderByColumn = "NextReplenishmentDate";
+            filterParameters.OrderByDirection = SortingDirection.Descending;
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.FirstOrDefault().Id.Should().Be(2),
+                 () => response.Data.OverviewItems.Skip(1).FirstOrDefault().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.Skip(2).FirstOrDefault().Id.Should().Be(1)
                  );
         }
     }
