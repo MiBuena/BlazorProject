@@ -424,5 +424,34 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().Be(1)
                  );
         }
+
+
+        [Test]
+        public void Should_ReturnResponseWithCorrectItems_When_SearchByDate()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto();
+            filterParameters.SearchDate = "08-10-2020";
+
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.Count().Should().Be(1),
+                 () => response.Data.OverviewItems.First().Id.Should().Be(2),
+                 () => response.Data.OverviewItems.First().Name.Should().Be("Cheese"),
+                 () => response.Data.OverviewItems.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
+                 () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(2)
+                 //() => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull()
+                 //() => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull()
+                 );
+        }
     }
 }

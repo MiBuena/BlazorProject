@@ -92,6 +92,47 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             return collection.AsQueryable();
         }
 
+        protected IQueryable<Item> BuildAdditionalItemsCollection()
+        {
+            var sixthItemPurchases = BuildSixthItemPurchases();
+
+            var sixthItem = new Item()
+            {
+                Id = 6,
+                Name = "Barley",
+                NextReplenishmentDate = new DateTime(2020, 10, 06),
+                ReplenishmentPeriod = 2,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+                Purchases = sixthItemPurchases
+            };
+
+            var seventhItem = new Item()
+            {
+                Id = 7,
+                Name = "Bacon",
+                NextReplenishmentDate = new DateTime(2020, 10, 2),
+                ReplenishmentPeriod = 5,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0"
+            };
+
+            var collection = new List<Item>() { sixthItem, seventhItem };
+            return collection.AsQueryable();
+        }
+
+        private ICollection<Purchase> BuildSixthItemPurchases()
+        {
+            var firstPurchase = new Purchase()
+            {
+                ReplenishmentDate = new DateTime(2020, 10, 02),
+                Quantity = 2,
+                ItemId = 6
+            };
+
+            var list = new List<Purchase>() { firstPurchase };
+            return list;
+        }
+
+
         protected Item BuildThirdItem()
         {
             var purchases = BuildThirdItemPurchases();
@@ -108,6 +149,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
 
             return thirdItem;
         }
+
+
 
         private ICollection<Purchase> BuildThirdItemPurchases()
         {
