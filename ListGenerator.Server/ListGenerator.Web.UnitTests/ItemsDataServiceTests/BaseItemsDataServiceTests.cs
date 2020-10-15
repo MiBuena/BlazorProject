@@ -46,12 +46,12 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                 .Returns(filteredItemNameDtos.AsQueryable());
         }
 
-        protected FilterPatemetersDto BuildParametersDtoWithPageSize()
+        protected FilterPatemetersDto BuildParametersDtoWithPageSize(int skipItems = 0)
         {
             var filterParameters = new FilterPatemetersDto()
             {
                 PageSize = 2,
-                SkipItems = 0
+                SkipItems = skipItems
             };
 
             return filterParameters;

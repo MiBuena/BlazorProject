@@ -70,5 +70,51 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.ErrorMessage.Should().BeNull()
                  );
         }
+
+
+        [Test]
+        public void Should_ReturnResponseWithSecondPageUserItems_When_SecondPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDtoWithPageSize(2);
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.Count().Should().Be(1),
+                 () => response.Data.OverviewItems.First().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.First().Name.Should().Be("Biscuits"),
+                 () => response.Data.OverviewItems.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 07)),
+                 () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(5),
+                 () => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02)),
+                 () => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().Be(1)
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnSuccessResponse_When_SecondPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDtoWithPageSize(2);
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeTrue(),
+                 () => response.ErrorMessage.Should().BeNull()
+                 );
+        }
     }
 }
