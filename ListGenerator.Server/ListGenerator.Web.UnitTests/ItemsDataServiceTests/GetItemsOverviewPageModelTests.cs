@@ -276,7 +276,14 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             //Assert
             AssertHelper.AssertAll(
                  () => response.Data.OverviewItems.FirstOrDefault().Id.Should().Be(1),
+
                  () => response.Data.OverviewItems.Skip(1).FirstOrDefault().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.Skip(1).First().Name.Should().Be("Biscuits"),
+                 () => response.Data.OverviewItems.Skip(1).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 07)),
+                 () => response.Data.OverviewItems.Skip(1).First().ReplenishmentPeriod.Should().Be(5),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02)),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().Be(1),
+
                  () => response.Data.OverviewItems.Skip(2).FirstOrDefault().Id.Should().Be(2)
                  );
         }
@@ -323,8 +330,73 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             //Assert
             AssertHelper.AssertAll(
                  () => response.Data.OverviewItems.FirstOrDefault().Id.Should().Be(2),
+
                  () => response.Data.OverviewItems.Skip(1).FirstOrDefault().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.Skip(1).First().Name.Should().Be("Biscuits"),
+                 () => response.Data.OverviewItems.Skip(1).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 07)),
+                 () => response.Data.OverviewItems.Skip(1).First().ReplenishmentPeriod.Should().Be(5),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02)),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().Be(1),
+
                  () => response.Data.OverviewItems.Skip(2).FirstOrDefault().Id.Should().Be(1)
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnResponseWithItemsInCorrectOrder_When_OrderByAndFirstPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto();
+            filterParameters.OrderByColumn = "NextReplenishmentDate";
+            filterParameters.OrderByDirection = SortingDirection.Ascending;
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.FirstOrDefault().Id.Should().Be(1),
+
+
+                 () => response.Data.OverviewItems.Skip(1).FirstOrDefault().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.Skip(1).First().Name.Should().Be("Biscuits"),
+                 () => response.Data.OverviewItems.Skip(1).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 07)),
+                 () => response.Data.OverviewItems.Skip(1).First().ReplenishmentPeriod.Should().Be(5),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02)),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().Be(1)
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnResponseWithCorrectItems_When_SearchByWord()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
+
+            var filterParameters = BuildParametersDto();
+            filterParameters.SearchWord = "Biscui";
+
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.Count().Should().Be(1),
+                 () => response.Data.OverviewItems.First().Id.Should().Be(3),
+                 () => response.Data.OverviewItems.First().Name.Should().Be("Biscuits"),
+                 () => response.Data.OverviewItems.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 07)),
+                 () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(5),
+                 () => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02)),
+                 () => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().Be(1)
                  );
         }
     }
