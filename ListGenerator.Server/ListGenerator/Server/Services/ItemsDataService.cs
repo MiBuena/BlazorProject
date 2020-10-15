@@ -63,6 +63,9 @@ namespace ListGenerator.Server.Services
         {
             try
             {
+                userId.ThrowIfNullOrEmpty();
+                dto.ThrowIfNull();
+
                 var query = GetOverviewItemsQuery(userId, dto);
 
                 var dtos = query
@@ -83,7 +86,7 @@ namespace ListGenerator.Server.Services
             }
             catch (Exception ex)
             {
-                var response = ResponseBuilder.Failure<ItemsOverviewPageDto>("An error occured while getting items names.");
+                var response = ResponseBuilder.Failure<ItemsOverviewPageDto>("An error occured while getting items names");
                 return response;
             }
         }

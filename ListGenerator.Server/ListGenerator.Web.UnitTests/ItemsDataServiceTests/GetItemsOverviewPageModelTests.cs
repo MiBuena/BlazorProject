@@ -525,6 +525,40 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
         }
 
         [Test]
+        public void Should_ReturnSuccessResponse_When_AllFiltersAreApplied_SecondPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            var additionalItems = BuildAdditionalItemsCollection();
+
+            var combinedCollection = new List<Item>(allItems);
+            combinedCollection.AddRange(additionalItems);
+
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(combinedCollection.AsQueryable());
+
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 2,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeTrue(),
+                 () => response.ErrorMessage.Should().BeNull()
+                 );
+        }
+
+        [Test]
         public void Should_ReturnResponseWithCorrectItems_When_AllFiltersAreApplied_SecondPage()
         {
             //Arrange
@@ -589,6 +623,88 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             //Assert
             AssertHelper.AssertAll(
                  () => response.Data.TotalItemsCount.Should().Be(3)
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_UserIdIsNull()
+        {
+            //Arrange
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 2,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel(null, filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeFalse(),
+                 () => response.ErrorMessage.Should().Be("An error occured while getting items names"),
+                 () => response.Data.Should().BeNull()
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_UserIdIsEmpty()
+        {
+            //Arrange
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 2,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel(string.Empty, filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeFalse(),
+                 () => response.ErrorMessage.Should().Be("An error occured while getting items names"),
+                 () => response.Data.Should().BeNull()
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnErrorResponse_When_FilterDtoIsNull()
+        {
+            //Arrange
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 2,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", null);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeFalse(),
+                 () => response.ErrorMessage.Should().Be("An error occured while getting items names"),
+                 () => response.Data.Should().BeNull()
                  );
         }
     }
