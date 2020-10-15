@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using ListGenerator.Data.Entities;
 using ListGenerator.Shared.Dtos;
 using ListGenerator.Shared.Enums;
 using NUnit.Framework;
@@ -405,7 +406,7 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
             ItemsRepositoryMock.Setup(x => x.All()).Returns(allItems);
 
             var filterParameters = BuildParametersDto();
-            filterParameters.SearchWord = "Biscui";
+            filterParameters.SearchWord = "uit";
 
 
 
@@ -451,6 +452,143 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(2)
                  //() => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull()
                  //() => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull()
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnResponseWithCorrectItems_When_AllFiltersAreApplied_FirstPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            var additionalItems = BuildAdditionalItemsCollection();
+
+            var combinedCollection = new List<Item>(allItems);
+            combinedCollection.AddRange(additionalItems);
+
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(combinedCollection.AsQueryable());
+
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 0,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.Count().Should().Be(2),
+                 () => response.Data.OverviewItems.First().Id.Should().Be(7),
+                 () => response.Data.OverviewItems.Skip(1).First().Id.Should().Be(6)
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnSuccessResponse_When_AllFiltersAreApplied_FirstPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            var additionalItems = BuildAdditionalItemsCollection();
+
+            var combinedCollection = new List<Item>(allItems);
+            combinedCollection.AddRange(additionalItems);
+
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(combinedCollection.AsQueryable());
+
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 0,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.IsSuccess.Should().BeTrue(),
+                 () => response.ErrorMessage.Should().BeNull()
+                 );
+        }
+
+        [Test]
+        public void Should_ReturnResponseWithCorrectItems_When_AllFiltersAreApplied_SecondPage()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            var additionalItems = BuildAdditionalItemsCollection();
+
+            var combinedCollection = new List<Item>(allItems);
+            combinedCollection.AddRange(additionalItems);
+
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(combinedCollection.AsQueryable());
+
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 2,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.OverviewItems.Count().Should().Be(1),
+                 () => response.Data.OverviewItems.First().Id.Should().Be(3)
+                 );
+        }
+
+
+        [Test]
+        public void Should_ReturnResponseWithCorrectTotalItemsCount_When_AllFiltersAreApplied()
+        {
+            //Arrange
+            var allItems = BuildItemsCollection();
+            var additionalItems = BuildAdditionalItemsCollection();
+
+            var combinedCollection = new List<Item>(allItems);
+            combinedCollection.AddRange(additionalItems);
+
+            ItemsRepositoryMock.Setup(x => x.All()).Returns(combinedCollection.AsQueryable());
+
+            var filterParameters = new FilterPatemetersDto()
+            {
+                PageSize = 2,
+                SkipItems = 0,
+                OrderByDirection = SortingDirection.Ascending,
+                OrderByColumn = "Name",
+                SearchDate = "02-10-2020",
+                SearchWord = "B"
+            };
+
+
+            //Act
+            var response = ItemsDataService.GetItemsOverviewPageModel("ab70793b-cec8-4eba-99f3-cbad0b1649d0", filterParameters);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                 () => response.Data.TotalItemsCount.Should().Be(3)
                  );
         }
     }
