@@ -24,10 +24,11 @@ namespace ListGenerator.Client.Services
         }
 
 
-        public async Task<Response<IEnumerable<ItemDto>>> GetShoppingListItems(DateTime secondReplenishmentDate)
+        public async Task<Response<IEnumerable<ReplenishmentItemDto>>> GetShoppingListItems(DateTime firstShoppingDate, DateTime secondShoppingDate)
         {
-            var invariantDate = DateTimeHelper.ToTransferDateAsString(secondReplenishmentDate);
-            var response = await _apiClient.GetAsync<Response<IEnumerable<ItemDto>>>($"api/replenishment/shoppinglist/{invariantDate}");
+            var firstShoppingDateTransfer = DateTimeHelper.ToTransferDateAsString(firstShoppingDate);
+            var secondShoppingDateTransfer = DateTimeHelper.ToTransferDateAsString(secondShoppingDate);
+            var response = await _apiClient.GetAsync<Response<IEnumerable<ReplenishmentItemDto>>>($"api/replenishment/shoppinglist/{firstShoppingDateTransfer}/{secondShoppingDateTransfer}");
 
             return response;
         }

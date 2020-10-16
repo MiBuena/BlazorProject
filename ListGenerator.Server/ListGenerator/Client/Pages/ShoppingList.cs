@@ -66,7 +66,7 @@ namespace ListGenerator.Client.Pages
 
         private async Task InitializeReplenishmentItemsCollection()
         {
-            var response = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
+            var response = await ReplenishmentService.GetShoppingListItems(this.FirstReplenishmentDate, this.SecondReplenishmentDate);
 
             if (!response.IsSuccess)
             {
@@ -109,7 +109,7 @@ namespace ListGenerator.Client.Pages
 
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
-            var response = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
+            var response = await ReplenishmentService.GetShoppingListItems(this.FirstReplenishmentDate, this.SecondReplenishmentDate);
 
             if (!response.IsSuccess)
             {

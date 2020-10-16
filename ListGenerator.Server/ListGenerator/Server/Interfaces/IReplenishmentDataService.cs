@@ -9,7 +9,7 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IReplenishmentDataService
     {
-        Response<IEnumerable<ItemDto>> GetShoppingList(string secondReplenishmentDate, string userId);
+        Response<IEnumerable<ReplenishmentItemDto>> GetShoppingList(string firstShoppingDateAsString, string secondShoppingDateAsString, string userId);
 
         void ReplenishItems(ReplenishmentDto dto);
     }

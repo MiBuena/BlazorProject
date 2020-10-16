@@ -20,12 +20,16 @@ namespace ListGenerator.Client.AutoMapper
                 .ForMember(item => item.ReplenishmentPeriod, opt => opt.MapFrom(a => a.ReplenishmentPeriod))
                 .ReverseMap()
                 .ForPath(s => s.ReplenishmentPeriod, opt => opt.MapFrom(src => double.Parse(src.ReplenishmentPeriodString)));
-            
+
             CreateMap<ItemDto, PurchaseItemViewModel>()
                 .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id));
 
             CreateMap<PurchaseItemViewModel, PurchaseItemDto>()
                 .ForMember(item => item.Quantity, opt => opt.MapFrom(a => int.Parse(a.Quantity)));
+
+            CreateMap<ReplenishmentItemDto, PurchaseItemViewModel>()
+                .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id))
+                .ForMember(item => item.Quantity, opt => opt.MapFrom(a => a.Quantity.ToString()));
         }
     }
 }

@@ -15,6 +15,8 @@ namespace ListGenerator.Server.AutoMapper
             CreateMap<PurchaseItemDto, Purchase>();
 
             CreateMap<Item, ItemNameDto>();
+
+            CreateMap<Item, ReplenishmentItemDto>();
         }
     }
 }

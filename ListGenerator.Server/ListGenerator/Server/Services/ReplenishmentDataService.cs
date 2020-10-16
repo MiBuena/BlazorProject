@@ -19,35 +19,73 @@ namespace ListGenerator.Server.Services
         private readonly IRepository<Item> _itemsRepository;
         private readonly IRepository<Purchase> _purchaseRepository;
         private readonly IMapper _mapper;
+        private readonly IDateTimeProvider _dateTimeProvider;
 
-        public ReplenishmentDataService(IRepository<Item> items, IMapper mapper, IRepository<Purchase> purchaseRepository)
+        public ReplenishmentDataService(IRepository<Item> items, IMapper mapper, IRepository<Purchase> purchaseRepository, IDateTimeProvider dateTimeProvider)
         {
             _itemsRepository = items;
             _purchaseRepository = purchaseRepository;
             _mapper = mapper;
+            _dateTimeProvider = dateTimeProvider;
         }
 
-        public Response<IEnumerable<ItemDto>> GetShoppingList(string secondReplenishmentDate, string userId)
+        public Response<IEnumerable<ReplenishmentItemDto>> GetShoppingList(string firstShoppingDateAsString, string secondShoppingDateAsString, string userId)
         {
             try
             {
-                var date = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDate);
+                var firstShoppingDate = DateTimeHelper.ToDateFromTransferDateAsString(firstShoppingDateAsString);
+                var secondShoppingDate = DateTimeHelper.ToDateFromTransferDateAsString(secondShoppingDateAsString);
 
-                var query = _itemsRepository.All()
-                    .Where(x => x.NextReplenishmentDate.Date < date
-                    && x.UserId == userId)
-                    .OrderBy(x => x.NextReplenishmentDate);
-
-                var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
-
-                var response = ResponseBuilder.Success<IEnumerable<ItemDto>>(itemsNeedingReplenishment);
+                var itemsNeedingReplenishment = GetShoppingListItems(secondShoppingDate, userId);
+                var replenishmentDtos = BuildReplenishmentDtos(secondShoppingDate, itemsNeedingReplenishment);
+                var response = ResponseBuilder.Success(replenishmentDtos);
                 return response;
             }
             catch (Exception ex)
             {
-                var response = ResponseBuilder.Failure<IEnumerable<ItemDto>>("An error occured while getting shopping items");
+                var response = ResponseBuilder.Failure<IEnumerable<ReplenishmentItemDto>>("An error occured while getting shopping items");
                 return response;
             }
+        }
+
+        private IEnumerable<ReplenishmentItemDto> BuildReplenishmentDtos(DateTime secondReplenishmentDate, IEnumerable<Item> items)
+        {
+            var dateTimeNowDate = _dateTimeProvider.GetDateTimeNowDate();
+
+            var replenishmentDtos = new List<ReplenishmentItemDto>();
+
+            foreach (var item in items)
+            {
+                var dto = _mapper.Map<Item, ReplenishmentItemDto>(item);
+
+                dto.ReplenishmentDate = dateTimeNowDate;
+                dto.Quantity = RecommendedPurchaseQuantity(item.ReplenishmentPeriod, item.NextReplenishmentDate, secondReplenishmentDate);
+
+                replenishmentDtos.Add(dto);
+            }
+
+            return replenishmentDtos;
+        }
+
+        private IEnumerable<Item> GetShoppingListItems(DateTime date, string userId)
+        {
+            var query = _itemsRepository.All()
+                .Where(x => x.NextReplenishmentDate.Date < date
+                && x.UserId == userId)
+                .OrderBy(x => x.NextReplenishmentDate);
+
+            var itemsNeedingReplenishment = query.ToList();
+
+            return itemsNeedingReplenishment;
+        }
+
+        private double RecommendedPurchaseQuantity(double itemReplenishmentPeriod, DateTime nextReplenishmentDate, DateTime secondReplenishmentDate)
+        {
+            var daysToBeCoveredWithSupplies = (secondReplenishmentDate - nextReplenishmentDate).Days;
+
+            var neededQuantity = Math.Ceiling(daysToBeCoveredWithSupplies / itemReplenishmentPeriod);
+
+            return neededQuantity;
         }
 
         public void ReplenishItems(ReplenishmentDto replenishmentData)
