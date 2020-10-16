@@ -96,13 +96,5 @@ namespace ListGenerator.Client.Services
             var response = await _apiClient.DeleteAsync($"api/items/{itemId}");
             return response;
         }
-
-        public async Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate)
-        {
-            var invariantDate = DateTimeHelper.ToTransferDateAsString(secondReplenishmentDate);
-            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>($"api/items/shoppinglist/{invariantDate}");
-
-            return dtos;
-        }
     }
 }

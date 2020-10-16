@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using ListGenerator.Data.Interfaces;
 using ListGenerator.Data.Entities;
 using ListGenerator.Shared.Interfaces;
+using ListGenerator.Shared.Helpers;
 
 namespace ListGenerator.Server.Services
 {
@@ -22,6 +23,20 @@ namespace ListGenerator.Server.Services
             _itemsRepository = items;
             _purchaseRepository = purchaseRepository;
             _mapper = mapper;
+        }
+
+        public IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId)
+        {
+            var date = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDate);
+
+            var query = _itemsRepository.All()
+                .Where(x => x.NextReplenishmentDate.Date < date
+                && x.UserId == userId)
+                .OrderBy(x => x.NextReplenishmentDate);
+
+            var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
+
+            return itemsNeedingReplenishment;
         }
 
         public void ReplenishItems(ReplenishmentDto replenishmentData)

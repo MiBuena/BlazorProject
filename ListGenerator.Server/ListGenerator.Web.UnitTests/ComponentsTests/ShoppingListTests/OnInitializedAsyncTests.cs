@@ -21,8 +21,6 @@ namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
     [TestFixture]
     public class OnInitializedAsyncTests : BUnitTestContext
     {
-        private Mock<IItemService> _mockItemService;
-
         private Mock<IReplenishmentService> _mockReplenishmentService;
 
         private Mock<IDateTimeProvider> _mockDateTimeProvider;
@@ -37,14 +35,12 @@ namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
         [SetUp]
         public void Init()
         {
-            _mockItemService = new Mock<IItemService>();
             _mockReplenishmentService = new Mock<IReplenishmentService>();
             _mockDateTimeProvider = new Mock<IDateTimeProvider>();
             _mockNavigationManager = new Mock<NavigationManager>();
             _mockItemBuilder = new Mock<IItemBuilder>();
             _mockReplenishmentBuilder = new Mock<IReplenishmentBuilder>();
 
-            Services.AddSingleton(_mockItemService.Object);
             Services.AddSingleton(_mockReplenishmentService.Object);
             Services.AddSingleton(_mockDateTimeProvider.Object);
             Services.AddSingleton(_mockNavigationManager.Object);
@@ -268,7 +264,7 @@ namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
 
             var itemDtoList = ItemsTestHelper.BuildNonUrgentItemDtoCollection();
 
-            _mockItemService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
+            _mockReplenishmentService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
                 .ReturnsAsync(itemDtoList);
 
 
@@ -288,7 +284,7 @@ namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
 
             var itemDtoList = ItemsTestHelper.BuildItemsDtosCollection();
 
-            _mockItemService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
+            _mockReplenishmentService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
                 .ReturnsAsync(itemDtoList);
 
 
@@ -308,7 +304,7 @@ namespace ListGenerator.Web.UnitTests.ComponentsTests.ShoppingListTests
 
             var itemDtoList = ItemsTestHelper.BuildUrgentItemDtoCollection();
 
-            _mockItemService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
+            _mockReplenishmentService.Setup(c => c.GetShoppingListItems(secondReplenishmentDate))
                 .ReturnsAsync(itemDtoList);
 
 

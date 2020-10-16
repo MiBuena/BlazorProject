@@ -17,6 +17,14 @@ namespace ListGenerator.Server.Controllers
             _replenishmentDataService = replenishmentDataService;
         }
 
+
+        [HttpGet("shoppinglist/{secondReplenishmentDate}")]
+        public IActionResult GetShoppingList(string secondReplenishmentDate)
+        {
+            var shoppingItems = _replenishmentDataService.GetShoppingList(secondReplenishmentDate, this.UserId);
+            return Ok(shoppingItems);
+        }
+
         [HttpPost("replenish")]
         public IActionResult ReplenishItems([FromBody] ReplenishmentDto model)
         {

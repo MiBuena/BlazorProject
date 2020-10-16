@@ -280,19 +280,5 @@ namespace ListGenerator.Server.Services
                 return response;
             }
         }
-
-        public IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId)
-        {
-            var date = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDate);
-
-            var query = _itemsRepository.All()
-                .Where(x => x.NextReplenishmentDate.Date < date
-                && x.UserId == userId)
-                .OrderBy(x => x.NextReplenishmentDate);
-
-            var itemsNeedingReplenishment = _mapper.ProjectTo<ItemDto>(query).ToList();
-
-            return itemsNeedingReplenishment;
-        }
     }
 }

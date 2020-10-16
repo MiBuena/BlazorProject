@@ -17,9 +17,6 @@ namespace ListGenerator.Client.Pages
     public partial class ShoppingList
     {
         [Inject]
-        private IItemService ItemService { get; set; }
-
-        [Inject]
         private IReplenishmentService ReplenishmentService { get; set; }
 
         [Inject]
@@ -67,7 +64,7 @@ namespace ListGenerator.Client.Pages
 
         private async Task InitializeReplenishmentItemsCollection()
         {
-            var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
+            var dtos = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
             this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 
@@ -101,7 +98,7 @@ namespace ListGenerator.Client.Pages
 
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
-            var dtos = await ItemService.GetShoppingListItems(this.SecondReplenishmentDate);
+            var dtos = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
             this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
         }
 

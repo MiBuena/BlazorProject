@@ -6,6 +6,9 @@ using ListGenerator.Client.Interfaces;
 using ListGenerator.Client.Models;
 using ListGenerator.Client.Services;
 using ListGenerator.Shared.Responses;
+using System.Collections.Generic;
+using ListGenerator.Shared.Helpers;
+using System;
 
 namespace ListGenerator.Client.Services
 {
@@ -18,6 +21,15 @@ namespace ListGenerator.Client.Services
         {
             _apiClient = apiClient;
             _jsonHelper = jsonHelper;
+        }
+
+
+        public async Task<IEnumerable<ItemDto>> GetShoppingListItems(DateTime secondReplenishmentDate)
+        {
+            var invariantDate = DateTimeHelper.ToTransferDateAsString(secondReplenishmentDate);
+            var dtos = await _apiClient.GetAsync<IEnumerable<ItemDto>>($"api/replenishment/shoppinglist/{invariantDate}");
+
+            return dtos;
         }
 
         public async Task<BaseResponse> ReplenishItems(ReplenishmentDto replenishmentModel)

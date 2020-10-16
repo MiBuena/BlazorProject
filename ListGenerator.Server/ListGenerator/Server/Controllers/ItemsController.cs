@@ -62,13 +62,6 @@ namespace ListGenerator.Server.Controllers
             return Ok(response);
         }
 
-        [HttpGet("shoppinglist/{secondReplenishmentDate}")]
-        public IActionResult GetShoppingList(string secondReplenishmentDate)
-        {
-            var shoppingItems = _itemsDataService.GetShoppingList(secondReplenishmentDate, this.UserId);
-            return Ok(shoppingItems);
-        }
-
         [HttpPost]
         public IActionResult AddItem([FromBody] ItemDto itemDto)
         {
