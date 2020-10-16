@@ -1,4 +1,5 @@
 ﻿using ListGenerator.Shared.Dtos;
+using ListGenerator.Shared.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IReplenishmentDataService
     {
-        IEnumerable<ItemDto> GetShoppingList(string secondReplenishmentDate, string userId);
+        Response<IEnumerable<ItemDto>> GetShoppingList(string secondReplenishmentDate, string userId);
 
         void ReplenishItems(ReplenishmentDto dto);
     }

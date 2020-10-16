@@ -21,8 +21,14 @@ namespace ListGenerator.Server.Controllers
         [HttpGet("shoppinglist/{secondReplenishmentDate}")]
         public IActionResult GetShoppingList(string secondReplenishmentDate)
         {
-            var shoppingItems = _replenishmentDataService.GetShoppingList(secondReplenishmentDate, this.UserId);
-            return Ok(shoppingItems);
+            var response = _replenishmentDataService.GetShoppingList(secondReplenishmentDate, this.UserId);
+           
+            if (!response.IsSuccess)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
         }
 
         [HttpPost("replenish")]

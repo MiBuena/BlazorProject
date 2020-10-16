@@ -8,6 +8,9 @@
 }
 else
 {
+    <div class="error-holder">
+        <ErrorComponent @ref="Error"></ErrorComponent>
+    </div>
 
     <div class="normalShoppingDay">
         <div class="shopping-label">
@@ -49,55 +52,55 @@ else
         <DataAnnotationsValidator />
         <ValidationSummary />
 
-                <table class="items-shopping-list-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Will run out of supplies on</th>
-                            <th>Quantity to buy</th>
-                            <th>Shopping date</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
+        <table class="items-shopping-list-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Will run out of supplies on</th>
+                    <th>Quantity to buy</th>
+                    <th>Shopping date</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
 
-                        @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
-                        {
+                @for (int m = 0; m < this.ReplenishmentItems.Count; m++)
+                {
 
-                            var replenishmentItem = this.ReplenishmentItems[m];
+                    var replenishmentItem = this.ReplenishmentItems[m];
 
-                            <tr>
+                    <tr>
 
-                                <td class="@replenishmentItem.ReplenishmentSignalClass replenishment-item-name">
-                                    @replenishmentItem.Name
-                                </td>
-                                <td class="@replenishmentItem.ReplenishmentSignalClass replenishment-item-next-replenishment-date">
-                                    @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
-                                </td>
-                                <td class="replenishment-item-quantity-to-buy">
-                                    <InputSelect class="app-input-control tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
+                        <td class="@replenishmentItem.ReplenishmentSignalClass replenishment-item-name">
+                            @replenishmentItem.Name
+                        </td>
+                        <td class="@replenishmentItem.ReplenishmentSignalClass replenishment-item-next-replenishment-date">
+                            @replenishmentItem.NextReplenishmentDate.Date.ToString("d.MM.yyyy")
+                        </td>
+                        <td class="replenishment-item-quantity-to-buy">
+                            <InputSelect class="app-input-control tableInputSelect" @bind-Value="@replenishmentItem.Quantity">
 
-                                        @for (int i = 1; i <= Constants.MaxDisplayQuantityToBuy; i++)
-                                                {
-                                            <option value="@i">@i</option>
-                                                }
+                                @for (int i = 1; i <= Constants.MaxDisplayQuantityToBuy; i++)
+                                        {
+                                    <option value="@i">@i</option>
+                                        }
 
-                                    </InputSelect>
-                                </td>
-                                <td class="replenishment-item-shopping-date">
-                                    <InputDate class="app-input-control" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
-                                </td>
-                                <td>
-                                    <RadzenButton Size="ButtonSize.Small" Click="@(x=> ReplenishItem(replenishmentItem.ItemId))">
-                                        Replenish
-                                    </RadzenButton>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                            </InputSelect>
+                        </td>
+                        <td class="replenishment-item-shopping-date">
+                            <InputDate class="app-input-control" @bind-Value="@replenishmentItem.ReplenishmentDate" max="@this.DateTimeNow.ToString("yyyy-MM-dd")"></InputDate>
+                        </td>
+                        <td>
+                            <RadzenButton Size="ButtonSize.Small" Click="@(x=> ReplenishItem(replenishmentItem.ItemId))">
+                                Replenish
+                            </RadzenButton>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
 
-                <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
+        <button type="submit" class="btn btn-primary edit-btn">Replenish all</button>
 
     </EditForm>
 

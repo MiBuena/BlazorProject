@@ -16,9 +16,6 @@ namespace ListGenerator.Client.Services
 {
     public class ItemService : IItemService
     {
-        private const string SaveItemSuccessMessage = "The item was saved successfully";
-        private const string SaveItemErrorMessage = "An error occurred while saving the item";
-
         private readonly IApiClient _apiClient;
         private readonly IJsonHelper _jsonHelper;
         private readonly IMapper _mapper;

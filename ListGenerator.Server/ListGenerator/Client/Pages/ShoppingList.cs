@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ListGenerator.Shared.Interfaces;
 using ListGenerator.Client.Builders;
+using ListGenerator.Client.Components;
 
 namespace ListGenerator.Client.Pages
 {
@@ -41,6 +42,7 @@ namespace ListGenerator.Client.Pages
 
         private DateTime DateTimeNow { get; set; }
 
+        private ErrorComponent Error { get; set; }
 
         private async Task ChangeFirstReplenishmentDateValue(ChangeEventArgs e)
         {
@@ -64,8 +66,17 @@ namespace ListGenerator.Client.Pages
 
         private async Task InitializeReplenishmentItemsCollection()
         {
-            var dtos = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
-            this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
+            var response = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
+
+            if (!response.IsSuccess)
+            {
+                this.Error.Show(response.ErrorMessage);
+            }
+
+            if (response.Data != null)
+            {
+                this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, response.Data);
+            }
         }
 
         private async Task RegenerateListFromDayOfWeek(ChangeEventArgs e)
@@ -98,8 +109,17 @@ namespace ListGenerator.Client.Pages
 
             await this.ReplenishmentService.ReplenishItems(replenishmentModel);
 
-            var dtos = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
-            this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, dtos);
+            var response = await ReplenishmentService.GetShoppingListItems(this.SecondReplenishmentDate);
+
+            if (!response.IsSuccess)
+            {
+                this.Error.Show(response.ErrorMessage);
+            }
+
+            if (response.Data != null)
+            {
+                this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, response.Data);
+            }
         }
 
         private async Task ReplenishAllItems()
