@@ -298,6 +298,56 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
                 );
         }
 
+        [Test]
+        public void Should_ThrowException_When_InputCollectionIsNull()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            //Assert
+            Assert.Throws<ArgumentNullException>(() => ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, null));
+        }
+
+        [Test]
+        public void Should_ThrowException_When_FirstReplenishmentDateIsAfterSecondReplenishmentDate()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 11); 
+            var secondReplenishmentDate = new DateTime(2020, 10, 04);
+
+
+            //Act
+            //Assert
+            var ex = Assert.Throws<ArgumentException>(() => ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items));
+
+            Assert.That(ex.Message, Is.EqualTo("firstReplenishmentDate : 11.10.2020 should be before secondReplenishmentDate : 04.10.2020"));
+        }
+
+
+        [Test]
+        public void Should_ReturnEmptyCollection_When_FirstReplenishmentDateIsAfterSecondReplenishmentDate()
+        {
+            //Arrange
+            var items = new List<Item>();
+            ItemsTestHelper.InitializeDateTimeProviderMock(DateTimeProviderMock);
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+            //Assert
+            dtos.Count().Should().Be(0);
+        }
+
         private IEnumerable<Item> InitializeWithCollection()
         {
             ItemsTestHelper.InitializeDateTimeProviderMock(DateTimeProviderMock);

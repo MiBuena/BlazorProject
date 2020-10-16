@@ -12,6 +12,7 @@ using ListGenerator.Shared.Helpers;
 using ListGenerator.Shared.Responses;
 using ListGenerator.Server.Builders;
 using ListGenerator.Client.Builders;
+using ListGenerator.Shared.Extensions;
 
 namespace ListGenerator.Server.Services
 {
@@ -37,6 +38,10 @@ namespace ListGenerator.Server.Services
         {
             try
             {
+                userId.ThrowIfNullOrEmpty();
+                firstReplenishmentDateAsString.ThrowIfNullOrEmpty();
+                secondReplenishmentDateAsString.ThrowIfNullOrEmpty();
+
                 var firstReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(firstReplenishmentDateAsString);
                 var secondReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDateAsString);
 

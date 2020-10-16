@@ -2,11 +2,10 @@
 using ListGenerator.Data.Entities;
 using ListGenerator.Server.Interfaces;
 using ListGenerator.Shared.Dtos;
+using ListGenerator.Shared.Extensions;
 using ListGenerator.Shared.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ListGenerator.Server.Builders
 {
@@ -23,6 +22,13 @@ namespace ListGenerator.Server.Builders
 
         public IEnumerable<ReplenishmentItemDto> BuildReplenishmentItemsDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items)
         {
+            items.ThrowIfNull();
+
+            if(secondReplenishmentDate <= firstReplenishmentDate)
+            {
+                throw new ArgumentException($"{nameof(firstReplenishmentDate)} : {firstReplenishmentDate.ToDateString("dd.MM.yyyy")} should be before {nameof(secondReplenishmentDate)} : {secondReplenishmentDate.ToDateString("dd.MM.yyyy")}");
+            }
+
             var dateTimeNowDate = _dateTimeProvider.GetDateTimeNowDate();
 
             var replenishmentDtos = new List<ReplenishmentItemDto>();
