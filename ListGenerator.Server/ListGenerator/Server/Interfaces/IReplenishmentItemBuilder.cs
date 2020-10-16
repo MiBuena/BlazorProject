@@ -9,6 +9,6 @@ namespace ListGenerator.Server.Interfaces
 {
     public interface IReplenishmentItemBuilder
     {
-        IEnumerable<ReplenishmentItemDto> BuildReplenishmentDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items);
+        IEnumerable<ReplenishmentItemDto> BuildReplenishmentItemsDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items);
     }
 }

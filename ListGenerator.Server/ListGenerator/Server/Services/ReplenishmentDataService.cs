@@ -41,7 +41,7 @@ namespace ListGenerator.Server.Services
                 var secondReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDateAsString);
 
                 var itemsNeedingReplenishment = GetShoppingListItems(secondReplenishmentDate, userId);
-                var replenishmentDtos = _replenishmentItemBuilder.BuildReplenishmentDtos(firstReplenishmentDate, secondReplenishmentDate, itemsNeedingReplenishment);
+                var replenishmentDtos = _replenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, itemsNeedingReplenishment);
                 var response = ResponseBuilder.Success(replenishmentDtos);
                 return response;
             }

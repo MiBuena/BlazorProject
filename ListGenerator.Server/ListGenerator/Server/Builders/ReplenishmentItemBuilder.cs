@@ -21,7 +21,7 @@ namespace ListGenerator.Server.Builders
             _mapper = mapper;
         }
 
-        public IEnumerable<ReplenishmentItemDto> BuildReplenishmentDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items)
+        public IEnumerable<ReplenishmentItemDto> BuildReplenishmentItemsDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items)
         {
             var dateTimeNowDate = _dateTimeProvider.GetDateTimeNowDate();
 
