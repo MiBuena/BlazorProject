@@ -29,15 +29,15 @@ namespace ListGenerator.Server.Services
             _dateTimeProvider = dateTimeProvider;
         }
 
-        public Response<IEnumerable<ReplenishmentItemDto>> GetShoppingList(string firstShoppingDateAsString, string secondShoppingDateAsString, string userId)
+        public Response<IEnumerable<ReplenishmentItemDto>> GetShoppingList(string firstReplenishmentDateAsString, string secondReplenishmentDateAsString, string userId)
         {
             try
             {
-                var firstShoppingDate = DateTimeHelper.ToDateFromTransferDateAsString(firstShoppingDateAsString);
-                var secondShoppingDate = DateTimeHelper.ToDateFromTransferDateAsString(secondShoppingDateAsString);
+                var firstReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(firstReplenishmentDateAsString);
+                var secondReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDateAsString);
 
-                var itemsNeedingReplenishment = GetShoppingListItems(secondShoppingDate, userId);
-                var replenishmentDtos = BuildReplenishmentDtos(secondShoppingDate, itemsNeedingReplenishment);
+                var itemsNeedingReplenishment = GetShoppingListItems(secondReplenishmentDate, userId);
+                var replenishmentDtos = BuildReplenishmentDtos(secondReplenishmentDate, itemsNeedingReplenishment);
                 var response = ResponseBuilder.Success(replenishmentDtos);
                 return response;
             }

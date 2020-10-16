@@ -9,7 +9,7 @@ namespace ListGenerator.Client.Services
 {
     public interface IReplenishmentService
     {
-        Task<Response<IEnumerable<ReplenishmentItemDto>>> GetShoppingListItems(DateTime firstShoppingDate, DateTime secondShoppingDate);
+        Task<Response<IEnumerable<ReplenishmentItemDto>>> GetShoppingListItems(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate);
 
         Task<BaseResponse> ReplenishItems(ReplenishmentDto replenishmentModel);
     }

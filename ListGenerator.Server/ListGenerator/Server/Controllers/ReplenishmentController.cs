@@ -18,10 +18,10 @@ namespace ListGenerator.Server.Controllers
         }
 
 
-        [HttpGet("shoppinglist/{firstShoppingtDate}/{secondShoppingDate}")]
-        public IActionResult GetShoppingList(string firstShoppingtDate, string secondShoppingDate)
+        [HttpGet("shoppinglist/{firstReplenishmenttDate}/{secondReplenishmentDate}")]
+        public IActionResult GetShoppingList(string firstReplenishmenttDate, string secondReplenishmentDate)
         {
-            var response = _replenishmentDataService.GetShoppingList(firstShoppingtDate, secondShoppingDate, this.UserId);
+            var response = _replenishmentDataService.GetShoppingList(firstReplenishmenttDate, secondReplenishmentDate, this.UserId);
            
             if (!response.IsSuccess)
             {
