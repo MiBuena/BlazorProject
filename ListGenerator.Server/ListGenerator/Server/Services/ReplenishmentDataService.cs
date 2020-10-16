@@ -11,6 +11,7 @@ using ListGenerator.Shared.Interfaces;
 using ListGenerator.Shared.Helpers;
 using ListGenerator.Shared.Responses;
 using ListGenerator.Server.Builders;
+using ListGenerator.Client.Builders;
 
 namespace ListGenerator.Server.Services
 {
@@ -19,14 +20,17 @@ namespace ListGenerator.Server.Services
         private readonly IRepository<Item> _itemsRepository;
         private readonly IRepository<Purchase> _purchaseRepository;
         private readonly IMapper _mapper;
-        private readonly IDateTimeProvider _dateTimeProvider;
+        private readonly IReplenishmentItemBuilder _replenishmentItemBuilder;
 
-        public ReplenishmentDataService(IRepository<Item> items, IMapper mapper, IRepository<Purchase> purchaseRepository, IDateTimeProvider dateTimeProvider)
+        public ReplenishmentDataService(IRepository<Item> items, 
+            IMapper mapper, 
+            IRepository<Purchase> purchaseRepository, 
+            IReplenishmentItemBuilder replenishmentItemBuilder)
         {
             _itemsRepository = items;
             _purchaseRepository = purchaseRepository;
             _mapper = mapper;
-            _dateTimeProvider = dateTimeProvider;
+            _replenishmentItemBuilder = replenishmentItemBuilder;
         }
 
         public Response<IEnumerable<ReplenishmentItemDto>> GetShoppingList(string firstReplenishmentDateAsString, string secondReplenishmentDateAsString, string userId)
@@ -37,7 +41,7 @@ namespace ListGenerator.Server.Services
                 var secondReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDateAsString);
 
                 var itemsNeedingReplenishment = GetShoppingListItems(secondReplenishmentDate, userId);
-                var replenishmentDtos = BuildReplenishmentDtos(firstReplenishmentDate, secondReplenishmentDate, itemsNeedingReplenishment);
+                var replenishmentDtos = _replenishmentItemBuilder.BuildReplenishmentDtos(firstReplenishmentDate, secondReplenishmentDate, itemsNeedingReplenishment);
                 var response = ResponseBuilder.Success(replenishmentDtos);
                 return response;
             }
@@ -46,26 +50,6 @@ namespace ListGenerator.Server.Services
                 var response = ResponseBuilder.Failure<IEnumerable<ReplenishmentItemDto>>("An error occured while getting shopping items");
                 return response;
             }
-        }
-
-        private IEnumerable<ReplenishmentItemDto> BuildReplenishmentDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items)
-        {
-            var dateTimeNowDate = _dateTimeProvider.GetDateTimeNowDate();
-
-            var replenishmentDtos = new List<ReplenishmentItemDto>();
-
-            foreach (var item in items)
-            {
-                var dto = _mapper.Map<Item, ReplenishmentItemDto>(item);
-
-                dto.ReplenishmentDate = dateTimeNowDate;
-                dto.Quantity = RecommendedPurchaseQuantity(item.ReplenishmentPeriod, item.NextReplenishmentDate, secondReplenishmentDate);
-                dto.ItemNeedsReplenishmentUrgently = item.NextReplenishmentDate < firstReplenishmentDate;
-
-                replenishmentDtos.Add(dto);
-            }
-
-            return replenishmentDtos;
         }
 
         private IEnumerable<Item> GetShoppingListItems(DateTime date, string userId)
@@ -78,15 +62,6 @@ namespace ListGenerator.Server.Services
             var itemsNeedingReplenishment = query.ToList();
 
             return itemsNeedingReplenishment;
-        }
-
-        private double RecommendedPurchaseQuantity(double itemReplenishmentPeriod, DateTime nextReplenishmentDate, DateTime secondReplenishmentDate)
-        {
-            var daysToBeCoveredWithSupplies = (secondReplenishmentDate - nextReplenishmentDate).Days;
-
-            var neededQuantity = Math.Ceiling(daysToBeCoveredWithSupplies / itemReplenishmentPeriod);
-
-            return neededQuantity;
         }
 
         public void ReplenishItems(ReplenishmentDto replenishmentData)

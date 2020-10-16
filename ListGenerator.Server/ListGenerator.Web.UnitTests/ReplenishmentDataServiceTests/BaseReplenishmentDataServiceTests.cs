@@ -20,14 +20,14 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentDataServiceTests
             ItemsRepositoryMock = new Mock<IRepository<Item>>(MockBehavior.Strict);
             PurchaseRepositoryMock = new Mock<IRepository<Purchase>>(MockBehavior.Strict);
             MapperMock = new Mock<IMapper>(MockBehavior.Strict);
-            DateTimeProviderMock = new Mock<IDateTimeProvider>();
-            ReplenishmentDataService = new ReplenishmentDataService(ItemsRepositoryMock.Object, MapperMock.Object, PurchaseRepositoryMock.Object, DateTimeProviderMock.Object);
+            ReplenishmentItemBuilderMock = new Mock<IReplenishmentItemBuilder>(MockBehavior.Strict);
+            ReplenishmentDataService = new ReplenishmentDataService(ItemsRepositoryMock.Object, MapperMock.Object, PurchaseRepositoryMock.Object, ReplenishmentItemBuilderMock.Object);
         }
 
         protected Mock<IRepository<Item>> ItemsRepositoryMock { get; private set; }
         protected Mock<IRepository<Purchase>> PurchaseRepositoryMock { get; private set; }
         protected Mock<IMapper> MapperMock { get; private set; }
-        protected Mock<IDateTimeProvider> DateTimeProviderMock { get; private set; }
+        protected Mock<IReplenishmentItemBuilder> ReplenishmentItemBuilderMock { get; private set; }
         protected IReplenishmentDataService ReplenishmentDataService { get; private set; }
     }
 }

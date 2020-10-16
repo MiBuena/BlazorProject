@@ -20,6 +20,7 @@ using ListGenerator.Data.Interfaces;
 using ListGenerator.Shared.Interfaces;
 using ListGenerator.Shared.Models;
 using AutoMapper;
+using ListGenerator.Server.Builders;
 
 namespace ListGenerator.Server
 {
@@ -53,6 +54,9 @@ namespace ListGenerator.Server
             services.AddTransient(typeof(IRepository<>), typeof(EfRepository<>));
 
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+
+            services.AddTransient<IReplenishmentItemBuilder, ReplenishmentItemBuilder>();
+
 
             services.AddAutoMapper(typeof(Startup));
 
