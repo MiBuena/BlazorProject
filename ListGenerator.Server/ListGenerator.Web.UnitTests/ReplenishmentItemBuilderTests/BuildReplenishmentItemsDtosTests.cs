@@ -32,7 +32,7 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
 
 
         [Test]
-        public void Should_ReturnCollectionWithOneItemViewModel_When_InputDtoCollectionHasOneItemDto()
+        public void Should_ReturnCollectionWithThreeDtos_When_InputCollectionHasThreeItems()
         {
             //Arrange
             var items = InitializeWithCollection();
@@ -42,12 +42,96 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
 
 
             //Act
-            var result = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
 
 
             //Assert
-            result.Count().Should().Be(3);
+            dtos.Count().Should().Be(3);
         }
+
+        [Test]
+        public void Should_ReturnCollection_WithUrgentDto_WithCorrectMappedProperties_When_InputCollectionHasAnUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.First().Id.Should().Be(1),
+                () => dtos.First().Name.Should().Be("Popcorn"),
+                () => dtos.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 02))
+                );
+        }
+
+
+        [Test]
+        public void Should_ReturnCollection_WithUrgentDto_WithCorrectQuantity_When_InputCollectionHasAnUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.First().Quantity.Should().Be(3)
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithUrgentDto_WithCorrectReplenishmentDate_When_InputCollectionHasAnUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.First().ReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 01))
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithUrgentDto_WithUrgencyPropertySetToTrue_When_InputCollectionHasAnUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.First().ItemNeedsReplenishmentUrgently.Should().BeTrue()
+                );
+        }
+
 
         private IEnumerable<Item> InitializeWithCollection()
         {
@@ -84,7 +168,7 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
                 Id = 1,
                 Name = "Popcorn",
                 NextReplenishmentDate = nextReplenishmentDate,
-                ReplenishmentPeriod = 1,
+                ReplenishmentPeriod = 4,
                 UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
             };
 
