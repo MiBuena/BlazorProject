@@ -132,6 +132,88 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
                 );
         }
 
+        [Test]
+        public void Should_ReturnCollection_WithDtoWithNextReplDateOnFirstReplDate_WithCorrectMappedProperties_When_InputCollectionHasAnItemWithNextReplDateOnFirstReplDate()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(1).First().Id.Should().Be(2),
+                () => dtos.Skip(1).First().Name.Should().Be("Brownies"),
+                () => dtos.Skip(1).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 04))
+                );
+        }
+
+
+        [Test]
+        public void Should_ReturnCollection_WithDtoWithNextReplDateOnFirstReplDate_WithCorrectQuantity_When_InputCollectionHasAnItemWithNextReplDateOnFirstReplDate()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(1).First().Quantity.Should().Be(7)
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithDtoWithNextReplDateOnFirstReplDate_WithCorrectReplenishmentDate_When_InputCollectionHasAnItemWithNextReplDateOnFirstReplDate()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(1).First().ReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 01))
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithDtoWithNextReplDateOnFirstReplDate_WithUrgencyPropertySetToTrue_When_InputCollectionHasAnItemWithNextReplDateOnFirstReplDate()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(1).First().ItemNeedsReplenishmentUrgently.Should().BeFalse()
+                );
+        }
 
         private IEnumerable<Item> InitializeWithCollection()
         {
@@ -221,7 +303,7 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
                 Id = 3,
                 Name = "Yoghurt",
                 NextReplenishmentDate = nextReplenishmentDate,
-                ReplenishmentPeriod = 1,
+                ReplenishmentPeriod = 2,
                 UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
             };
 
