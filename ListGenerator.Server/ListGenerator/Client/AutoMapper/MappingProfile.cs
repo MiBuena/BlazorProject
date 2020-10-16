@@ -2,6 +2,7 @@
 using ListGenerator.Shared.Dtos;
 using ListGenerator.Client.ViewModels;
 using System;
+using ListGenerator.Shared.Constants;
 
 namespace ListGenerator.Client.AutoMapper
 {
@@ -29,7 +30,11 @@ namespace ListGenerator.Client.AutoMapper
 
             CreateMap<ReplenishmentItemDto, PurchaseItemViewModel>()
                 .ForMember(item => item.ItemId, opt => opt.MapFrom(a => a.Id))
-                .ForMember(item => item.Quantity, opt => opt.MapFrom(a => a.Quantity.ToString()));
+                .ForMember(item => item.Quantity, opt => opt.MapFrom(a => a.Quantity.ToString()))
+                .ForMember(item => item.ReplenishmentSignalClass, 
+                opt => opt.MapFrom(a => a.ItemNeedsReplenishmentUrgently 
+                ? Constants.ReplenishmentSignalClass 
+                : string.Empty));
         }
     }
 }

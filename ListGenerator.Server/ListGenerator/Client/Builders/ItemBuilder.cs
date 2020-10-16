@@ -32,20 +32,5 @@ namespace ListGenerator.Client.Builders
 
             return model;
         }
-
-        public List<PurchaseItemViewModel> BuildPurchaseItemViewModels(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<ReplenishmentItemDto> itemsDtos)
-        {
-            var replenishmentItems = itemsDtos.Select(x => _mapper.Map<ReplenishmentItemDto, PurchaseItemViewModel>(x)).ToList();
-
-            foreach (var item in replenishmentItems)
-            {
-                item.ReplenishmentSignalClass =
-                    item.NextReplenishmentDate < firstReplenishmentDate
-                    ? Constants.ReplenishmentSignalClass
-                    : string.Empty;
-            }
-
-            return replenishmentItems;
-        }
     }
 }

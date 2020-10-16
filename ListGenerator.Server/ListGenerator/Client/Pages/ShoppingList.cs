@@ -24,6 +24,10 @@ namespace ListGenerator.Client.Pages
         private IDateTimeProvider DateTimeProvider { get; set; }
 
         [Inject]
+        private IMapper Mapper { get; set; }
+
+
+        [Inject]
         private NavigationManager NavigationManager { get; set; }
 
         [Inject]
@@ -75,7 +79,7 @@ namespace ListGenerator.Client.Pages
 
             if (response.Data != null)
             {
-                this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, response.Data);
+                this.ReplenishmentItems = response.Data.Select(x => Mapper.Map<ReplenishmentItemDto, PurchaseItemViewModel>(x)).ToList();
             }
         }
 
@@ -118,7 +122,7 @@ namespace ListGenerator.Client.Pages
 
             if (response.Data != null)
             {
-                this.ReplenishmentItems = ItemBuilder.BuildPurchaseItemViewModels(this.FirstReplenishmentDate, this.SecondReplenishmentDate, response.Data);
+                this.ReplenishmentItems = response.Data.Select(x => Mapper.Map<ReplenishmentItemDto, PurchaseItemViewModel>(x)).ToList();
             }
         }
 

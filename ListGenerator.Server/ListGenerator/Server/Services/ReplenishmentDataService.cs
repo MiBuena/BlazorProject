@@ -37,7 +37,7 @@ namespace ListGenerator.Server.Services
                 var secondReplenishmentDate = DateTimeHelper.ToDateFromTransferDateAsString(secondReplenishmentDateAsString);
 
                 var itemsNeedingReplenishment = GetShoppingListItems(secondReplenishmentDate, userId);
-                var replenishmentDtos = BuildReplenishmentDtos(secondReplenishmentDate, itemsNeedingReplenishment);
+                var replenishmentDtos = BuildReplenishmentDtos(firstReplenishmentDate, secondReplenishmentDate, itemsNeedingReplenishment);
                 var response = ResponseBuilder.Success(replenishmentDtos);
                 return response;
             }
@@ -48,7 +48,7 @@ namespace ListGenerator.Server.Services
             }
         }
 
-        private IEnumerable<ReplenishmentItemDto> BuildReplenishmentDtos(DateTime secondReplenishmentDate, IEnumerable<Item> items)
+        private IEnumerable<ReplenishmentItemDto> BuildReplenishmentDtos(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<Item> items)
         {
             var dateTimeNowDate = _dateTimeProvider.GetDateTimeNowDate();
 
@@ -60,6 +60,7 @@ namespace ListGenerator.Server.Services
 
                 dto.ReplenishmentDate = dateTimeNowDate;
                 dto.Quantity = RecommendedPurchaseQuantity(item.ReplenishmentPeriod, item.NextReplenishmentDate, secondReplenishmentDate);
+                dto.ItemNeedsReplenishmentUrgently = item.NextReplenishmentDate < firstReplenishmentDate;
 
                 replenishmentDtos.Add(dto);
             }

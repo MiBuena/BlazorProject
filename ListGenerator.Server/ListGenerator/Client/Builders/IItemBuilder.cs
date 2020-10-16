@@ -10,7 +10,5 @@ namespace ListGenerator.Client.Builders
     public interface IItemBuilder
     {
         ItemViewModel BuildItemViewModel();
-
-        List<PurchaseItemViewModel> BuildPurchaseItemViewModels(DateTime firstReplenishmentDate, DateTime secondReplenishmentDate, IEnumerable<ReplenishmentItemDto> itemsDtos);
     }
 }
