@@ -215,6 +215,89 @@ namespace ListGenerator.Web.UnitTests.ReplenishmentItemBuilderTests
                 );
         }
 
+
+        [Test]
+        public void Should_ReturnCollection_WithNonUrgentDto_WithCorrectMappedProperties_When_InputCollectionHasANonUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(2).First().Id.Should().Be(3),
+                () => dtos.Skip(2).First().Name.Should().Be("Yoghurt"),
+                () => dtos.Skip(2).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 06))
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithNonUrgentDto_WithCorrectQuantity_When_InputCollectionHasANonUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(2).First().Quantity.Should().Be(3)
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithNonUrgentDto_WithCorrectReplenishmentDate_When_InputCollectionHasANonUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(2).First().ReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 01))
+                );
+        }
+
+        [Test]
+        public void Should_ReturnCollection_WithNonUrgentDto_WithUrgencyPropertySetToTrue_When_InputCollectionHasANonUrgentItem()
+        {
+            //Arrange
+            var items = InitializeWithCollection();
+
+            var firstReplenishmentDate = new DateTime(2020, 10, 04);
+            var secondReplenishmentDate = new DateTime(2020, 10, 11);
+
+
+            //Act
+            var dtos = ReplenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, items);
+
+
+            //Assert
+            AssertHelper.AssertAll(
+                () => dtos.Skip(2).First().ItemNeedsReplenishmentUrgently.Should().BeFalse()
+                );
+        }
+
         private IEnumerable<Item> InitializeWithCollection()
         {
             ItemsTestHelper.InitializeDateTimeProviderMock(DateTimeProviderMock);
