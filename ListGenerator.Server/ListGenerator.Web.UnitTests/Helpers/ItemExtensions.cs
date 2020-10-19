@@ -18,5 +18,15 @@ namespace ListGenerator.Web.UnitTests.Helpers
 
             return haveTheSameProperties;
         }
+
+        //public static bool HasSamePropertiesAs(this ReplenishmentItemDto real, ReplenishmentItemDto expected)
+        //{
+        //    bool haveSameProperties = 
+        //        real.Id == expected.Id
+        //        && real.Name == expected.Name
+        //        && real.ItemNeedsReplenishmentUrgently == expected.ItemNeedsReplenishmentUrgently
+        //        && real.NextReplenishmentDate == expected.
+                 
+        //}
     }
 }

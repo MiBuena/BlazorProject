@@ -1,4 +1,6 @@
-﻿using ListGenerator.Data.Entities;
+﻿using IdentityModel.Client;
+using ListGenerator.Data.Entities;
+using ListGenerator.Shared.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -122,6 +124,163 @@ namespace ListGenerator.Web.UnitTests
 
             var list = new List<Purchase>() { firstPurchase, secondPurchase };
             return list;
+        }
+
+        public IQueryable<ReplenishmentItemDto> BuildDifferentDatesItemsDtosCollection()
+        {
+            var urgentItem = BuildUrgentReplenishmentItemDto(new DateTime(2020, 10, 02));
+            var nonUrgentItem = BuildNonUrgentReplenishmentItemDto(new DateTime(2020, 10, 06));
+            var itemWithNextReplDateOnFirstReplDate = BuildItemDtoWithReplenishmentOnFirstReplDate(new DateTime(2020, 10, 04));
+            var itemNotInShoppingList = BuildOutOfShoppingListReplenishmentItemDto(new DateTime(2020, 10, 20));
+
+            var collection = new List<ReplenishmentItemDto>() { urgentItem, nonUrgentItem, itemWithNextReplDateOnFirstReplDate, itemNotInShoppingList };
+
+            return collection.AsQueryable();
+        }
+
+
+        public IQueryable<ReplenishmentItemDto> BuildDifferentDatesItemsDtosCollectionFiltered()
+        {
+            var urgentItem = BuildUrgentReplenishmentItemDto(new DateTime(2020, 10, 02));
+            var itemWithNextReplDateOnFirstReplDate = BuildItemDtoWithReplenishmentOnFirstReplDate(new DateTime(2020, 10, 04));
+            var nonUrgentItem = BuildNonUrgentReplenishmentItemDto(new DateTime(2020, 10, 06));
+
+            var collection = new List<ReplenishmentItemDto>() { urgentItem, itemWithNextReplDateOnFirstReplDate, nonUrgentItem };
+
+            return collection.AsQueryable();
+        }
+
+        public IQueryable<Item> BuildDifferentDatesItemsCollection()
+        {
+            var urgentItem = BuildUrgentItem(new DateTime(2020, 10, 02));
+            var itemWithNextReplDateOnFirstReplDate = BuildItemWithReplenishmentOnFirstReplDate(new DateTime(2020, 10, 04));
+            var nonUrgentItem = BuildNonUrgentItem(new DateTime(2020, 10, 06));
+            var itemNotInShoppingList = BuildOutOfShoppingDateItem(new DateTime(2020, 10, 20));
+
+            var collection = new List<Item>() { urgentItem, itemWithNextReplDateOnFirstReplDate, nonUrgentItem, itemNotInShoppingList };
+
+            return collection.AsQueryable();
+        }
+
+        public IQueryable<Item> BuildDifferentDatesItemsCollectionFiltered()
+        {
+            var urgentItem = BuildUrgentItem(new DateTime(2020, 10, 02));
+            var itemWithNextReplDateOnFirstReplDate = BuildItemWithReplenishmentOnFirstReplDate(new DateTime(2020, 10, 04));
+            var nonUrgentItem = BuildNonUrgentItem(new DateTime(2020, 10, 06));
+
+            var collection = new List<Item>() { urgentItem, itemWithNextReplDateOnFirstReplDate, nonUrgentItem };
+
+            return collection.AsQueryable();
+        }
+
+
+        protected Item BuildOutOfShoppingDateItem(DateTime nextReplenishmentDate)
+        {
+            var item = new Item()
+            {
+                Id = 4,
+                Name = "Oranges",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentPeriod = 10,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+            };
+
+            return item;
+        }
+
+        protected ReplenishmentItemDto BuildOutOfShoppingListReplenishmentItemDto(DateTime nextReplenishmentDate)
+        {
+            var itemDto = new ReplenishmentItemDto()
+            {
+                Id = 4,
+                Name = "Oranges",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01)
+            };
+
+            return itemDto;
+        }
+
+
+        protected Item BuildUrgentItem(DateTime nextReplenishmentDate)
+        {
+            var item = new Item()
+            {
+                Id = 1,
+                Name = "Popcorn",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentPeriod = 4,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+            };
+
+            return item;
+        }
+
+        protected ReplenishmentItemDto BuildUrgentReplenishmentItemDto(DateTime nextReplenishmentDate)
+        {
+            var itemDto = new ReplenishmentItemDto()
+            {
+                Id = 1,
+                Name = "Popcorn",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01)
+            };
+
+            return itemDto;
+        }
+
+        protected Item BuildItemWithReplenishmentOnFirstReplDate(DateTime nextReplenishmentDate)
+        {
+            var firstItem = new Item()
+            {
+                Id = 2,
+                Name = "Brownies",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentPeriod = 1,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+            };
+
+            return firstItem;
+        }
+
+        protected ReplenishmentItemDto BuildItemDtoWithReplenishmentOnFirstReplDate(DateTime nextReplenishmentDate)
+        {
+            var itemDto = new ReplenishmentItemDto()
+            {
+                Id = 2,
+                Name = "Brownies",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01)
+            };
+
+            return itemDto;
+        }
+
+        protected Item BuildNonUrgentItem(DateTime nextReplenishmentDate)
+        {
+            var firstItem = new Item()
+            {
+                Id = 3,
+                Name = "Yoghurt",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentPeriod = 2,
+                UserId = "ab70793b-cec8-4eba-99f3-cbad0b1649d0",
+            };
+
+            return firstItem;
+        }
+
+        protected ReplenishmentItemDto BuildNonUrgentReplenishmentItemDto(DateTime nextReplenishmentDate)
+        {
+            var itemDto = new ReplenishmentItemDto()
+            {
+                Id = 3,
+                Name = "Yoghurt",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01)
+            };
+
+            return itemDto;
         }
     }
 }

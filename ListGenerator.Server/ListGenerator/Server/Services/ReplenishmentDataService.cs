@@ -47,6 +47,7 @@ namespace ListGenerator.Server.Services
 
                 var itemsNeedingReplenishment = GetShoppingListItems(secondReplenishmentDate, userId);
                 var replenishmentDtos = _replenishmentItemBuilder.BuildReplenishmentItemsDtos(firstReplenishmentDate, secondReplenishmentDate, itemsNeedingReplenishment);
+               
                 var response = ResponseBuilder.Success(replenishmentDtos);
                 return response;
             }

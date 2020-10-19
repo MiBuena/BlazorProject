@@ -46,9 +46,9 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.Skip(1).First().Id.Should().Be(2),
                  () => response.Data.OverviewItems.Skip(1).First().Name.Should().Be("Cheese"),
                  () => response.Data.OverviewItems.Skip(1).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
-                 () => response.Data.OverviewItems.Skip(1).First().ReplenishmentPeriod.Should().Be(2)
-                 //() => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeNull()
-                 //() => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().BeNull()
+                 () => response.Data.OverviewItems.Skip(1).First().ReplenishmentPeriod.Should().Be(2),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeNull(),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().BeNull()
                  );
         }
 
@@ -184,8 +184,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.Skip(1).First().Name.Should().Be("Cheese"),
                  () => response.Data.OverviewItems.Skip(1).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
                  () => response.Data.OverviewItems.Skip(1).First().ReplenishmentPeriod.Should().Be(2),
-                 //() => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeNull()
-                 //() => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().BeNull()
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentDate.Should().BeNull(),
+                 () => response.Data.OverviewItems.Skip(1).First().LastReplenishmentQuantity.Should().BeNull(),
 
                  () => response.Data.OverviewItems.Skip(2).First().Id.Should().Be(3),
                  () => response.Data.OverviewItems.Skip(2).First().Name.Should().Be("Biscuits"),
@@ -293,9 +293,9 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.Skip(2).First().Id.Should().Be(2),
                  () => response.Data.OverviewItems.Skip(2).First().Name.Should().Be("Cheese"),
                  () => response.Data.OverviewItems.Skip(2).First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
-                 () => response.Data.OverviewItems.Skip(2).First().ReplenishmentPeriod.Should().Be(2)
-                 //() => response.Data.OverviewItems.Skip(2).First().LastReplenishmentDate.Should().BeNull()
-                 //() => response.Data.OverviewItems.Skip(2).First().LastReplenishmentQuantity.Should().BeNull()
+                 () => response.Data.OverviewItems.Skip(2).First().ReplenishmentPeriod.Should().Be(2),
+                 () => response.Data.OverviewItems.Skip(2).First().LastReplenishmentDate.Should().BeNull(),
+                 () => response.Data.OverviewItems.Skip(2).First().LastReplenishmentQuantity.Should().BeNull()
                  );
         }
 
@@ -344,8 +344,8 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.First().Name.Should().Be("Cheese"),
                  () => response.Data.OverviewItems.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
                  () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(2),
-                 //() => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull()
-                 //() => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull()
+                 () => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull(),
+                 () => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull(),
 
                  () => response.Data.OverviewItems.Skip(1).First().Id.Should().Be(3),
                  () => response.Data.OverviewItems.Skip(1).First().Name.Should().Be("Biscuits"),
@@ -449,9 +449,9 @@ namespace ListGenerator.Web.UnitTests.ItemsDataServiceTests
                  () => response.Data.OverviewItems.First().Id.Should().Be(2),
                  () => response.Data.OverviewItems.First().Name.Should().Be("Cheese"),
                  () => response.Data.OverviewItems.First().NextReplenishmentDate.Should().BeSameDateAs(new DateTime(2020, 10, 08)),
-                 () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(2)
-                 //() => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull(),
-                 //() => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull()
+                 () => response.Data.OverviewItems.First().ReplenishmentPeriod.Should().Be(2),
+                 () => response.Data.OverviewItems.First().LastReplenishmentDate.Should().BeNull(),
+                 () => response.Data.OverviewItems.First().LastReplenishmentQuantity.Should().BeNull()
                  );
         }
 

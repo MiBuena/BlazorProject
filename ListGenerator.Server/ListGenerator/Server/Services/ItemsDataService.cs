@@ -157,11 +157,11 @@ namespace ListGenerator.Server.Services
                     NextReplenishmentDate = x.NextReplenishmentDate,
                     LastReplenishmentDate = x.Purchases
                                      .OrderByDescending(y => y.ReplenishmentDate)
-                                     .Select(m => m.ReplenishmentDate)
+                                     .Select(m => (DateTime?) m.ReplenishmentDate)
                                      .FirstOrDefault(),
                     LastReplenishmentQuantity = x.Purchases
                                      .OrderByDescending(y => y.ReplenishmentDate)
-                                     .Select(m => m.Quantity)
+                                     .Select(m => (int?) m.Quantity)
                                      .FirstOrDefault(),
                 });
 
