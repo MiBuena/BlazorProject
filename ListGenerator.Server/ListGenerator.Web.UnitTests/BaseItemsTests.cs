@@ -1,4 +1,5 @@
 ﻿using IdentityModel.Client;
+using ListGenerator.Client.ViewModels;
 using ListGenerator.Data.Entities;
 using ListGenerator.Shared.Dtos;
 using System;
@@ -229,6 +230,21 @@ namespace ListGenerator.Web.UnitTests
             return itemDto;
         }
 
+        protected PurchaseItemViewModel BuildUrgentReplenishmentItemViewModel(DateTime nextReplenishmentDate)
+        {
+            var itemViewModel = new PurchaseItemViewModel()
+            {
+                ItemId = 1,
+                Name = "Popcorn",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                Quantity = "3",
+                ReplenishmentSignalClass = "itemNeedsReplenishment"
+            };
+
+            return itemViewModel;
+        }
+
         protected Item BuildItemWithReplenishmentOnFirstReplDate(DateTime nextReplenishmentDate)
         {
             var firstItem = new Item()
@@ -256,6 +272,22 @@ namespace ListGenerator.Web.UnitTests
             return itemDto;
         }
 
+
+        protected PurchaseItemViewModel BuildItemViewModelWithReplenishmentOnFirstReplDate(DateTime nextReplenishmentDate)
+        {
+            var itemViewModel = new PurchaseItemViewModel()
+            {
+                ItemId = 2,
+                Name = "Brownies",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                Quantity = "7",
+                ReplenishmentSignalClass = string.Empty
+            };
+
+            return itemViewModel;
+        }
+
         protected Item BuildNonUrgentItem(DateTime nextReplenishmentDate)
         {
             var firstItem = new Item()
@@ -281,6 +313,21 @@ namespace ListGenerator.Web.UnitTests
             };
 
             return itemDto;
+        }
+
+        protected PurchaseItemViewModel BuildNonUrgentItemViewModel(DateTime nextReplenishmentDate)
+        {
+            var itemViewModel = new PurchaseItemViewModel()
+            {
+                ItemId = 3,
+                Name = "Yoghurt",
+                NextReplenishmentDate = nextReplenishmentDate,
+                ReplenishmentDate = new DateTime(2020, 10, 01),
+                Quantity = "3",
+                ReplenishmentSignalClass = string.Empty
+            };
+
+            return itemViewModel;
         }
     }
 }

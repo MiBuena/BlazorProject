@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace ListGenerator.Web.UnitTests
 {
-    public abstract class BUnitTestContext : ITestContext, IDisposable
+    public abstract class BUnitTestContext : BaseItemsTests, ITestContext, IDisposable
     {
         private Bunit.TestContext _context;
 
