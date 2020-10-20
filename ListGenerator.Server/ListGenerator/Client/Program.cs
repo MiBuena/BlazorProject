@@ -34,6 +34,7 @@ namespace ListGenerator.Client
             builder.Services.AddTransient<IApiClient, ApiClient>();
             builder.Services.AddTransient<IItemBuilder, ItemBuilder>();
             builder.Services.AddTransient<IReplenishmentBuilder, ReplenishmentBuilder>();
+            builder.Services.AddTransient<ICultureService, CultureService>();
 
             builder.Services.AddScoped<ISpinnerService, SpinnerService>();
             builder.Services.AddScoped<BlazorDisplaySpinnerAutomaticallyHttpMessageHandler>();

@@ -16,6 +16,8 @@ using ListGenerator.Client.Builders;
 using ListGenerator.Server.Builders;
 using ListGenerator.Shared.Extensions;
 using ListGenerator.Shared.CustomExceptions;
+using ListGenerator.Server.CommonResources;
+using Microsoft.Extensions.Localization;
 
 namespace ListGenerator.Server.Services
 {
@@ -23,11 +25,16 @@ namespace ListGenerator.Server.Services
     {
         private readonly IRepository<Item> _itemsRepository;
         private readonly IMapper _mapper;
+        private readonly IStringLocalizer<Errors> _localizer;
 
-        public ItemsDataService(IRepository<Item> itemsRepository, IMapper mapper)
+
+        public ItemsDataService(IRepository<Item> itemsRepository, 
+            IMapper mapper, 
+            IStringLocalizer<Errors> localizer)
         {
             _itemsRepository = itemsRepository;
             _mapper = mapper;
+            _localizer = localizer;
         }
 
         public Response<IEnumerable<ItemNameDto>> GetItemsNames(string searchWord, string userId)
@@ -86,7 +93,8 @@ namespace ListGenerator.Server.Services
             }
             catch (Exception ex)
             {
-                var response = ResponseBuilder.Failure<ItemsOverviewPageDto>("An error occured while getting items names");
+                var errorMessage = _localizer["OverviewItemsError"];
+                var response = ResponseBuilder.Failure<ItemsOverviewPageDto>(errorMessage);
                 return response;
             }
         }

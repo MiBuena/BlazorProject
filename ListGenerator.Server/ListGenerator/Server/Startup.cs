@@ -57,6 +57,7 @@ namespace ListGenerator.Server
 
             services.AddTransient<IReplenishmentItemBuilder, ReplenishmentItemBuilder>();
 
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -84,6 +85,13 @@ namespace ListGenerator.Server
                 app.UseHsts();
             }
 
+            var supportedCultures = new[] { "en-US", "bg-BG", "fr-FR" };
+            var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+                .AddSupportedCultures(supportedCultures)
+                .AddSupportedUICultures(supportedCultures);
+
+            app.UseRequestLocalization(localizationOptions);
+
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
@@ -93,6 +101,7 @@ namespace ListGenerator.Server
             app.UseIdentityServer();
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
