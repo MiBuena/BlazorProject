@@ -126,6 +126,12 @@ namespace ListGenerator.Client.Pages
             StateHasChanged();
         }
 
+        private async void Reload_OnCultureChange()
+        {
+            await Table.Reload();
+            StateHasChanged();
+        }
+
         private void NavigateToListGeneration()
         {
             NavigationManager.NavigateTo("/shoppinglist");

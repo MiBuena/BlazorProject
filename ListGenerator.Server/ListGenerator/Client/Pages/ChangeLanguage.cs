@@ -15,10 +15,14 @@ namespace ListGenerator.Client.Pages
         [Inject]
         private ICultureService CultureService { get; set; }
 
-        private void OnSelected(ChangeEventArgs e)
+        [Parameter]
+        public EventCallback<bool> ChangeEventCallBack { get; set; }
+
+        private async void OnSelected(ChangeEventArgs e)
         {
             var culture = (string)e.Value;
-            CultureService.ChangeCulture(culture);
+            await CultureService.ChangeCulture(culture);
+            await ChangeEventCallBack.InvokeAsync(true);
         }
     }
 }
